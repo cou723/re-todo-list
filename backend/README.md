@@ -38,6 +38,10 @@ $ pnpm run test:e2e
 $ pnpm run test:cov
 ```
 
+### Git Commit Message 
+
+Conventional Commitsを使用しています
+
 ## サービス内容
 
 ### 言語定義
@@ -66,6 +70,7 @@ $ pnpm run test:cov
 #### タスク: Task
 - name:task
   - id: INTEGER
+  - created_by: INTEGER
   - title: TEXT
   - description: TEXT
   - is_done: INTEGER(0,1)

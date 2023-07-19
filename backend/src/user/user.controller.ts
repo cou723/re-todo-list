@@ -1,9 +1,11 @@
-import { Controller, Post, Delete } from '@nestjs/common';
+import { Controller, Post, Delete, Body } from '@nestjs/common';
+import { LoginDto } from './login_dto';
 
 @Controller('user')
 export class UserController {
   @Post('login')
-  login() {
+  login(@Body() loginDto: LoginDto) {
+    loginDto.username;
     return 'login';
   }
 
