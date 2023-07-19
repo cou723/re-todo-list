@@ -5,6 +5,7 @@ import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
 import { TaskModule } from './task/task.module';
 import { AuthModule } from './auth/auth.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
@@ -16,6 +17,11 @@ import { AuthModule } from './auth/auth.module';
       database: 'db.sqlite',
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
     }),
+    ConfigModule.forRoot({
+      // envファイルを組み込むために使用
+      isGlobal: true,
+    }),
+    AuthModule, //
   ],
   controllers: [AppController],
   providers: [AppService],

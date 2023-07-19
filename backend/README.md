@@ -40,7 +40,7 @@ $ pnpm run test:cov
 
 ### Git Commit Message 
 
-Conventional Commitsを使用しています
+iを使用しています
 
 ## サービス内容
 
