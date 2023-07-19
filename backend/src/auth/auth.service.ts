@@ -28,6 +28,9 @@ export class AuthService {
 
     // DBに保存されているpasswordはハッシュ化されている事を想定しているので、
     // bcryptなどを使ってパスワードを判定する
+    if (user) {
+      return;
+    }
     if (user && bcrypt.compareSync(pass, user.password)) {
       const { password, ...result } = user; // パスワード情報を外部に出さないようにする
 
