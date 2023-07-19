@@ -8,27 +8,24 @@ import {
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 
+@UseGuards(AuthGuard('jwt'))
 @Controller('task')
 export class TaskController {
-  @UseGuards(AuthGuard('local'))
   @Post()
   createTask(): string {
     return 'create task';
   }
 
-  @UseGuards(AuthGuard('local'))
   @Get('list')
   getTasks() {
     return 'all task';
   }
 
-  @UseGuards(AuthGuard('local'))
   @Get(':id')
   getTask(@Param('id') id: string) {
     return `one task ${id}`;
   }
 
-  @UseGuards(AuthGuard('local'))
   @Post(':id')
   updateTask(@Param('id') id: string) {
     return `update task ${id}`;

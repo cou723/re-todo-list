@@ -16,6 +16,7 @@ import { ConfigModule } from '@nestjs/config';
       type: 'sqlite',
       database: 'db.sqlite',
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
+      synchronize: true,
     }),
     ConfigModule.forRoot({
       // envファイルを組み込むために使用

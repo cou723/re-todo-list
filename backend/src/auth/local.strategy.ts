@@ -1,37 +1,8 @@
 import { Strategy as BaseLocalStrategy } from 'passport-local';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
-import { Strategy } from 'passport-local';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
 import { User } from '../user/user.entity';
 import { AuthService } from './auth.service';
-
-// @Injectable()
-// export class LocalStrategy extends PassportStrategy(Strategy) {
-//   constructor(
-//     @InjectRepository(User)
-//     private userRepository: Repository<User>,
-//   ) {
-//     super();
-//   }
-
-//   async validate(username: string, password: string): Promise<any> {
-//     // ユーザー名とパスワードを検証
-//     const user = await this.userRepository.findOne({
-//       where: {
-//         username: username,
-//         password: password,
-//       },
-//     });
-//     if (user) {
-//       return user;
-//     } else {
-//       // ユーザーが見つからなかった場合、例外をスロー
-//       return new UnauthorizedException();
-//     }
-//   }
-// }
 
 type PasswordOmitUser = Omit<User, 'password'>;
 
