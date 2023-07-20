@@ -80,9 +80,10 @@ export class TaskController {
     });
   }
 
+  // 削除が成功したかどうかは返さない
   @Delete(':id')
-  deleteTask(@Param('id') id: number) {
-    return `delete task ${id}`;
+  async deleteTask(@Param('id') id: number): Promise<void> {
+    return await this.taskService.delete(id);
   }
 
   @Post(':id/done')
