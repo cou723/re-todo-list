@@ -2,7 +2,11 @@ import { Strategy as BaseLocalStrategy } from 'passport-local';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { User } from '../user/user.entity';
-import { AuthService } from './auth.service';
+import {
+  AuthService,
+  PasswordNotMatchError,
+  UserNotFoundError,
+} from './auth.service';
 
 type PasswordOmitUser = Omit<User, 'password'>;
 
@@ -20,13 +24,16 @@ export class LocalStrategy extends PassportStrategy(BaseLocalStrategy) {
     name: User['username'],
     pass: User['password'],
   ): Promise<PasswordOmitUser> {
-    // 認証して結果を受け取る
-    const user = await this.authService.validateUser(name, pass);
-
-    if (!user) {
-      throw new UnauthorizedException(); // 認証失敗
+    try {
+      const user = await this.authService.validateUser(name, pass);
+      console.log('user in validate', user);
+      return user;
+    } catch (e) {
+      if (e instanceof UserNotFoundError)
+        throw new UnauthorizedException(e.message);
+      if (e instanceof PasswordNotMatchError)
+        throw new UnauthorizedException(e.message);
+      throw new UnauthorizedException();
     }
-
-    return user;
   }
 }

@@ -5,8 +5,31 @@ import { JwtService } from '@nestjs/jwt';
 import bcrypt = require('bcrypt');
 type PasswordOmitUser = Omit<User, 'password'>;
 
+export class AuthError extends Error {
+  constructor(e?: string) {
+    super(e);
+    this.name = new.target.name;
+    if (Error.captureStackTrace) {
+      Error.captureStackTrace(this, this.constructor);
+    }
+    Object.setPrototypeOf(this, new.target.prototype);
+  }
+}
+
+export class UserNotFoundError extends AuthError {
+  constructor() {
+    super('user not found');
+  }
+}
+
+export class PasswordNotMatchError extends AuthError {
+  constructor() {
+    super('password not match');
+  }
+}
+
 interface JWTPayload {
-  userId: User['id'];
+  id: User['id'];
   username: User['username'];
 }
 /**
@@ -19,31 +42,21 @@ export class AuthService {
     private usersService: UserService,
   ) {}
 
-  // ユーザーを認証する
   async validateUser(
     name: User['username'],
     pass: User['password'],
-  ): Promise<PasswordOmitUser | null> {
-    const user = await this.usersService.findOne(name); // DBからUserを取得
-
-    // DBに保存されているpasswordはハッシュ化されている事を想定しているので、
-    // bcryptなどを使ってパスワードを判定する
-    if (user) {
-      return;
-    }
-    if (user && bcrypt.compareSync(pass, user.password)) {
-      const { password, ...result } = user; // パスワード情報を外部に出さないようにする
-
-      return result;
-    }
-
-    return null;
+  ): Promise<PasswordOmitUser> {
+    const user = await this.usersService.findOne(name);
+    if (!user) throw new UserNotFoundError();
+    if (!bcrypt.compareSync(pass, user.password))
+      throw new PasswordNotMatchError();
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { password, ...userOmitPassword } = user;
+    return userOmitPassword;
   }
 
-  // jwt tokenを返す
   async login(user: PasswordOmitUser) {
-    // jwtにつけるPayload情報
-    const payload: JWTPayload = { userId: user.id, username: user.username };
+    const payload: JWTPayload = { id: user.id, username: user.username };
 
     return {
       accessToken: this.jwtService.sign(payload),

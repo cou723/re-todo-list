@@ -14,7 +14,6 @@ export class AuthController {
   async login(@Request() req: { user: PasswordOmitUser }) {
     // LocalStrategy.validate()で認証して返した値がreq.userに入ってる
     const user = req.user;
-    console.log('login user: ', user.username);
 
     // JwtToken を返す
     return this.authService.login(req.user);

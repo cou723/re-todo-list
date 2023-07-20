@@ -78,12 +78,13 @@ iを使用しています
 
 ### エンドポイント
 
-| path         | method | 効果                     |
-| :----------- | :----- | :----------------------- |
-| /user/login  | POST   |                          |
-| /user/logout | POST   |                          |
-| /user/create | POST   | ユーザーを新しく作成する |
-| /user        | DELETE | ユーザーを削除する       |
+
+| path        | method | 効果                     |
+| :---------- | :----- | :----------------------- |
+| /auth/login | POST   |                          |
+| /logout     | POST   |                          |
+| /user/new       | POST   | ユーザーを新しく作成する |
+| /user       | DELETE | ユーザーを削除する       |
 
 | path             | method | 効果                       |
 | :--------------- | :----- | :------------------------- |
@@ -96,6 +97,8 @@ iを使用しています
 | /task/:id/parent | POST   | タスクに親を追加する       |
 | /task/:id/parent | DELETE | タスクから親を削除する     |
 | /task/:id        | DELETE | 特定のタスクを削除する     |
+
+※Content-Type: application/jsonは必須
 
 #### /user/login
 
@@ -112,7 +115,7 @@ iを使用しています
   - ユーザーが存在しない: `401, User not found`
   - パスワードが間違っている: `401, Password is wrong`
 
-#### /user/create
+#### /user/newa
 
 ##### body
 ```ts
@@ -134,8 +137,7 @@ iを使用しています
 {
   "title":TEXT,
   "description":TEXT,
-  "is_done": 0|1,
-  "path": TEXT
+  "path"?: TEXT
 }
 ```
 

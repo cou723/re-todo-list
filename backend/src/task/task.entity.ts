@@ -20,3 +20,7 @@ export class Task {
   @Column()
   path: string;
 }
+
+export function getCurrentPath(task: Task): string {
+  return task.path + '/' + task.id;
+}
