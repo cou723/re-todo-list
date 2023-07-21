@@ -10,6 +10,7 @@
 
 ```bash
 $ pnpm install
+$ touch db.sqlite
 ```
 
 ### Running the app
