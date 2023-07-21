@@ -7,12 +7,12 @@ import {
   Body,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { AppService } from './app.service';
 import { PasswordOmitUser, User } from './user/user.entity';
+import { UserService } from './user/user.service';
 
 @Controller()
 export class AppController {
-  constructor(private appService: AppService) {}
+  constructor(private userService: UserService) {}
   @Post('logout')
   logout() {
     return 'logout is not implemented yet. We plan to implement a blacklist in the near future';
@@ -20,12 +20,12 @@ export class AppController {
 
   @Post('register')
   register(@Body() req: { user: User }) {
-    return this.appService.register(req.user.username, req.user.password);
+    return this.userService.register(req.user.username, req.user.password);
   }
 
   @UseGuards(AuthGuard('jtw'))
   @Delete('delete')
   delete(@Request() req: { user: PasswordOmitUser }) {
-    return this.appService.delete(req.user.id);
+    return this.userService.delete(req.user.id);
   }
 }

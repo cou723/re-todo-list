@@ -21,10 +21,9 @@ import { User } from './user/user.entity';
       synchronize: true,
     }),
     ConfigModule.forRoot({
-      // envファイルを組み込むために使用
       isGlobal: true,
     }),
-    AuthModule, //
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
