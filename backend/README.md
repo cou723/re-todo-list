@@ -84,7 +84,7 @@ iを使用しています
 | :---------- | :----- | :----------------------- |
 | /auth/login | POST   |                          |
 | /logout     | POST   |                          |
-| /user/new       | POST   | ユーザーを新しく作成する |
+| /user/new   | POST   | ユーザーを新しく作成する |
 | /user       | DELETE | ユーザーを削除する       |
 
 | path             | method | 効果                       |
