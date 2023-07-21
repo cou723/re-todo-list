@@ -47,6 +47,7 @@ export class AuthService {
     pass: User['password'],
   ): Promise<PasswordOmitUser> {
     const user = await this.usersService.findOne(name);
+
     if (!user) throw new UserNotFoundError();
     if (!bcrypt.compareSync(pass, user.password))
       throw new PasswordNotMatchError();

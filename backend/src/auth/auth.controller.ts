@@ -12,10 +12,6 @@ export class AuthController {
   @UseGuards(AuthGuard('local')) // passport-local戦略を付与する
   @Post('login')
   async login(@Request() req: { user: PasswordOmitUser }) {
-    // LocalStrategy.validate()で認証して返した値がreq.userに入ってる
-    const user = req.user;
-
-    // JwtToken を返す
     return this.authService.login(req.user);
   }
 
@@ -25,11 +21,6 @@ export class AuthController {
   @UseGuards(AuthGuard('jwt')) // passport-jwt戦略を付与する
   @Get('profile')
   getProfile(@Request() req: { user: PasswordOmitUser }) {
-    // JwtStrategy.validate()で認証して返した値がreq.userに入ってる
-    const user = req.user;
-    console.log('get user profile: ', user.username);
-
-    // 認証に成功したユーザーの情報を返す
     return req.user;
   }
 }
