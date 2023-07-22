@@ -31,7 +31,6 @@ export class JwtStrategy extends PassportStrategy(BaseJwtStrategy) {
   // ここでPayloadを使ったバリデーション処理を実行できる
   // Payloadは、AuthService.login()で定義した値
   async validate(payload: JWTPayload): Promise<JWTPayload> {
-    console.log('payload:', payload);
     return { id: payload.id, username: payload.username };
   }
 }

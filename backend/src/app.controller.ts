@@ -41,8 +41,6 @@ export class AppController {
   @UseGuards(AuthGuard('jwt'))
   @Delete('user')
   delete(@Request() req: { user: PasswordOmitUser }) {
-    console.log('called delete');
-
     return this.userService.delete(req.user.id);
   }
 }
