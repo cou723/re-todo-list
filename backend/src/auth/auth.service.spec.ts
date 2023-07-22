@@ -2,7 +2,7 @@ import { Repository } from 'typeorm';
 import { getRepositoryToken } from '@nestjs/typeorm';
 
 import * as bcrypt from 'bcrypt';
-import { User } from '../user/user.entity';
+import { User } from '../entity/user.entity';
 
 import { Test, TestingModule } from '@nestjs/testing';
 import { JwtService } from '@nestjs/jwt';

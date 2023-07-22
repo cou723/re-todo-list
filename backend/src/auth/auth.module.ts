@@ -3,8 +3,6 @@ import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { UserModule } from '../user/user.module';
 
-import { AuthController } from './auth.controller';
-
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AuthService } from './auth.service';
 import { JwtStrategy } from './jwt.strategy';
@@ -22,11 +20,10 @@ import { LocalStrategy } from './local.strategy';
           signOptions: { expiresIn: '120s' },
         };
       },
-      inject: [ConfigService], // useFactoryで使う為にConfigServiceを注入する
+      inject: [ConfigService],
     }),
   ],
   providers: [AuthService, LocalStrategy, JwtStrategy],
   exports: [AuthService],
-  controllers: [AuthController],
 })
 export class AuthModule {}

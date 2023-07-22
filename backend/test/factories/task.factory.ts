@@ -1,5 +1,5 @@
 import * as Factory from 'factory.ts';
-import { Task } from '../../src/task/task.entity';
+import { Task } from '../../src/entity/task.entity';
 
 export const userFactory = Factory.makeFactory<Task>({
   id: Factory.each((i) => i),

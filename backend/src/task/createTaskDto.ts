@@ -1,5 +1,5 @@
 import { IsNumber, IsOptional, IsString } from 'class-validator';
-import { Task } from './task.entity';
+import { Task } from '../entity/task.entity';
 
 export class CreateTaskDto {
   @IsString()

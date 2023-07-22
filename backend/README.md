@@ -82,9 +82,9 @@ iを使用しています
 
 | path        | method | 効果                     |
 | :---------- | :----- | :----------------------- |
-| /auth/login | POST   |                          |
+| /login | POST   |                          |
 | /logout     | POST   |                          |
-| /user/new   | POST   | ユーザーを新しく作成する |
+| /register   | POST   | ユーザーを新しく作成する |
 | /user       | DELETE | ユーザーを削除する       |
 
 | path             | method | 効果                       |
@@ -101,7 +101,7 @@ iを使用しています
 
 ※Content-Type: application/jsonは必須
 
-#### /user/login
+#### /login
 
 ##### body
 ```ts
@@ -116,7 +116,7 @@ iを使用しています
   - ユーザーが存在しない: `401, User not found`
   - パスワードが間違っている: `401, Password is wrong`
 
-#### /user/newa
+#### /register
 
 ##### body
 ```ts

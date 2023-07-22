@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { User } from './user.entity';
+import { User } from '../entity/user.entity';
 
 import * as bcrypt from 'bcrypt';
 
@@ -24,6 +24,6 @@ export class UserService {
   }
 
   async delete(id: number) {
-    return await this.userRepos.delete({ id: id });
+    await this.userRepos.delete({ id: id });
   }
 }

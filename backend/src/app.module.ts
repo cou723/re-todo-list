@@ -6,8 +6,9 @@ import { UserModule } from './user/user.module';
 import { TaskModule } from './task/task.module';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
-import { User } from './user/user.entity';
+import { User } from './entity/user.entity';
 import { ConfigService } from '@nestjs/config';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [
@@ -15,6 +16,15 @@ import { ConfigService } from '@nestjs/config';
     UserModule,
     TaskModule,
     AuthModule,
+    JwtModule.registerAsync({
+      useFactory: async (configService: ConfigService) => {
+        return {
+          secret: configService.get<string>('JWT_SECRET_KEY'),
+          signOptions: { expiresIn: '120s' },
+        };
+      },
+      inject: [ConfigService],
+    }),
     TypeOrmModule.forRoot({
       type: 'sqlite',
       database: new ConfigService().get<string>('DB_FILE_PATH'),

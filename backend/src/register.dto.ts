@@ -1,3 +1,9 @@
-import { User } from './user/user.entity';
+import { IsString } from 'class-validator';
 
-export class RegisterDto extends User {}
+export class RegisterDto {
+  @IsString()
+  username: string;
+
+  @IsString()
+  password: string;
+}
