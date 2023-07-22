@@ -71,10 +71,10 @@ iを使用しています
 #### タスク: Task
 - name:task
   - id: INTEGER
-  - created_by: INTEGER
+  - createdBy: INTEGER
   - title: TEXT
   - description: TEXT
-  - is_done: INTEGER(0,1)
+  - isDone: INTEGER(0,1)
   - path: TEXT
 
 ### エンドポイント
@@ -144,7 +144,7 @@ iを使用しています
 
 ##### Response 
 - 失敗時
-  - is_doneが0,1以外: `400, Invalid is_done`
+  - isDoneが0,1以外: `400, Invalid isDone`
   - pathが不正: `400, Invalid path`
 
 #### /task/list
@@ -158,7 +158,7 @@ iを使用しています
     "id":INTEGER,
     "title":TEXT,
     "description":TEXT,
-    "is_done": 0|1,
+    "isDone": 0|1,
     "path": TEXT
   },
   ...
@@ -175,7 +175,7 @@ iを使用しています
   "id":INTEGER,
   "title":TEXT,
   "description":TEXT,
-  "is_done": 0|1,
+  "isDone": 0|1,
   "path": TEXT
 }
 ```
@@ -192,7 +192,7 @@ iを使用しています
 {
   "title":TEXT,
   "description":TEXT,
-  "is_done": 0|1,
+  "isDone": 0|1,
   "path": TEXT
 }
 ```

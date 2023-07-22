@@ -72,14 +72,18 @@ export class TaskController {
     @Param('id') id: number,
   ): Promise<void> {
     const targetTask = await this.taskService.findTask(id, req.user.id);
+    let path = targetTask.path;
     if (updateContents.newParent)
-      targetTask.path = getCurrentPath(
+      path = getCurrentPath(
         await this.taskService.findTask(updateContents.newParent, req.user.id),
       );
-    this.taskService.edit(
+
+    await this.taskService.edit(
       {
-        ...targetTask,
-        ...updateContents,
+        id: targetTask.id,
+        path: path,
+        title: updateContents.title,
+        description: updateContents.description,
       },
       req.user.id,
     );
@@ -111,24 +115,36 @@ export class TaskController {
     @Body() body: ParentDto,
     @Req() req: { user: User },
   ): Promise<void> {
-    const currentTask = await this.taskService.findTask(id, req.user.id);
-    this.taskService.edit(
-      {
-        ...currentTask,
-        path: getCurrentPath(
-          await this.taskService.findTask(body.newParent, req.user.id),
-        ),
-      },
-      req.user.id,
-    );
+    try {
+      this.taskService.edit(
+        {
+          id,
+          path: getCurrentPath(
+            await this.taskService.findTask(body.newParent, req.user.id),
+          ),
+        },
+        req.user.id,
+      );
+    } catch (error) {
+      if (error instanceof HttpException) {
+        throw error;
+      }
+      throw new HttpException('Internal Server Error', 500);
+    }
   }
 
   @Delete(':id/parent')
-  async removeParentTask(
+  async deleteParentTask(
     @Param('id') id: number,
     @Req() req: { user: User },
   ): Promise<void> {
-    const currentTask = await this.taskService.findTask(id, req.user.id);
-    this.taskService.edit({ ...currentTask, path: '' }, req.user.id);
+    try {
+      this.taskService.edit({ id, path: '' }, req.user.id);
+    } catch (error) {
+      if (error instanceof HttpException) {
+        throw error;
+      }
+      throw new HttpException('Internal Server Error', 500);
+    }
   }
 }

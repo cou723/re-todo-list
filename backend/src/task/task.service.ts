@@ -9,10 +9,9 @@ export class TaskService {
   ) {}
 
   private async checkPermission(taskId: number, userId: number): Promise<void> {
-    if (
-      (await this.taskRepos.findOne({ where: { id: taskId } })).createdBy !==
-      userId
-    )
+    const task = await this.taskRepos.findOne({ where: { id: taskId } });
+    if (!task) throw new HttpException(`task:${taskId} is not found`, 404);
+    if (task.createdBy !== userId)
       throw new HttpException(`task:${userId} is not allow this user`, 403);
   }
 
@@ -30,28 +29,49 @@ export class TaskService {
     });
   }
 
-  async create(task: Omit<Task, 'id'>): Promise<Task> {
-    console.log('create:', task);
-    return await this.taskRepos.save(task);
+  async create(task: Omit<Task, 'id'>): Promise<void> {
+    await this.taskRepos.insert(task);
   }
 
-  async edit(task: Task, currentUserId: number): Promise<Task> {
-    this.checkPermission(task.id, currentUserId);
-    return await this.taskRepos.save(task);
+  async edit(
+    task: {
+      id: number;
+      title?: string;
+      description?: string;
+      path?: string;
+    },
+    currentUserId: number,
+  ): Promise<Task> {
+    await this.checkPermission(task.id, currentUserId);
+    const result = await this.taskRepos.save(task);
+    return result;
   }
 
   async delete(id: Task['id'], currentUserId: number): Promise<void> {
-    this.checkPermission(id, currentUserId);
+    await this.checkPermission(id, currentUserId);
     await this.taskRepos.delete({ id });
   }
 
   async done(id: Task['id'], currentUserId: number): Promise<void> {
-    this.checkPermission(id, currentUserId);
-    await this.taskRepos.update({ id }, { isDone: true });
+    await this.checkPermission(id, currentUserId);
+    const currentTask: Task = await this.taskRepos.findOne({ where: { id } });
+    console.log(await this.taskRepos.find({}));
+
+    try {
+      await this.taskRepos.save({
+        ...currentTask,
+        isDone: true,
+      });
+    } catch (e) {
+      console.log(e);
+    }
+    console.log(await this.taskRepos.find({}));
+
+    console.log('finished');
   }
 
   async undone(id: Task['id'], currentUserId: number): Promise<void> {
-    this.checkPermission(id, currentUserId);
-    await this.taskRepos.update({ id }, { isDone: false });
+    await this.checkPermission(id, currentUserId);
+    await this.taskRepos.save({ id, isDone: false });
   }
 }
