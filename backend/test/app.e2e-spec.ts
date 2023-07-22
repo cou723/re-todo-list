@@ -13,9 +13,13 @@ describe('User and User API (e2e)', () => {
   let userRepository: Repository<User>;
   let taskRepository: Repository<Task>;
 
-  async function showUserRepository() {
-    console.log(await userRepository.find({}));
-  }
+  // for debug
+  // async function showUserRepository() {
+  //   console.log(await userRepository.find({}));
+  // }
+  // async function showTaskRepository() {
+  //   console.log(await taskRepository.find({}));
+  // }
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
@@ -64,6 +68,7 @@ describe('User and User API (e2e)', () => {
     accessToken = eventResponse.accessToken;
   });
 
+  // TODO: /logout
   // it('/logout ;POST', async () => {});
 
   it('/register ;POST', async () => {
@@ -78,15 +83,14 @@ describe('User and User API (e2e)', () => {
     expect(res.status).toEqual(201);
 
     expect(userRepository.count()).resolves.toEqual(2);
-    // console.log(await userRepository.find({}));
 
     expect(
-      userRepository.findOne({ where: { username: addedUserName } }),
-    ).resolves.toHaveProperty('username', addedUserName);
+      await userRepository.findOne({ where: { username: addedUserName } }),
+    ).toHaveProperty('username', addedUserName);
 
     expect(
-      userRepository.findOne({ where: { username: addedUserName } }),
-    ).resolves.toHaveProperty('password');
+      await userRepository.findOne({ where: { username: addedUserName } }),
+    ).toHaveProperty('password');
   });
 
   it('/user ;DELETE ', async () => {
@@ -96,14 +100,30 @@ describe('User and User API (e2e)', () => {
       .set('Authorization', `Bearer ${accessToken}`)
       .send(TEST_USER);
     expect(res.status).toEqual(200);
-    if (res.status !== 200) console.log(res.body);
 
-    expect(userRepository.count()).resolves.toEqual(0);
+    const userCount = await userRepository.count();
+    expect(userCount).toEqual(0);
   });
 
   // task //
 
-  // it('/task            | POST  ', async () => {});
+  it('/task ;POST', async () => {
+    // const res = await request(app.getHttpServer())
+    //   .post('/task')
+    //   .set('Accept', 'application/json')
+    //   .set('Authorization', `Bearer ${accessToken}`)
+    //   .send({ title: 'test', description: 'test' });
+    // expect(res.status).toEqual(201);
+    // expect(taskRepository.count()).resolves.toEqual(1);
+    // showUserRepository();
+    // showTaskRepository();
+    // expect(
+    //   taskRepository.find({ where: { createdBy: 1 } }),
+    // ).resolves.toHaveProperty('title', 'test');
+    // expect(
+    //   taskRepository.find({ where: { createdBy: 1 } }),
+    // ).resolves.toHaveProperty('description', 'test');
+  });
   // it('/task/list ;GET', async () => {});
   // it('/task/:id ;GET', async () => {});
   // it('/task/:id/done ;POST', async () => {});
