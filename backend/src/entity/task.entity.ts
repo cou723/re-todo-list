@@ -22,5 +22,5 @@ export class Task {
 }
 
 export function getCurrentPath(task: Task): string {
-  return task.path + '/' + task.id;
+  return task.path + (task.path ? '/' : '') + task.id;
 }

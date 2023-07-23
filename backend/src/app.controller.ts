@@ -9,7 +9,7 @@ import {
   UsePipes,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { PasswordOmitUser, User } from './entity/user.entity';
+import { PasswordOmitUser } from './entity/user.entity';
 import { UserService } from './user/user.service';
 import { AuthService } from './auth/auth.service';
 import { RegisterDto } from './register.dto';

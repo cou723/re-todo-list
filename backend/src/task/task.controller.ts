@@ -58,9 +58,10 @@ export class TaskController {
 
   @Get(':id')
   async getTask(
-    @Param('id') id: number,
+    @Param('id') paramId: string,
     @Req() req: { user: User },
   ): Promise<Task> {
+    const id = parseInt(paramId);
     return await this.taskService.findTask(id, req.user.id);
   }
 
@@ -69,10 +70,12 @@ export class TaskController {
   async updateTask(
     @Body() updateContents: UpdateTaskDto,
     @Req() req: { user: User },
-    @Param('id') id: number,
+    @Param('id') paramId: string,
   ): Promise<void> {
+    const id = parseInt(paramId);
     const targetTask = await this.taskService.findTask(id, req.user.id);
     let path = targetTask.path;
+
     if (updateContents.newParent)
       path = getCurrentPath(
         await this.taskService.findTask(updateContents.newParent, req.user.id),
@@ -92,31 +95,41 @@ export class TaskController {
   // 削除が成功したかどうかは返さない
   @Delete(':id')
   async deleteTask(
-    @Param('id') id: number,
+    @Param('id') paramId: string,
     @Req() req: { user: User },
   ): Promise<void> {
+    const id = parseInt(paramId);
     return await this.taskService.delete(id, req.user.id);
   }
 
   @Post(':id/done')
-  markTaskAsDone(@Param('id') id: number, @Req() req: { user: User }) {
-    this.taskService.done(id, req.user.id);
+  async markTaskAsDone(
+    @Param('id') paramId: string,
+    @Req() req: { user: User },
+  ) {
+    const id = parseInt(paramId);
+    await this.taskService.setIsDone(id, req.user.id, true);
   }
 
   @Post(':id/undone')
-  markTaskAsUndone(@Param('id') id: number, @Req() req: { user: User }) {
-    this.taskService.undone(id, req.user.id);
+  async markTaskAsUndone(
+    @Param('id') paramId: string,
+    @Req() req: { user: User },
+  ) {
+    const id = parseInt(paramId);
+    await this.taskService.setIsDone(id, req.user.id, false);
   }
 
   @Post(':id/parent')
   @UsePipes(ValidationPipe)
   async setParentTask(
-    @Param('id') id: number,
+    @Param('id') paramId: string,
     @Body() body: ParentDto,
     @Req() req: { user: User },
   ): Promise<void> {
+    const id = parseInt(paramId);
     try {
-      this.taskService.edit(
+      await this.taskService.edit(
         {
           id,
           path: getCurrentPath(
@@ -129,21 +142,24 @@ export class TaskController {
       if (error instanceof HttpException) {
         throw error;
       }
+      console.error(error);
       throw new HttpException('Internal Server Error', 500);
     }
   }
 
   @Delete(':id/parent')
   async deleteParentTask(
-    @Param('id') id: number,
+    @Param('id') paramId: string,
     @Req() req: { user: User },
   ): Promise<void> {
+    const id = parseInt(paramId);
     try {
-      this.taskService.edit({ id, path: '' }, req.user.id);
+      await this.taskService.edit({ id, path: '' }, req.user.id);
     } catch (error) {
       if (error instanceof HttpException) {
         throw error;
       }
+      console.error(error);
       throw new HttpException('Internal Server Error', 500);
     }
   }
