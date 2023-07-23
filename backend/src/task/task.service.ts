@@ -44,7 +44,6 @@ export class TaskService {
   ): Promise<Task> {
     const currentTask = await this.checkTargetValidity(task.id, currentUserId);
     const updateTask = { ...currentTask, ...task };
-    console.log('task: ', task);
     const result = await this.taskRepos.save(updateTask);
     return result;
   }
