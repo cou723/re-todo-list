@@ -1,3 +1,11 @@
+# Frontend(solid.js)
+
+## route
+| path      | できること                                             | 遷移可能先 |
+| :-------- | :----------------------------------------------------- | :--------- |
+| /login    | loginしてjwtを入手できる                               |            |
+| /         | home画面。タスク一覧の閲覧、タスクのdone化、ができる。 | /edit/:id  |
+| /edit/:id | タスクの編集ページ。タスクの編集、削除ができる。       |            |
 ## Usage
 
 Those templates dependencies are maintained via [pnpm](https://pnpm.io) via `pnpm up -Lri`.
