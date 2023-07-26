@@ -30,6 +30,36 @@
     "rules": {
         "solid/reactivity": "warn",
         "solid/no-destructure": "warn",
-        "solid/jsx-no-undef": "error"
+        "solid/jsx-no-undef": "error",
+        "@typescript-eslint/no-unsafe-return": "off",
+        "new-cap": [
+            "error",
+            {
+                "capIsNewExceptions": [
+                    "Ok",
+                    "Err"
+                ]
+            }
+        ],
+        "@typescript-eslint/naming-convention": [
+            "error",
+            // {
+            //     "selector": "variable",
+            //     "format": [
+            //         "camelCase"
+            //     ],
+            //     "filter": {
+            //         "regex": "LoginResponse",
+            //         "match": false
+            //     }
+            // }
+            {
+                "selector": "variable",
+                "format": [
+                    "PascalCase",
+                    "camelCase"
+                ]
+            }
+        ]
     }
 }

@@ -28,6 +28,9 @@
   },
   "dependencies": {
     "@solidjs/router": "^0.8.2",
-    "solid-js": "^1.7.6"
+    "fp-ts": "^2.16.0",
+    "io-ts": "^2.2.20",
+    "solid-js": "^1.7.6",
+    "ts-results": "^3.3.0"
   }
 }
