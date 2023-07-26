@@ -1,11 +1,12 @@
 import { HttpException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Task, getCurrentPath } from '../entity/task.entity';
+import { ITask, Task, TaskEntity } from '../entity/task.entity';
 
 export class TaskService {
   constructor(
-    @InjectRepository(Task) private readonly taskRepos: Repository<Task>,
+    @InjectRepository(TaskEntity)
+    private readonly taskRepos: Repository<TaskEntity>,
   ) {}
 
   private async checkTargetValidity(
@@ -16,20 +17,27 @@ export class TaskService {
     if (!task) throw new HttpException(`task:${taskId} is not found`, 404);
     if (task.createdBy !== userId)
       throw new HttpException(`task:${userId} is not allow this user`, 403);
-    return task;
+    return Task.fromObject(task);
   }
 
-  async findTask(taskId: Task['id'], currentUserId: number): Promise<Task> {
-    return this.checkTargetValidity(taskId, currentUserId);
+  async findTask(
+    taskId: TaskEntity['id'],
+    currentUserId: number,
+  ): Promise<Task> {
+    return Task.fromObject(
+      await this.checkTargetValidity(taskId, currentUserId),
+    );
   }
 
   async findAll(currentUserId: number): Promise<Task[]> {
-    return await this.taskRepos.find({
-      where: { createdBy: currentUserId },
-    });
+    return (
+      await this.taskRepos.find({
+        where: { createdBy: currentUserId },
+      })
+    ).map((task) => Task.fromObject(task));
   }
 
-  async create(task: Omit<Task, 'id'>): Promise<void> {
+  async create(task: Omit<ITask, 'id'>): Promise<void> {
     await this.taskRepos.insert(task);
   }
 
@@ -41,19 +49,18 @@ export class TaskService {
       path?: string;
     },
     currentUserId: number,
-  ): Promise<Task> {
+  ): Promise<void> {
     const currentTask = await this.checkTargetValidity(task.id, currentUserId);
     const updateTask = { ...currentTask, ...task };
-    const result = await this.taskRepos.save(updateTask);
-    return result;
+    await this.taskRepos.save(updateTask);
   }
 
-  async delete(id: Task['id'], currentUserId: number): Promise<void> {
+  async delete(id: TaskEntity['id'], currentUserId: number): Promise<void> {
     const currentTask = await this.checkTargetValidity(id, currentUserId);
 
     // もしほかのタスクがこのタスクを親要素としてもっていたらそのタスクも削除する
     const tasks = await this.taskRepos.find({
-      where: { path: getCurrentPath(currentTask) },
+      where: { path: currentTask.getCurrentPath() },
     });
     for (const task of tasks) await this.delete(task.id, currentUserId);
 
@@ -61,7 +68,7 @@ export class TaskService {
   }
 
   async setIsDone(
-    id: Task['id'],
+    id: TaskEntity['id'],
     currentUserId: number,
     isDone: boolean,
   ): Promise<void> {

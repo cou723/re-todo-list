@@ -1,14 +1,14 @@
 import { IsNumber, IsOptional, IsString } from 'class-validator';
-import { Task } from '../entity/task.entity';
+import { TaskEntity } from '../entity/task.entity';
 
 export class CreateTaskDto {
   @IsString()
-  title: Task['title'];
+  title: TaskEntity['title'];
 
   @IsString()
-  description: Task['description'];
+  description: TaskEntity['description'];
 
   @IsOptional()
   @IsNumber()
-  parent: null | Task['id'];
+  parent: null | TaskEntity['id'];
 }

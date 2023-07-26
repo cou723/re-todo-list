@@ -14,7 +14,7 @@ import {
 import { AuthGuard } from '@nestjs/passport';
 import { TaskService } from './task.service';
 import { User } from '../entity/user.entity';
-import { Task, getCurrentPath } from '../entity/task.entity';
+import { TaskEntity } from '../entity/task.entity';
 
 import { CreateTaskDto } from './createTaskDto';
 import { UpdateTaskDto } from './updateTaskDto';
@@ -60,7 +60,7 @@ export class TaskController {
   async getTask(
     @Param('id') paramId: string,
     @Req() req: { user: User },
-  ): Promise<Task> {
+  ): Promise<TaskEntity> {
     const id = parseInt(paramId);
     return await this.taskService.findTask(id, req.user.id);
   }
@@ -77,9 +77,9 @@ export class TaskController {
     let path = targetTask.path;
 
     if (updateContents.newParent)
-      path = getCurrentPath(
-        await this.taskService.findTask(updateContents.newParent, req.user.id),
-      );
+      path = (
+        await this.taskService.findTask(updateContents.newParent, req.user.id)
+      ).getCurrentPath();
 
     await this.taskService.edit(
       {
@@ -132,9 +132,9 @@ export class TaskController {
       await this.taskService.edit(
         {
           id,
-          path: getCurrentPath(
-            await this.taskService.findTask(body.newParent, req.user.id),
-          ),
+          path: (
+            await this.taskService.findTask(body.newParent, req.user.id)
+          ).getCurrentPath(),
         },
         req.user.id,
       );

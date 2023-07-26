@@ -1,7 +1,7 @@
 import { Test } from '@nestjs/testing';
 import { TypeOrmModule, getRepositoryToken } from '@nestjs/typeorm';
 import { User } from '../src/entity/user.entity';
-import { Task } from '../src/entity/task.entity';
+import { TaskEntity } from '../src/entity/task.entity';
 import { Repository } from 'typeorm';
 import { AppModule } from '../src/app.module';
 import { INestApplication } from '@nestjs/common';
@@ -11,7 +11,7 @@ import * as bcrypt from 'bcrypt';
 describe('User and User API (e2e)', () => {
   let app: INestApplication;
   let userRepository: Repository<User>;
-  let taskRepository: Repository<Task>;
+  let taskRepository: Repository<TaskEntity>;
 
   // for debug
   async function showUserRepository() {
@@ -31,7 +31,7 @@ describe('User and User API (e2e)', () => {
     title?: string;
     createdBy?: number;
     path?: string;
-  }): Task {
+  }): TaskEntity {
     return {
       id,
       title,
@@ -49,14 +49,14 @@ describe('User and User API (e2e)', () => {
         TypeOrmModule.forRoot({
           type: 'sqlite',
           database: 'test.sqlite',
-          entities: [User, Task],
+          entities: [User, TaskEntity],
           synchronize: true,
         }),
       ],
     }).compile();
 
     userRepository = moduleRef.get<Repository<User>>(getRepositoryToken(User));
-    taskRepository = moduleRef.get<Repository<Task>>(getRepositoryToken(Task));
+    taskRepository = moduleRef.get<Repository<TaskEntity>>(getRepositoryToken(TaskEntity));
 
     app = moduleRef.createNestApplication();
     await app.init();
