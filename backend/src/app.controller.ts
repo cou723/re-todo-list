@@ -3,16 +3,18 @@ import {
   Delete,
   Post,
   UseGuards,
-  Request,
+  Req,
   Body,
   ValidationPipe,
   UsePipes,
+  Res,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { PasswordOmitUser } from './entity/user.entity';
 import { UserService } from './user/user.service';
 import { AuthService } from './auth/auth.service';
 import { RegisterDto } from './register.dto';
+import { Response } from 'express';
 
 @Controller()
 export class AppController {
@@ -23,8 +25,14 @@ export class AppController {
 
   @UseGuards(AuthGuard('local')) // passport-local戦略を付与する
   @Post('login')
-  async login(@Request() req: { user: PasswordOmitUser }) {
-    return this.authService.login(req.user);
+  async login(
+    @Res({ passthrough: true }) res: Response,
+    @Req() req: { user: PasswordOmitUser },
+  ) {
+    res.cookie('accessToken', this.authService.login(req.user), {
+      httpOnly: true,
+    });
+    return;
   }
 
   @Post('logout')
@@ -40,7 +48,7 @@ export class AppController {
 
   @UseGuards(AuthGuard('jwt'))
   @Delete('user')
-  delete(@Request() req: { user: PasswordOmitUser }) {
+  delete(@Req() req: { user: PasswordOmitUser }) {
     return this.userService.delete(req.user.id);
   }
 }

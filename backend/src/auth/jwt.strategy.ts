@@ -5,12 +5,23 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
 import { User } from '../entity/user.entity';
+import { Request } from 'express';
 
 // JwtについているPayload情報の型
 interface JWTPayload {
   id: User['id'];
   username: User['username'];
 }
+
+const cookieExtractor = (req: Request) => {
+  let token = null;
+  console.log('request: ', req.cookies);
+
+  if (req && req.cookies) {
+    token = req.cookies['accessToken'];
+  }
+  return token;
+};
 
 /**
  * @description JWTの認証処理を行うクラス
@@ -20,7 +31,7 @@ export class JwtStrategy extends PassportStrategy(BaseJwtStrategy) {
   constructor(private readonly configService: ConfigService) {
     super({
       // Authorization bearerからトークンを読み込む関数を返す
-      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+      jwtFromRequest: ExtractJwt.fromExtractors([cookieExtractor]),
       // 有効期間を無視するかどうか
       ignoreExpiration: true,
       // envファイルから秘密鍵を渡す

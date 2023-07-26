@@ -56,7 +56,9 @@ describe('User and User API (e2e)', () => {
     }).compile();
 
     userRepository = moduleRef.get<Repository<User>>(getRepositoryToken(User));
-    taskRepository = moduleRef.get<Repository<TaskEntity>>(getRepositoryToken(TaskEntity));
+    taskRepository = moduleRef.get<Repository<TaskEntity>>(
+      getRepositoryToken(TaskEntity),
+    );
 
     app = moduleRef.createNestApplication();
     await app.init();
@@ -84,9 +86,10 @@ describe('User and User API (e2e)', () => {
       .set('Accept', 'application/json')
       .send(TEST_USER);
     expect(res.status).toEqual(201);
-    const eventResponse = res.body;
-    expect(eventResponse).toHaveProperty('accessToken');
-    accessToken = eventResponse.accessToken;
+    expect(res.header['set-cookie'][0]).toMatch(
+      /accessToken=[^;]+; Path=\/; HttpOnly/,
+    );
+    accessToken = res.header['set-cookie'][0];
   });
 
   // TODO: /logout
@@ -118,7 +121,7 @@ describe('User and User API (e2e)', () => {
     const res = await request(app.getHttpServer())
       .delete('/user')
       .set('Accept', 'application/json')
-      .set('Authorization', `Bearer ${accessToken}`)
+      .set('Cookie', [`accessToken=${accessToken}`])
       .send(TEST_USER);
     expect(res.status).toEqual(200);
 
@@ -136,7 +139,7 @@ describe('User and User API (e2e)', () => {
     return await request(app.getHttpServer())
       [method](path)
       .set('Accept', 'application/json')
-      .set('Authorization', `Bearer ${token ?? accessToken}`)
+      .set('Cookie', [`accessToken=${token ?? accessToken}`])
       .send(body);
   }
 
@@ -385,7 +388,7 @@ describe('User and User API (e2e)', () => {
       const res = await request(app.getHttpServer())
         .post('/task/2/parent')
         .set('Accept', 'application/json')
-        .set('Authorization', `Bearer ${accessToken}`)
+        .set('Cookie', [`accessToken=${accessToken}`])
         .send({ newParent: 1 });
       expect(res.status).toEqual(201);
       expect(await taskRepository.count()).toEqual(2);
@@ -403,7 +406,7 @@ describe('User and User API (e2e)', () => {
       const res = await request(app.getHttpServer())
         .post('/task/2/parent')
         .set('Accept', 'application/json')
-        .set('Authorization', `Bearer ${accessToken}`)
+        .set('Cookie', [`accessToken=${accessToken}`])
         .send({ newParent: 10 });
       expect(res.status).toEqual(404);
       expect(await taskRepository.count()).toEqual(2);
@@ -424,7 +427,7 @@ describe('User and User API (e2e)', () => {
       const res = await request(app.getHttpServer())
         .post('/task/2/parent')
         .set('Accept', 'application/json')
-        .set('Authorization', `Bearer ${accessToken}`)
+        .set('Cookie', [`accessToken=${accessToken}`])
         .send({ newParent: 1 });
       expect(res.status).toEqual(403);
       expect(await taskRepository.count()).toEqual(2);
@@ -458,7 +461,7 @@ describe('User and User API (e2e)', () => {
       const res = await request(app.getHttpServer())
         .delete('/task/2/parent')
         .set('Accept', 'application/json')
-        .set('Authorization', `Bearer ${accessToken}`);
+        .set('Cookie', [`accessToken=${accessToken}`]);
       expect(res.status).toEqual(200);
       expect(await taskRepository.count()).toEqual(2);
       expect((await taskRepository.findOne({ where: { id: 2 } })).path).toEqual(
@@ -475,7 +478,7 @@ describe('User and User API (e2e)', () => {
       const res = await request(app.getHttpServer())
         .delete('/task/2/parent')
         .set('Accept', 'application/json')
-        .set('Authorization', `Bearer ${accessToken}`);
+        .set('Cookie', [`accessToken=${accessToken}`]);
       expect(res.status).toEqual(403);
       expect(await taskRepository.count()).toEqual(2);
       expect((await taskRepository.findOne({ where: { id: 2 } })).path).toEqual(

@@ -59,8 +59,6 @@ export class AuthService {
   async login(user: PasswordOmitUser) {
     const payload: JWTPayload = { id: user.id, username: user.username };
 
-    return {
-      accessToken: this.jwtService.sign(payload),
-    };
+    return this.jwtService.sign(payload);
   }
 }
