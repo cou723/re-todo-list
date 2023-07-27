@@ -8,13 +8,11 @@ const taskListIoType = t.array(taskIoType);
 const httpErrorTypeObject = {
 	statusCode: t.number,
 	message: t.string,
-	error: t.string,
 };
 
 const unknownError = {
 	statusCode: 500,
 	message: 'Unknown error',
-	error: 'Unknown error',
 };
 
 const httpErrorIo = t.type(httpErrorTypeObject);
