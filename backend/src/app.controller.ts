@@ -8,6 +8,7 @@ import {
   ValidationPipe,
   UsePipes,
   Res,
+  HttpCode,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { PasswordOmitUser } from './entity/user.entity';
@@ -25,11 +26,13 @@ export class AppController {
 
   @UseGuards(AuthGuard('local')) // passport-local戦略を付与する
   @Post('login')
+  @HttpCode(200)
   async login(
     @Res({ passthrough: true }) res: Response,
     @Req() req: { user: PasswordOmitUser },
   ) {
-    res.cookie('accessToken', this.authService.login(req.user), {
+    const token = await this.authService.login(req.user);
+    res.cookie('accessToken', token, {
       httpOnly: true,
     });
     return;
@@ -46,6 +49,7 @@ export class AppController {
     return this.userService.register(user.username, user.password);
   }
 
+  @HttpCode(204)
   @UseGuards(AuthGuard('jwt'))
   @Delete('user')
   delete(@Req() req: { user: PasswordOmitUser }) {

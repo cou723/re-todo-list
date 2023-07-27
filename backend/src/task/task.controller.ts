@@ -10,6 +10,7 @@ import {
   ValidationPipe,
   HttpException,
   Req,
+  HttpCode,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { TaskService } from './task.service';
@@ -61,7 +62,7 @@ export class TaskController {
     @Param('id') paramId: string,
     @Req() req: { user: User },
   ): Promise<TaskEntity> {
-    const id = parseInt(paramId);
+    const id = parseId(paramId);
     return await this.taskService.findTask(id, req.user.id);
   }
 
@@ -72,7 +73,7 @@ export class TaskController {
     @Req() req: { user: User },
     @Param('id') paramId: string,
   ): Promise<void> {
-    const id = parseInt(paramId);
+    const id = parseId(paramId);
     const targetTask = await this.taskService.findTask(id, req.user.id);
     let path = targetTask.path;
 
@@ -93,12 +94,13 @@ export class TaskController {
   }
 
   // 削除が成功したかどうかは返さない
+  @HttpCode(204)
   @Delete(':id')
   async deleteTask(
     @Param('id') paramId: string,
     @Req() req: { user: User },
   ): Promise<void> {
-    const id = parseInt(paramId);
+    const id = parseId(paramId);
     return await this.taskService.delete(id, req.user.id);
   }
 
@@ -107,7 +109,7 @@ export class TaskController {
     @Param('id') paramId: string,
     @Req() req: { user: User },
   ) {
-    const id = parseInt(paramId);
+    const id = parseId(paramId);
     await this.taskService.setIsDone(id, req.user.id, true);
   }
 
@@ -116,7 +118,7 @@ export class TaskController {
     @Param('id') paramId: string,
     @Req() req: { user: User },
   ) {
-    const id = parseInt(paramId);
+    const id = parseId(paramId);
     await this.taskService.setIsDone(id, req.user.id, false);
   }
 
@@ -127,7 +129,7 @@ export class TaskController {
     @Body() body: ParentDto,
     @Req() req: { user: User },
   ): Promise<void> {
-    const id = parseInt(paramId);
+    const id = parseId(paramId);
     try {
       await this.taskService.edit(
         {
@@ -147,12 +149,13 @@ export class TaskController {
     }
   }
 
+  @HttpCode(204)
   @Delete(':id/parent')
   async deleteParentTask(
     @Param('id') paramId: string,
     @Req() req: { user: User },
   ): Promise<void> {
-    const id = parseInt(paramId);
+    const id = parseId(paramId);
     try {
       await this.taskService.edit({ id, path: '' }, req.user.id);
     } catch (error) {
@@ -163,4 +166,12 @@ export class TaskController {
       throw new HttpException('Internal Server Error', 500);
     }
   }
+}
+
+function parseId(paramId: string): number {
+  const id = parseInt(paramId, 10);
+  if (isNaN(id)) {
+    throw new HttpException('Invalid :id', 400);
+  }
+  return id;
 }

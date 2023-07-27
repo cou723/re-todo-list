@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
-import { ITask } from '../../../common/Task';
+import { ITask } from '../../common/Task';
 
 @Entity()
 export class TaskEntity implements ITask {

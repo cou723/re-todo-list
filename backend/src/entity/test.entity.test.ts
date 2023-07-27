@@ -1,4 +1,4 @@
-import { Task } from '../../../common/Task';
+import { Task } from '../../common/Task';
 test('get current path', () => {
   expect(
     Task.fromObject({
