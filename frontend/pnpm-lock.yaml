@@ -8,9 +8,6 @@ dependencies:
   '@solidjs/router':
     specifier: ^0.8.2
     version: 0.8.2(solid-js@1.7.6)
-  fp-ts:
-    specifier: ^2.16.0
-    version: 2.16.0
   io-ts:
     specifier: ^2.2.20
     version: 2.2.20(fp-ts@2.16.0)

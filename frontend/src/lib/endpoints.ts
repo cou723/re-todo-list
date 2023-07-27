@@ -1,4 +1,4 @@
-const debugEndpointDomain = 'localhost:8080';
+const debugEndpointDomain = 'localhost:8000';
 // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
 const endpointBase = 'https://' + (import.meta.env.VITE_ENDPOINT ?? debugEndpointDomain);
 
@@ -7,17 +7,19 @@ const endpointsService = {
 	logout: endpointBase + '/logout',
 	register: endpointBase + '/register',
 	user: endpointBase + '/user',
-	task: endpointBase + '/task',
 };
+
+const taskEndpointBase = '/task';
 
 const endpointsTasks = {
-	list: endpointsService.task + '/list',
-	one: (id: number) => `${endpointsService.task}/${id}`,
-	done: (id: number) => `${endpointsService.task}/${id}/done`,
-	undone: (id: number) => `${endpointsService.task}/${id}/undone`,
-	parent: (id: number) => `${endpointsService.task}/${id}/parent`,
+	base: taskEndpointBase,
+	list: taskEndpointBase + '/list',
+	get: (id: number) => `${taskEndpointBase}/${id}`,
+	done: (id: number) => `${taskEndpointBase}/${id}/done`,
+	undone: (id: number) => `${taskEndpointBase}/${id}/undone`,
+	parent: (id: number) => `${taskEndpointBase}/${id}/parent`,
 };
 
-const endpoints = {...endpointsService, ...endpointsTasks};
+const endpoints = {...endpointsService, task: {...endpointsTasks}};
 
 export default endpoints;
