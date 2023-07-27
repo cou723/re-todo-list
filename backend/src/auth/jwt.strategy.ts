@@ -1,47 +1,39 @@
 // import先が'passport-local'では無い事に注意！
-import { ExtractJwt, Strategy as BaseJwtStrategy } from 'passport-jwt';
+import { ExtractJwt, Strategy } from 'passport-jwt';
 
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
-import { User } from '../entity/user.entity';
 import { Request } from 'express';
+import { User } from 'src/entity/user.entity';
 
-// JwtについているPayload情報の型
-interface JWTPayload {
-  id: User['id'];
-  username: User['username'];
-}
-
-const cookieExtractor = (req: Request) => {
-  let token = null;
-  console.log('request: ', req.cookies);
-
-  if (req && req.cookies) {
-    token = req.cookies['accessToken'];
-  }
-  return token;
-};
-
-/**
- * @description JWTの認証処理を行うクラス
- */
 @Injectable()
-export class JwtStrategy extends PassportStrategy(BaseJwtStrategy) {
-  constructor(private readonly configService: ConfigService) {
+export class JwtStrategy extends PassportStrategy(Strategy) {
+  constructor(configService: ConfigService) {
     super({
-      // Authorization bearerからトークンを読み込む関数を返す
-      jwtFromRequest: ExtractJwt.fromExtractors([cookieExtractor]),
-      // 有効期間を無視するかどうか
+      jwtFromRequest: ExtractJwt.fromExtractors([
+        JwtStrategy.extractJWTFromCookie,
+      ]),
       ignoreExpiration: true,
-      // envファイルから秘密鍵を渡す
       secretOrKey: configService.get<string>('JWT_SECRET_KEY'),
     });
   }
 
-  // ここでPayloadを使ったバリデーション処理を実行できる
-  // Payloadは、AuthService.login()で定義した値
-  async validate(payload: JWTPayload): Promise<JWTPayload> {
+  private static extractJWTFromCookie(req: Request): string | null {
+    if (req.headers.cookie) {
+      const params = req.headers.cookie.split(';');
+      if (params == undefined) return null;
+      const token = params
+        .map((t) => t.split('='))
+        .filter((t) => t[0] == 'accessToken');
+      if (token == undefined || token.length != 1 || token[0].length != 2)
+        return null;
+      return token[0][1];
+    }
+    return null;
+  }
+
+  async validate(payload: Omit<User, 'password'>) {
     return { id: payload.id, username: payload.username };
   }
 }

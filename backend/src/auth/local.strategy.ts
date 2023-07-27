@@ -1,4 +1,4 @@
-import { Strategy as BaseLocalStrategy } from 'passport-local';
+import { Strategy } from 'passport-local';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { User } from '../entity/user.entity';
@@ -10,16 +10,12 @@ import {
 
 type PasswordOmitUser = Omit<User, 'password'>;
 
-/**
- * @description usernameとpasswordを使った認証処理を行うクラス
- */
 @Injectable()
-export class LocalStrategy extends PassportStrategy(BaseLocalStrategy) {
+export class LocalStrategy extends PassportStrategy(Strategy) {
   constructor(private authService: AuthService) {
     super();
   }
 
-  // passport-localは、デフォルトで username と password をパラメーターで受け取る
   async validate(
     name: User['username'],
     pass: User['password'],
