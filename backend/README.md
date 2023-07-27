@@ -237,7 +237,7 @@ iを使用しています
 ##### body
 ```ts
 {
-  "parent_id":
+  "newParent":
 }
 ```
 
