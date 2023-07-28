@@ -5,10 +5,11 @@ module.exports = {
     tsconfigRootDir: __dirname,
     sourceType: "module",
   },
-  plugins: ["@typescript-eslint/eslint-plugin"],
+  plugins: ["@typescript-eslint/eslint-plugin", "solid"],
   extends: [
     "plugin:@typescript-eslint/recommended",
     "plugin:prettier/recommended",
+    "plugin:solid/typescript",
   ],
   root: true,
   env: {
@@ -29,7 +30,7 @@ module.exports = {
       },
       {
         "selector": "variable",
-        "format": ["camelCase", "UPPER_CASE"],
+        "format": ["PascalCase", "camelCase", "UPPER_CASE"],
       },
       {
         "selector": "typeLike",
