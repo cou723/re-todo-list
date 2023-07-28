@@ -7,7 +7,9 @@
     "dev": "vite",
     "build": "vite build",
     "serve": "vite preview",
-    "test": "jest"
+    "test": "jest",
+    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.tsx\" ",
+    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix"
   },
   "license": "MIT",
   "devDependencies": {
