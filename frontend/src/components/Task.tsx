@@ -6,7 +6,7 @@ export const Task = (props: { task: ITaskView }) => (
   <Card>
     <Card.Header>props.task.title</Card.Header>
     <Card.Body>props.task.description</Card.Body>
-    <For each={props.task.children}>{(child, i) => <Task task={child} />}</For>
+    <For each={props.task.children}>{(child) => <Task task={child} />}</For>
     <Button>✏️</Button>
     <Button>🚮</Button>
   </Card>

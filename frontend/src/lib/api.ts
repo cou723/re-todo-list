@@ -19,13 +19,13 @@ export async function fetchWithHeader(
     method,
     // eslint-disable-next-line @typescript-eslint/naming-convention
     headers: { 'Content-Type': 'application/json' },
-    body,
+    body: JSON.stringify(body),
   });
 }
 
 type ApiReturnVal<T = void> = Promise<Result<T, HttpError>>;
 
-// CommandTypeRequestとはpostやdeleteなどの返り値にデータを要求していないもの
+// CommandTypeRequestとはpostやdeleteなどの返り値にデータを要求していないものにつかうラッパー
 async function commandTypeRequest(
   url: string,
   body: any = {},
