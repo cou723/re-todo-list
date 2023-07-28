@@ -85,11 +85,11 @@ describe('User and User API (e2e)', () => {
       .post('/login')
       .set('Accept', 'application/json')
       .send(TEST_USER);
-    expect(res.status).toEqual(201);
+    expect(res.status).toEqual(200);
     expect(res.header['set-cookie'][0]).toMatch(
       /accessToken=[^;]+; Path=\/; HttpOnly/,
     );
-    accessToken = res.header['set-cookie'][0];
+    accessToken = res.header['set-cookie'][0].split(';')[0].split('=')[1];
   });
 
   // TODO: /logout
@@ -123,7 +123,7 @@ describe('User and User API (e2e)', () => {
       .set('Accept', 'application/json')
       .set('Cookie', [`accessToken=${accessToken}`])
       .send(TEST_USER);
-    expect(res.status).toEqual(200);
+    expect(res.status).toEqual(204);
 
     expect(await userRepository.count()).toEqual(0);
   });
@@ -462,7 +462,7 @@ describe('User and User API (e2e)', () => {
         .delete('/task/2/parent')
         .set('Accept', 'application/json')
         .set('Cookie', [`accessToken=${accessToken}`]);
-      expect(res.status).toEqual(200);
+      expect(res.status).toEqual(204);
       expect(await taskRepository.count()).toEqual(2);
       expect((await taskRepository.findOne({ where: { id: 2 } })).path).toEqual(
         '',
@@ -510,7 +510,7 @@ describe('User and User API (e2e)', () => {
       ];
       await taskRepository.insert(tasks);
       const res = await requestWrapper('/task/1', 'delete');
-      expect(res.status).toEqual(200);
+      expect(res.status).toEqual(204);
       expect(await taskRepository.count()).toEqual(1);
       expect(await taskRepository.findOne({ where: { id: 4 } })).toEqual(
         tasks[3],
