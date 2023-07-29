@@ -7,7 +7,7 @@ import CreatePage from './pages/CreatePage';
 import HomePage from './pages/HomePage';
 
 const App: Component = () => (
-  <div class="container">
+  <div class="container mt-4">
     <Routes>
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />

@@ -30,7 +30,7 @@ const HomePage = () => {
   const [tasks] = createResource(fetchTasks);
 
   return (
-    <div >
+    <div>
       <Show when={tasks()} fallback={<>please login</>}>
         <Button>New</Button>
         <TaskList tasks={tasks()} />
