@@ -32,7 +32,7 @@ const HomePage = () => {
     <div>
       <Button onClick={() => (window.location.href = '/task/create')}>
         <span class="mr-2 align-bottom">
-          <AddIcon class="" />
+          <AddIcon />
         </span>
         タスクを追加
       </Button>
