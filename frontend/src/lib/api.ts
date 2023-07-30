@@ -7,6 +7,7 @@ import {
   httpErrorIo,
   unknownFormatError,
 } from '../types/httpError';
+import { ICreateTaskDto } from '../../../backend/src/task/createTaskDto';
 
 const taskListIoType = t.array(taskIoType);
 
@@ -15,12 +16,19 @@ export async function fetchWithHeader(
   body: any = {},
   method: 'GET' | 'POST' | 'DELETE' = 'GET',
 ): Promise<Response> {
-  return fetch(url, {
+  let payload: {
+    method: 'GET' | 'POST' | 'DELETE';
+    headers: any;
+    credentials: 'include';
+    body?: any;
+  } = {
     method,
     // eslint-disable-next-line @typescript-eslint/naming-convention
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(body),
-  });
+    credentials: 'include',
+  };
+  if (method !== 'GET') payload = { ...payload, body: JSON.stringify(body) };
+  return fetch(url, payload);
 }
 
 type ApiReturnVal<T = void> = Promise<Result<T, HttpError>>;
@@ -45,32 +53,22 @@ async function commandTypeRequest(
 }
 
 async function get(id: number): ApiReturnVal<ITask> {
-  try {
-    const res: any = await fetch(endpoints.task.one(id));
+  const res: any = await fetchWithHeader(endpoints.task.one(id));
 
-    const data: any = await res.json();
-
-    if (taskIoType.is(data)) {
-      return Ok(data);
-    }
-
-    if (httpErrorIo.is(data)) {
-      return Err(data);
-    }
-    console.log(data);
-  } catch (e) {
-    console.log(e);
-  }
+  // Errorハンドリングめんどくさいので放置
+  const data: any = await res.json();
+  if (taskIoType.is(data)) return Ok(data);
+  if (httpErrorIo.is(data)) return Err(data);
 
   return Err(unknownFormatError);
 }
 
-async function create(task: ITask): ApiReturnVal {
+async function create(task: ICreateTaskDto): ApiReturnVal {
   return commandTypeRequest(endpoints.task.base, task);
 }
 
 async function deleteIt(id: number): ApiReturnVal {
-  return commandTypeRequest(endpoints.task.base, { id }, 'DELETE');
+  return commandTypeRequest(endpoints.task.base + '/' + id, {}, 'DELETE');
 }
 
 async function update(id: number): ApiReturnVal {
@@ -78,16 +76,12 @@ async function update(id: number): ApiReturnVal {
 }
 
 async function list(): ApiReturnVal<ITask[]> {
-  const res: any = await fetch(endpoints.task.list);
+  const res: any = await fetchWithHeader(endpoints.task.list);
 
   const data: any = await res.json();
-  if (taskListIoType.is(data)) {
-    return Ok(data);
-  }
+  if (taskListIoType.is(data)) return Ok(data);
 
-  if (httpErrorIo.is(data)) {
-    return Err(data);
-  }
+  if (httpErrorIo.is(data)) return Err(data);
 
   return Err(unknownFormatError);
 }

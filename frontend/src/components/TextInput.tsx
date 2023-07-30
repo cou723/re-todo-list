@@ -5,12 +5,13 @@ const TextInput = (props: {
   value: any;
   setValue: any;
   type?: string;
+  placeholder?: string;
 }) => (
   <Form.Group class="mb-3" controlId="formBasicEmail">
     <Form.Label>{props.label}</Form.Label>
     <Form.Control
       type={props.type ?? 'text'}
-      placeholder={props.label}
+      placeholder={props.placeholder ?? props.label}
       value={props.value()}
       onInput={(e) => props.setValue(e.currentTarget.value)}
     />

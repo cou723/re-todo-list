@@ -16,12 +16,18 @@ const LoginPage = () => {
     <div style={{ width: '20rem' }}>
       <h4>Login</h4>
       <Form>
-        <TextInput label="Username" value={username} setValue={setUsername} />
         <TextInput
-          label="password"
+          label="Username"
+          value={username}
+          setValue={setUsername}
+          placeholder="UserName10203"
+        />
+        <TextInput
+          label="Password"
           value={password}
           setValue={setPassword}
           type="password"
+          placeholder="**********"
         />
         <Show when={error()}>
           <Alert variant="danger" dismissible onClose={() => setError(false)}>
@@ -32,7 +38,7 @@ const LoginPage = () => {
           </Alert>
         </Show>
         <Button variant="primary" onClick={login}>
-          Submit
+          Login
         </Button>
       </Form>
     </div>

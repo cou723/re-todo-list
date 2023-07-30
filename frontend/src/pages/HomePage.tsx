@@ -6,6 +6,7 @@ import { getTaskViewTree } from '../lib/getTaskView';
 import { Show, createResource } from 'solid-js';
 import { ITaskView, TaskView } from '../types/TaskView';
 import { Result } from 'ts-results';
+import AddIcon from '../components/AddIcon';
 
 // データのリストをとってくる
 // データのリストの取得に失敗したらログインを促す
@@ -13,26 +14,37 @@ import { Result } from 'ts-results';
 // 失敗したらエラーメッセージを表示する
 // 成功したら表示して返す
 const HomePage = () => {
-  const fetchTasks = async () => {
+  const [tasks] = createResource(true, async () => {
     const data = await api.list();
     let tasks: ITaskView[] = [];
     if (data.ok) {
       const taskTree: Result<ITaskView[], void> = getTaskViewTree(
         data.val.map((task) => new TaskView(Task.fromObject(task))),
       );
-      if (taskTree.ok) {
-        tasks = taskTree.val;
-      }
-    }
-    return tasks;
-  };
+      console.log(taskTree);
+      if (taskTree.ok) tasks = taskTree.val;
+    } else window.location.href = '/login';
 
-  const [tasks] = createResource(fetchTasks);
+    return tasks;
+  });
 
   return (
     <div>
-      <Show when={tasks()} fallback={<>please login</>}>
-        <Button>New</Button>
+      <Button onClick={() => (window.location.href = '/task/create')}>
+        <span class="mr-2 align-bottom">
+          <AddIcon class="" />
+        </span>
+        タスクを追加
+      </Button>
+      <Show
+        when={tasks()?.length !== 0}
+        fallback={
+          <>
+            <br />
+            タスクが一つもありません。New Taskボタンからタスクを作りましょう！
+          </>
+        }
+      >
         <TaskList tasks={tasks()} />
       </Show>
     </div>
