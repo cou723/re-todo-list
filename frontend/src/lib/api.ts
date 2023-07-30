@@ -8,6 +8,7 @@ import {
   unknownFormatError,
 } from '../types/httpError';
 import { ICreateTaskDto } from '../../../backend/src/task/createTaskDto';
+import { IUpdateTaskDto } from '../../../backend/src/task/updateTaskDto';
 
 const taskListIoType = t.array(taskIoType);
 
@@ -71,8 +72,8 @@ async function deleteIt(id: number): ApiReturnVal {
   return commandTypeRequest(endpoints.task.base + '/' + id, {}, 'DELETE');
 }
 
-async function update(id: number): ApiReturnVal {
-  return commandTypeRequest(endpoints.task.one(id), {}, 'POST');
+async function update(id: number, task: IUpdateTaskDto): ApiReturnVal {
+  return commandTypeRequest(endpoints.task.one(id), task, 'POST');
 }
 
 async function list(): ApiReturnVal<ITask[]> {
