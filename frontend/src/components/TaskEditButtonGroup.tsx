@@ -8,17 +8,14 @@ const TaskEditButtonGroup = (props: {
   failedDelete: () => void;
 }) => {
   const deleteTask = async () => {
-    /* const res = await api.deleteIt(props.id);
+    const res = await api.deleteIt(props.id);
     if (res.ok) window.location.href = '/';
-    else  */ props.failedDelete();
+    else props.failedDelete();
   };
 
   return (
     <ButtonGroup class="ms-auto">
-      <Button
-        size="sm"
-        onClick={() => (window.location.href = `/edit/${props.id}`)}
-      >
+      <Button size="sm" href={`/edit/${props.id}`}>
         <span class="mr-2">編集</span>
         <PenIcon />
       </Button>

@@ -1,34 +1,47 @@
+import { Show, createResource } from 'solid-js';
 import { Button } from 'solid-bootstrap';
 import LogoIcon from './LogoIcon';
-const Header = (props: { class?: string }) => (
-  <div class="container">
-    <header
-      class={
-        'd-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 border-bottom ' +
-        props.class
-      }
-    >
-      <a
-        href="/"
-        class="d-flex align-items-center  text-dark text-decoration-none"
-      >
-        <LogoIcon size={2} />
-      </a>
+import api from '../lib/api';
+import { LoginButton } from './LoginButton';
+import { LogoutButton } from './LogoutButton';
 
-      <div class=" text-end">
-        <Button
-          onClick={() => (window.location.href = '/login')}
-          variant="outline-primary"
-          class="me-2 mr-1"
-        >
-          Login
-        </Button>
-        <Button onClick={() => (window.location.href = '/register')} class="">
-          Sign-up
-        </Button>
-      </div>
-    </header>
-  </div>
-);
+const Header = (props: { class?: string }) => {
+  const handleLogout = async () => await api.logout();
+
+  const [isLogin] = createResource(true, async () => {
+    const res = await api.authStatus();
+    console.log(res.ok);
+    return res.ok;
+  });
+
+  return (
+    <div class="container">
+      <header
+        class={
+          'd-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 border-bottom ' +
+          props.class
+        }
+      >
+        <a href="/" class="d-flex align-items-center ">
+          <LogoIcon size={2} />
+        </a>
+
+        <div class="text-end">
+          <Show
+            when={isLogin()}
+            fallback={
+              <>
+                <LoginButton />
+                <Button href="/register">Sign-up</Button>
+              </>
+            }
+          >
+            <LogoutButton handleLogout={handleLogout} />
+          </Show>
+        </div>
+      </header>
+    </div>
+  );
+};
 
 export default Header;

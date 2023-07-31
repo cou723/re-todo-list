@@ -7,11 +7,13 @@ const LoginPage = () => {
   const [username, setUsername] = createSignal('');
   const [password, setPassword] = createSignal('');
   const [error, setError] = createSignal(false);
+
   const login = async () => {
     const data = await api.login(username(), password());
     if (data.ok) window.location.href = '/';
     else setError(true);
   };
+
   return (
     <div style={{ width: '20rem' }}>
       <h4>Login</h4>

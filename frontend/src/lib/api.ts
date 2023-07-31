@@ -35,7 +35,7 @@ export async function fetchWithHeader(
 type ApiReturnVal<T = void> = Promise<Result<T, HttpError>>;
 
 // CommandTypeRequestとはpostやdeleteなどの返り値にデータを要求していないものにつかうラッパー
-async function commandTypeRequest(
+async function requestErrorHandling(
   url: string,
   body: any = {},
   method: 'POST' | 'DELETE' = 'POST',
@@ -52,7 +52,6 @@ async function commandTypeRequest(
 
   return Err(unknownFormatError);
 }
-
 async function get(id: number): ApiReturnVal<ITask> {
   const res: any = await fetchWithHeader(endpoints.task.one(id));
 
@@ -65,15 +64,15 @@ async function get(id: number): ApiReturnVal<ITask> {
 }
 
 async function create(task: ICreateTaskDto): ApiReturnVal {
-  return commandTypeRequest(endpoints.task.base, task);
+  return requestErrorHandling(endpoints.task.base, task, 'POST');
 }
 
 async function deleteIt(id: number): ApiReturnVal {
-  return commandTypeRequest(endpoints.task.base + '/' + id, {}, 'DELETE');
+  return requestErrorHandling(endpoints.task.base + '/' + id, {}, 'DELETE');
 }
 
 async function update(id: number, task: IUpdateTaskDto): ApiReturnVal {
-  return commandTypeRequest(endpoints.task.one(id), task, 'POST');
+  return requestErrorHandling(endpoints.task.one(id), task, 'POST');
 }
 
 async function list(): ApiReturnVal<ITask[]> {
@@ -88,35 +87,54 @@ async function list(): ApiReturnVal<ITask[]> {
 }
 
 async function done(id: number): ApiReturnVal {
-  return commandTypeRequest(endpoints.task.done(id), {}, 'POST');
+  return requestErrorHandling(endpoints.task.done(id), {}, 'POST');
 }
 
 async function undone(id: number): ApiReturnVal {
-  return commandTypeRequest(endpoints.task.undone(id), {}, 'POST');
+  return requestErrorHandling(endpoints.task.undone(id), {}, 'POST');
 }
 
 async function addParent(id: number, newParent: number): ApiReturnVal {
-  return commandTypeRequest(endpoints.task.parent(id), { newParent }, 'POST');
+  return requestErrorHandling(endpoints.task.parent(id), { newParent }, 'POST');
 }
 
 async function deleteParent(id: number): ApiReturnVal {
-  return commandTypeRequest(endpoints.task.parent(id), {}, 'DELETE');
+  return requestErrorHandling(endpoints.task.parent(id), {}, 'DELETE');
 }
 
 async function login(username: string, password: string) {
-  return commandTypeRequest(endpoints.login, { username, password }, 'POST');
+  return requestErrorHandling(endpoints.login, { username, password }, 'POST');
 }
 
 async function logout() {
-  return commandTypeRequest(endpoints.logout, {}, 'POST');
+  return requestErrorHandling(endpoints.logout, {}, 'POST');
 }
 
 async function register(username: string, password: string) {
-  return commandTypeRequest(endpoints.register, { username, password }, 'POST');
+  return requestErrorHandling(
+    endpoints.register,
+    { username, password },
+    'POST',
+  );
 }
 
 async function deleteAccount() {
-  return commandTypeRequest(endpoints.user, {}, 'DELETE');
+  return requestErrorHandling(endpoints.user, {}, 'DELETE');
+}
+
+async function getAuthStatus(): Promise<Result<void, void>> {
+  let response;
+  try {
+    response = await fetch(endpoints.authStatus, {
+      method: 'GET',
+      credentials: 'include',
+    });
+  } catch (e) {
+    return Err(undefined);
+  }
+  if (!response.ok) return Err(undefined);
+
+  return Ok(undefined);
 }
 
 const api = {
@@ -133,6 +151,7 @@ const api = {
   logout,
   register,
   deleteAccount,
+  authStatus: getAuthStatus,
 };
 
 export default api;
