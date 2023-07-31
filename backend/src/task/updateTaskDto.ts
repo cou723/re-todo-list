@@ -1,5 +1,11 @@
 import { IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
 
+export interface IUpdateTaskDto {
+  title?: string;
+  description?: string;
+  parent?: number;
+}
+
 export class UpdateTaskDto {
   @IsString()
   @IsNotEmpty()
@@ -13,8 +19,4 @@ export class UpdateTaskDto {
   @IsNumber()
   @IsOptional()
   readonly parent: number;
-
-  @IsNumber()
-  @IsOptional()
-  readonly newParent: number;
 }

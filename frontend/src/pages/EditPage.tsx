@@ -7,35 +7,49 @@ import { ICreateTaskDto } from '../../../backend/src/task/createTaskDto';
 
 const EditPage: Component = () => {
   const params = useParams();
-  const [task] = createResource(true, async () => {
-    const taskId = parseIntResult(params.id);
-    if (taskId.err) {
-      window.location.href = '/404';
-      throw new Error('404');
-    }
-    const res = await api.get(taskId.val);
-    if (res.err) {
-      window.location.href = '/';
-      throw new Error();
-    }
-    return {
-      title: res.val.title,
-      description: res.val.description,
-      parent: parseIntResult(res.val.path.split('/').slice(0, -1)[0]).unwrap(),
-    };
-  });
+  const idResult = parseIntResult(params.id);
+  if (idResult.err) {
+    window.location.href = '/404';
+    throw new Error('404');
+  }
+  const id = idResult.val;
+  const [task] = createResource<ICreateTaskDto>(
+    async (): Promise<ICreateTaskDto> => {
+      const res = await api.get(id);
+      if (res.err) {
+        window.location.href = '/';
+        throw new Error();
+      }
+      console.log('res:', res.val);
+      if (res.val.path === '')
+        return {
+          title: res.val.title,
+          description: res.val.description,
+        };
 
-  const handleSendEditedTask = (task: ICreateTaskDto) => {
+      return {
+        title: res.val.title,
+        description: res.val.description,
+        parentId: parseInt(res.val.path.split('/').slice(0, -1)[0]),
+      };
+    },
+  );
+
+  const handleSendEditedTask = async (sendTask: ICreateTaskDto) => {
     const taskId = parseIntResult(params.id);
     if (taskId.err) {
       window.location.href = '/404';
-      throw new Error('404');
+      return [];
     }
-    api.update(taskId.val, {
-      title: task.title,
-      description: task.description,
-      parent: task.parent,
+    console.log('val;', sendTask);
+    await api.update(taskId.val, {
+      title: sendTask.title,
+      description: sendTask.description,
     });
+    if (task() !== undefined && sendTask.parentId != task()?.parentId) {
+      if (sendTask.parentId == undefined) await api.deleteParent(taskId.val);
+      else await api.addParent(taskId.val, sendTask.parentId);
+    }
     window.location.href = '/';
   };
 
@@ -47,13 +61,15 @@ const EditPage: Component = () => {
           default={{
             title: task()?.title ?? '',
             description: task()?.description ?? '',
-            parent: task()?.parent ?? undefined,
+            parentId: task()?.parentId ?? undefined,
           }}
           sendLabel="更新"
           onSend={handleSendEditedTask}
+          id={id}
         />
+        {task()?.parentId}
       </Show>
-      Task Id: {params.id}
+      Task Id: {id}
     </>
   );
 };

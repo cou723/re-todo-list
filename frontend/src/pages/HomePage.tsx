@@ -21,7 +21,6 @@ const HomePage = () => {
       const taskTree: Result<ITaskView[], void> = getTaskViewTree(
         data.val.map((task) => new TaskView(Task.fromObject(task))),
       );
-      console.log(taskTree);
       if (taskTree.ok) tasks = taskTree.val;
     } else window.location.href = '/login';
 

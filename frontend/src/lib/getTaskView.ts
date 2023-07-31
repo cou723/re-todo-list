@@ -27,6 +27,8 @@ function buildTree(tasks: ITaskView[]): ITaskView {
     tasks.find((task: ITaskView) => !task.path.includes('/')),
   );
   if (root.err) {
+    console.log(tasks);
+
     throw new Error('Root node not found');
   }
 

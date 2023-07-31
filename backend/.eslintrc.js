@@ -37,4 +37,15 @@ module.exports = {
       },
     ],
   },
+  "overrides": [
+    {
+      "files": ["**/*.ts"],
+      "rules": {
+        "@typescript-eslint/no-floating-promises": "error",
+      },
+      "parserOptions": {
+        "project": ["./tsconfig.json"],
+      },
+    },
+  ],
 };

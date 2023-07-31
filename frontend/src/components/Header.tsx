@@ -10,7 +10,6 @@ const Header = (props: { class?: string }) => {
 
   const [isLogin] = createResource(true, async () => {
     const res = await api.authStatus();
-    console.log(res.ok);
     return res.ok;
   });
 

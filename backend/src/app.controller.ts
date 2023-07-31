@@ -9,6 +9,7 @@ import {
   UsePipes,
   Res,
   HttpCode,
+  Get,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { PasswordOmitUser } from './entity/user.entity';
@@ -39,8 +40,8 @@ export class AppController {
   }
 
   @Post('logout')
-  logout() {
-    return 'logout is not implemented yet. We plan to implement a blacklist in the near future';
+  logout(@Res({ passthrough: true }) res: Response) {
+    res.clearCookie('accessToken');
   }
 
   @Post('register')
@@ -54,5 +55,11 @@ export class AppController {
   @Delete('user')
   delete(@Req() req: { user: PasswordOmitUser }) {
     return this.userService.delete(req.user.id);
+  }
+
+  @Get('auth-status')
+  @UseGuards(AuthGuard('jwt'))
+  authStatus() {
+    return;
   }
 }

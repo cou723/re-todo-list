@@ -1,7 +1,13 @@
 import { IsNumber, IsOptional, IsString } from 'class-validator';
 import { TaskEntity } from '../entity/task.entity';
 
-export class CreateTaskDto {
+export interface ICreateTaskDto {
+  title: TaskEntity['title'];
+  description: TaskEntity['description'];
+  parentId?: TaskEntity['id'];
+}
+
+export class CreateTaskDto implements ICreateTaskDto {
   @IsString()
   title: TaskEntity['title'];
 
@@ -10,5 +16,5 @@ export class CreateTaskDto {
 
   @IsOptional()
   @IsNumber()
-  parent: null | TaskEntity['id'];
+  parentId?: TaskEntity['id'];
 }

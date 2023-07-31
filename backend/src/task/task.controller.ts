@@ -20,6 +20,7 @@ import { TaskEntity } from '../entity/task.entity';
 import { CreateTaskDto } from './createTaskDto';
 import { UpdateTaskDto } from './updateTaskDto';
 import { ParentDto } from './parentDto';
+import { Task } from 'common/Task';
 
 @UseGuards(AuthGuard('jwt'))
 @Controller('task')
@@ -33,19 +34,24 @@ export class TaskController {
     @Req() req: { user: User },
   ): Promise<void> {
     let path = '';
-    if (task.parent) {
-      const parent = await this.taskService.findTask(task.parent, req.user.id);
+
+    if (task.parentId) {
+      const parent = await this.taskService.findTask(
+        task.parentId,
+        req.user.id,
+      );
       path = `${parent.path}/${parent.id}`;
     }
 
     try {
-      this.taskService.create({
+      await this.taskService.create({
         title: task.title,
         description: task.description,
         isDone: false,
         path,
         createdBy: req.user.id,
       });
+      console.log(task);
     } catch (e) {
       throw new HttpException('Create Task failed.', 500);
     }
@@ -53,8 +59,10 @@ export class TaskController {
   }
 
   @Get('list')
-  getTasks(@Req() req: { user: User }) {
-    return this.taskService.findAll(req.user.id);
+  async getTasks(@Req() req: { user: User }): Promise<TaskEntity[]> {
+    const list = await this.taskService.findAll(req.user.id);
+    console.log(list);
+    return list;
   }
 
   @Get(':id')
@@ -77,9 +85,9 @@ export class TaskController {
     const targetTask = await this.taskService.findTask(id, req.user.id);
     let path = targetTask.path;
 
-    if (updateContents.newParent)
+    if (updateContents.parent)
       path = (
-        await this.taskService.findTask(updateContents.newParent, req.user.id)
+        await this.taskService.findTask(updateContents.parent, req.user.id)
       ).getCurrentPath();
 
     await this.taskService.edit(
@@ -101,7 +109,7 @@ export class TaskController {
     @Req() req: { user: User },
   ): Promise<void> {
     const id = parseId(paramId);
-    return await this.taskService.delete(id, req.user.id);
+    await this.taskService.delete(id, req.user.id);
   }
 
   @Post(':id/done')
@@ -129,6 +137,7 @@ export class TaskController {
     @Body() body: ParentDto,
     @Req() req: { user: User },
   ): Promise<void> {
+    console.log('set');
     const id = parseId(paramId);
     try {
       await this.taskService.edit(

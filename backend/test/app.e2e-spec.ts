@@ -69,7 +69,7 @@ describe('User and User API (e2e)', () => {
   beforeEach(async () => {
     await userRepository.clear();
     await taskRepository.clear();
-    userRepository.insert({
+    await userRepository.insert({
       id: 1,
       username: TEST_USER.username,
       password: bcrypt.hashSync(TEST_USER.password, 1),
@@ -280,7 +280,7 @@ describe('User and User API (e2e)', () => {
     });
 
     it('/task/:id GET fail: un auth', async () => {
-      taskRepository.insert(generateTask({ id: 1, createdBy: 1 }));
+      await taskRepository.insert(generateTask({ id: 1, createdBy: 1 }));
 
       const res = await requestWrapper('/task/1', 'post', {}, 'invalid token');
       expect(res.status).toEqual(401);
