@@ -7,8 +7,6 @@ import { LogoutButton } from './LogoutButton';
 import { UserDeleteButton } from './UserDeleteButton';
 
 const Header = (props: { class?: string }) => {
-  const handleLogout = async () => await api.logout();
-
   const [loginName] = createResource(true, async () => {
     const res = await api.authStatus();
     console.log(res.ok, res.val);
@@ -20,7 +18,7 @@ const Header = (props: { class?: string }) => {
     <div class="container">
       <header
         class={
-          'd-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 border-bottom ' +
+          'd-flex flex-wrap align-items-center justify-content-between py-3 border-bottom ' +
           props.class
         }
       >
@@ -39,7 +37,7 @@ const Header = (props: { class?: string }) => {
             }
           >
             <>
-              <LogoutButton handleLogout={handleLogout} />
+              <LogoutButton />
               <span class="ml-3">username: {loginName()}</span>
               <UserDeleteButton class="ml-3" />
             </>

@@ -8,6 +8,7 @@ export const UserDeleteButton = (props: { class: string }) => {
     await await api.logout();
     window.location.href = '/login';
   };
+
   return (
     <Button variant="danger" class={props.class} onClick={deleteAccount}>
       アカウント削除
