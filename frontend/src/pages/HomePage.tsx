@@ -38,10 +38,10 @@ const HomePage = () => {
       <Show
         when={tasks()?.length !== 0}
         fallback={
-          <>
+          <div class="m-2">
             <br />
-            タスクが一つもありません。New Taskボタンからタスクを作りましょう！
-          </>
+            タスクが一つもありません。「タスクを追加」ボタンから新しくタスクを作りましょう！
+          </div>
         }
       >
         <TaskList tasks={tasks()} />

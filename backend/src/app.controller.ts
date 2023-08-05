@@ -62,4 +62,16 @@ export class AppController {
   authStatus(@Req() req: { user: PasswordOmitUser }) {
     return req.user;
   }
+
+  @Post('is-exist')
+  @UsePipes(ValidationPipe)
+  async isExist(@Body() body: Omit<RegisterDto, 'password'>) {
+    console.log(body);
+    if (body.username === '') return { isExits: false };
+    const user = await this.userService.findOne(body.username);
+
+    return {
+      isExits: user !== null,
+    };
+  }
 }

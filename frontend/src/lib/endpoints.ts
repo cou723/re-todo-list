@@ -8,6 +8,7 @@ const endpointsService = {
   register: endpointBase + '/register',
   user: endpointBase + '/user',
   authStatus: endpointBase + '/auth-status',
+  userExist: endpointBase + '/is-exist',
 };
 
 const taskEndpointBase = endpointBase + '/task';

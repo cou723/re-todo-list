@@ -29,7 +29,7 @@ export async function fetchWithHeader(
     credentials: 'include',
   };
   if (method !== 'GET') payload = { ...payload, body: JSON.stringify(body) };
-  return fetch(url, payload);
+  return await fetch(url, payload);
 }
 
 type ApiReturnVal<T = void> = Promise<Result<T, HttpError>>;
@@ -139,6 +139,22 @@ async function getAuthStatus(): Promise<Result<string, void>> {
   return Err(undefined);
 }
 
+async function isUserExist(username: string): ApiReturnVal<boolean> {
+  try {
+    const res = await fetchWithHeader(
+      endpoints.userExist,
+      { username },
+      'POST',
+    );
+    const body = await res.json();
+    console.log(body);
+
+    return Ok(body.isExits);
+  } catch (e) {
+    return Err({ statusCode: 500, message: 'internal server error' });
+  }
+}
+
 const api = {
   get,
   create,
@@ -154,6 +170,7 @@ const api = {
   register,
   deleteAccount,
   authStatus: getAuthStatus,
+  isUserExist,
 };
 
 export default api;

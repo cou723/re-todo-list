@@ -5,6 +5,8 @@ describe('endpoints', () => {
     expect(endpoints.logout).toEqual('http://localhost:8000/logout');
     expect(endpoints.user).toEqual('http://localhost:8000/user');
     expect(endpoints.register).toEqual('http://localhost:8000/register');
+    expect(endpoints.authStatus).toEqual('http://localhost:8000/auth-status');
+    expect(endpoints.userExist).toEqual('http://localhost:8000/is-exist');
   });
 
   it('task', () => {

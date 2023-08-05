@@ -6,6 +6,7 @@ const TextInput = (props: {
   setValue: any;
   type?: string;
   placeholder?: string;
+  help?: string;
 }) => (
   <Form.Group class="mb-3" controlId="formBasicEmail">
     <Form.Label>{props.label}</Form.Label>
@@ -15,6 +16,7 @@ const TextInput = (props: {
       value={props.value()}
       onInput={(e) => props.setValue(e.currentTarget.value)}
     />
+    <Form.Text class="text-error">{props.help}</Form.Text>
   </Form.Group>
 );
 

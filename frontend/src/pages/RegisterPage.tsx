@@ -1,5 +1,5 @@
 import { Alert, Button, Form } from 'solid-bootstrap';
-import { type Component, Show, createSignal } from 'solid-js';
+import { type Component, Show, createSignal, createResource } from 'solid-js';
 import TextInput from '../components/TextInput';
 import api from '../lib/api';
 
@@ -11,10 +11,15 @@ const RegisterPage: Component = () => {
   const register = async () => {
     const res = await api.register(username(), password());
     if (res.err) {
-      // ユーザー名被り
-      // ユーザー名入力してない
+      setError('ユーザー名が既に使われています。');
     } else window.location.href = '/login';
   };
+
+  const [isDuplicateUsername] = createResource(username, async () => {
+    const res = await api.isUserExist(username());
+    if (res.ok) return res.val;
+    else return false;
+  });
 
   return (
     <div style={{ width: '20rem' }}>
@@ -25,6 +30,7 @@ const RegisterPage: Component = () => {
           value={username}
           setValue={setUsername}
           placeholder="UserName10203"
+          help={isDuplicateUsername() ? 'ユーザー名が既に使われています。' : ''}
         />
         <TextInput
           label="Password"
@@ -35,13 +41,15 @@ const RegisterPage: Component = () => {
         />
         <Show when={error()}>
           <Alert variant="danger" dismissible onClose={() => setError('')}>
-            <Alert.Heading>ログイン失敗</Alert.Heading>
-            <p>
-              ログインに失敗しました。今一度ユーザー名とパスワードを確認してください。
-            </p>
+            <Alert.Heading>登録失敗</Alert.Heading>
+            <p>{error()}</p>
           </Alert>
         </Show>
-        <Button variant="primary" onClick={register}>
+        <Button
+          variant="primary"
+          onClick={register}
+          disabled={!!isDuplicateUsername()}
+        >
           Create New Account
         </Button>
       </Form>

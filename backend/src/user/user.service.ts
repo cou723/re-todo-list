@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
@@ -17,6 +17,8 @@ export class UserService {
   }
 
   async register(username, password) {
+    if (await this.findOne(username))
+      throw new HttpException('User already exists', 409);
     return await this.userRepos.save({
       username: username,
       password: bcrypt.hashSync(password, 10),
