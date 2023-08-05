@@ -5,7 +5,7 @@ import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import CreatePage from './pages/CreatePage';
 import HomePage from './pages/HomePage';
-import Header from './components/Header';
+import Header from './components/Header/Header';
 
 const App: Component = () => (
   <>

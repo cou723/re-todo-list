@@ -1,7 +1,7 @@
 import { Button, ButtonGroup } from 'solid-bootstrap';
 import TrashIcon from './TrashIcon';
 import PenIcon from './PenIcon';
-import api from '../lib/api';
+import api from '../../../../lib/api';
 
 const TaskEditButtonGroup = (props: {
   id: number;

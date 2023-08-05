@@ -1,5 +1,5 @@
 import { Button } from 'solid-bootstrap';
-import TaskList from '../components/TaskList';
+import TaskList from '../components/TaskList/TaskList';
 import api from '../lib/api';
 import { Task } from '../../../backend/common/Task';
 import { getTaskViewTree } from '../lib/getTaskView';
