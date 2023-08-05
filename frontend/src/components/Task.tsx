@@ -37,7 +37,9 @@ export const Task = (props: { class?: string; task: ITaskView }) => {
         </div>
       </Card.Header>
       <Card.Body>{props.task.description}</Card.Body>
-      <For each={props.task.children}>{(child) => <Task task={child} />}</For>
+      <For each={props.task.children}>
+        {(child) => <Task class="m-3" task={child} />}
+      </For>
       <TaskDeleteFailedModal
         show={showErrorModal()}
         handleClose={() => setShowErrorModal(false)}

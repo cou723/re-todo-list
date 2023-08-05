@@ -1,12 +1,10 @@
-import { ITask, Task } from '../../../backend/common/Task';
+import { ITask } from '../../../backend/common/Task';
 import TextInput from './TextInput';
 import { createStore } from 'solid-js/store';
 import { Button, Form } from 'solid-bootstrap';
 import { ICreateTaskDto } from '../../../backend/src/task/createTaskDto';
 import { For, createResource, mergeProps, Show } from 'solid-js';
-import { Result } from 'ts-results';
 import api from '../lib/api';
-import { getTaskViewTree } from '../lib/getTaskView';
 import { ITaskView, TaskView } from '../types/TaskView';
 
 const TaskEditor = (props: {
