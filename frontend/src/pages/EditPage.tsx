@@ -35,7 +35,7 @@ const EditPage: Component = () => {
     },
   );
 
-  const handleSendEditedTask = async (sendTask: ICreateTaskDto) => {
+  const sendEditedTask = async (sendTask: ICreateTaskDto) => {
     const taskId = parseIntResult(params.id);
     if (taskId.err) {
       window.location.href = '/404';
@@ -64,7 +64,7 @@ const EditPage: Component = () => {
             parentId: task()?.parentId ?? undefined,
           }}
           sendLabel="更新"
-          onSend={handleSendEditedTask}
+          onSend={sendEditedTask}
           id={id}
         />
         {task()?.parentId}

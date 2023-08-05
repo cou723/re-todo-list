@@ -24,7 +24,6 @@ const TaskEditor = (props: {
     },
     props,
   );
-  console.log('task:', props.default);
 
   const [currentTask, setTask] = createStore<ICreateTaskDto>(merged.default);
 
@@ -34,13 +33,12 @@ const TaskEditor = (props: {
 
   const [parentTaskList] = createResource(true, async () => {
     const data = await api.list();
+    console.log(data);
+
     let tasks: ITaskView[] = [];
-    if (data.ok) {
-      const taskTree: Result<ITaskView[], void> = getTaskViewTree(
-        data.val.map((task) => new TaskView(Task.fromObject(task))),
-      );
-      if (taskTree.ok) tasks = taskTree.val;
-    } else window.location.href = '/login';
+    if (data.ok) tasks = data.val.map((task) => TaskView.fromObject(task));
+    else window.location.href = '/login';
+    console.log('tasks:', tasks);
 
     return tasks.filter((task) => task.id != props.id);
   });

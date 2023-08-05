@@ -40,7 +40,6 @@ export class TaskService {
 
   async create(task: Omit<ITask, 'id'>): Promise<void> {
     await this.taskRepos.insert(task);
-    console.log(await this.taskRepos.find({}));
   }
 
   async edit(

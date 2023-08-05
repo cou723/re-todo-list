@@ -8,6 +8,8 @@ const CreatePage: Component = () => {
   const [error, setError] = createSignal<string>('');
 
   const createTask = async (task: ICreateTaskDto) => {
+    console.log(task);
+
     const res = await api.create(task);
     if (res.err) {
       if (res.val.statusCode === 401) window.location.href = '/login';

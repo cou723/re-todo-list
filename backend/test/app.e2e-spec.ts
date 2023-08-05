@@ -196,6 +196,40 @@ describe('User and User API (e2e)', () => {
       expect(createdTask).toHaveProperty('path', '');
     });
 
+    it('/task POST success with parent', async () => {
+      await requestWrapper('/task', 'post', {
+        title: 'test',
+        description: 'test',
+      });
+
+      const parentId = (
+        await taskRepository.findOne({ where: { title: 'test' } })
+      ).id;
+
+      const res = await requestWrapper('/task', 'post', {
+        title: 'child',
+        description: 'child',
+        parentId,
+      });
+
+      expect(res.status).toEqual(201);
+
+      expect(await taskRepository.count()).toEqual(2);
+
+      const createdTask = await taskRepository
+        .createQueryBuilder('task')
+        .orderBy('task.id', 'DESC')
+        .limit(1)
+        .getOne();
+
+      expect(createdTask).toHaveProperty('id');
+      expect(createdTask).toHaveProperty('createdBy', 1);
+      expect(createdTask).toHaveProperty('title', 'child');
+      expect(createdTask).toHaveProperty('description', 'child');
+      expect(createdTask).toHaveProperty('isDone', false);
+      expect(createdTask).toHaveProperty('path', parentId.toString());
+    });
+
     it('/task POST fail: un auth', async () => {
       const res = await requestWrapper(
         '/task',

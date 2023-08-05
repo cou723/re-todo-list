@@ -64,6 +64,8 @@ async function get(id: number): ApiReturnVal<ITask> {
 }
 
 async function create(task: ICreateTaskDto): ApiReturnVal {
+  console.log('create', task);
+
   return requestErrorHandling(endpoints.task.base, task, 'POST');
 }
 
@@ -122,19 +124,19 @@ async function deleteAccount() {
   return requestErrorHandling(endpoints.user, {}, 'DELETE');
 }
 
-async function getAuthStatus(): Promise<Result<void, void>> {
-  let response;
+async function getAuthStatus(): Promise<Result<string, void>> {
+  let res;
   try {
-    response = await fetch(endpoints.authStatus, {
+    res = await fetch(endpoints.authStatus, {
       method: 'GET',
       credentials: 'include',
     });
+    const data: any = await res.json();
+    if (res.ok) return Ok(data.username);
   } catch (e) {
     return Err(undefined);
   }
-  if (!response.ok) return Err(undefined);
-
-  return Ok(undefined);
+  return Err(undefined);
 }
 
 const api = {

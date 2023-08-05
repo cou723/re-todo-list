@@ -59,7 +59,7 @@ export class AppController {
 
   @Get('auth-status')
   @UseGuards(AuthGuard('jwt'))
-  authStatus() {
-    return;
+  authStatus(@Req() req: { user: PasswordOmitUser }) {
+    return req.user;
   }
 }

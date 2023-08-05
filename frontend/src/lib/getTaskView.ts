@@ -3,6 +3,8 @@ import { type ITaskView } from '../types/TaskView';
 
 export function getTaskViewTree(tasks: ITaskView[]): Result<ITaskView[], void> {
   const trees: ITaskView[] = [];
+  console.log("raw tasks:",tasks);
+
 
   const taskGroupList = tasks.reduce((acc: Map<string, ITaskView[]>, task) => {
     const key = task.path.split('/')[0];

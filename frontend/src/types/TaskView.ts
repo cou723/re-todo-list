@@ -1,4 +1,4 @@
-import { type Task, type ITask } from '../../../backend/common/Task';
+import { Task, type ITask } from '../../../backend/common/Task';
 export type ITaskView = ITask & { children: ITaskView[] };
 
 export class TaskView implements ITaskView {
@@ -18,5 +18,18 @@ export class TaskView implements ITaskView {
     this.children = children;
     this.path = task.getCurrentPath();
     this.createdBy = task.createdBy;
+
+    if (this.path.split('/').slice(-1)[0] !== this.id.toString()) {
+      throw new Error(
+        'path root is not this id(' + this.id + '): ' + this.path,
+      );
+    }
+    if (this.path[0] === '/') {
+      throw new Error('path cannot start with /: ' + this.path);
+    }
+  }
+
+  public static fromObject(task: ITask): TaskView {
+    return new TaskView(Task.fromObject(task));
   }
 }
