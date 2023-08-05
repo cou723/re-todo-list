@@ -80,12 +80,14 @@ iを使用しています
 ### エンドポイント
 
 
-| path        | method | 効果                     |
-| :---------- | :----- | :----------------------- |
-| /login | POST   |                          |
-| /logout     | POST   |                          |
-| /register   | POST   | ユーザーを新しく作成する |
-| /user       | DELETE | ユーザーを削除する       |
+| path         | method | 効果                                       |
+| :----------- | :----- | :----------------------------------------- |
+| /login       | POST   |                                            |
+| /logout      | POST   |                                            |
+| /register    | POST   | ユーザーを新しく作成する                   |
+| /user        | DELETE | ユーザーを削除する                         |
+| /auth-status | POST   | 現在ログインしているかどうかを返す         |
+| /is-exist    | POST   | 送られたusernameが存在するユーザーがを返す |
 
 | path             | method | 効果                       |
 | :--------------- | :----- | :------------------------- |
@@ -129,7 +131,21 @@ iを使用しています
 ##### Response
 - 失敗時
   - すでに同名のユーザーが存在する: `409, User already exists`
-  - 使用できない文字が含まれている: `400, Invalid character`
+  - 使用できない文字が含まれている: `400, Invalid character` <- 未実装
+
+#### /auth-status
+##### Response
+- ログインしているユーザー存在するとき
+```ts
+{
+  id: INTEGER;
+  username: STRING;
+}
+```
+- ログインしているユーザーが存在しないとき: `403, Forbidden`
+
+##### body
+```ts```
 
 #### /task
 

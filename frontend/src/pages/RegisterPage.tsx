@@ -50,7 +50,7 @@ const RegisterPage: Component = () => {
           onClick={register}
           disabled={!!isDuplicateUsername()}
         >
-          Create New Account
+          アカウント新規作成
         </Button>
       </Form>
     </div>
