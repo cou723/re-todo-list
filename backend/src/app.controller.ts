@@ -46,15 +46,17 @@ export class AppController {
 
   @Post('register')
   @UsePipes(ValidationPipe)
-  register(@Body() user: RegisterDto) {
-    return this.userService.register(user.username, user.password);
+  async register(@Body() user: RegisterDto) {
+    return await this.userService.register(user.username, user.password);
   }
 
   @HttpCode(204)
   @UseGuards(AuthGuard('jwt'))
   @Delete('user')
-  delete(@Req() req: { user: PasswordOmitUser }) {
-    return this.userService.delete(req.user.id);
+  async delete(@Req() req: { user: PasswordOmitUser }) {
+    console.log('user', req.user);
+    await this.userService.delete(req.user.id);
+    return;
   }
 
   @Get('auth-status')

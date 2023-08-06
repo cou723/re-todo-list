@@ -1,0 +1,329 @@
+[33mcommit c6df7d3ba63b884e4523f14e07e8fefb29c48184[m[33m ([m[1;36mHEAD -> [m[1;32mpassport[m[33m)[m
+Author: cou <courange.c@gmail.com>
+Date:   Sat Aug 5 22:44:28 2023 +0900
+
+    ignore .vite
+
+[33mcommit bcd59e4f4805d52343b56325967c894a28e3ebd8[m
+Author: cou <courange.c@gmail.com>
+Date:   Sat Aug 5 22:42:51 2023 +0900
+
+    update document
+
+[33mcommit d6111d8810aee0edee7e4f24502380b1e82c753c[m[33m ([m[1;31morigin/passport[m[33m)[m
+Author: cou <courange.c@gmail.com>
+Date:   Sat Aug 5 22:30:47 2023 +0900
+
+    重複した名前を使えないようにした
+
+[33mcommit d2e62499e1565a4fe2d16daea4892597631f7833[m
+Author: cou <courange.c@gmail.com>
+Date:   Sat Aug 5 20:12:03 2023 +0900
+
+    Refactor the Task component to add a class to each child task
+
+[33mcommit 8614fd843c7c7e50a33613daf9bd4b9a8c87ea85[m
+Author: cou <courange.c@gmail.com>
+Date:   Sat Aug 5 20:02:25 2023 +0900
+
+    タスクを追加からタスクを追加した際に親を指定するとバグる問題の修正
+
+[33mcommit 872271b7ab62339335fc5ea2ad3447d8b91e1280[m
+Author: cou <courange.c@gmail.com>
+Date:   Mon Jul 31 19:00:22 2023 +0900
+
+    Taskの親を編集する機能の完成
+
+[33mcommit 47cb4c9cdaa5a3004c9cf33cab07a96e389faac9[m
+Author: cou <courange.c@gmail.com>
+Date:   Mon Jul 31 11:24:32 2023 +0900
+
+    loginボタンのtoggle機能暫定完成
+
+[33mcommit a8f5166ea799346347e572c7e1a54876ece0958c[m
+Author: cou <courange.c@gmail.com>
+Date:   Sun Jul 30 22:08:38 2023 +0900
+
+    編集機能完成
+
+[33mcommit 2370db7e6ac5a34e3e1ba096fc058abd660a65a5[m
+Author: cou <courange.c@gmail.com>
+Date:   Sun Jul 30 21:42:25 2023 +0900
+
+    Taskコンポーネント復活
+
+[33mcommit e021f910fad542d5463b84a839b4e04bc561c261[m
+Author: cou <courange.c@gmail.com>
+Date:   Sun Jul 30 17:34:52 2023 +0900
+
+    Remove unnecessary imports and update Task component to include a delete failed modal
+
+[33mcommit b748eaf9f37cfe7a70a6b75ef04674210326c6c6[m
+Author: cou <courange.c@gmail.com>
+Date:   Sun Jul 30 17:11:55 2023 +0900
+
+    Task消えた
+
+[33mcommit 31725fa2e05129231b03ed5edc4bf5ed99ca0355[m
+Author: cou <courange.c@gmail.com>
+Date:   Sat Jul 29 13:07:40 2023 +0900
+
+    Add TaskEditor component to CreatePage
+
+[33mcommit 445a78b79a77d11062cd6665cb2886f2c9e4dbb1[m
+Author: cou <courange.c@gmail.com>
+Date:   Fri Jul 28 21:59:26 2023 +0900
+
+    LoginPageの正常理の完成
+
+[33mcommit fab430126d64088c59259a0bff516b36ceb01256[m
+Author: cou <courange.c@gmail.com>
+Date:   Fri Jul 28 17:37:10 2023 +0900
+
+    Add solid plugin and update variable naming conventions
+
+[33mcommit 7f801dd5a3beb7a9ff67d2dcb6454811615c1ca3[m
+Author: cou <courange.c@gmail.com>
+Date:   Fri Jul 28 17:10:53 2023 +0900
+
+    change format rule
+
+[33mcommit 3833d6724fe96269ac0c6cc1adf48e3971a35405[m
+Author: cou <courange.c@gmail.com>
+Date:   Fri Jul 28 17:03:16 2023 +0900
+
+    Change ESLint, Jest, Prettier, and JSON Server configurations
+
+[33mcommit ab530e85de2c1415b605927c5e156bc5665cc3f4[m
+Author: cou <courange.c@gmail.com>
+Date:   Fri Jul 28 17:02:28 2023 +0900
+
+    wip Added getTaskViewTree
+
+[33mcommit f120ffe1949c16b0f3f2c11ff41d83157a6a0acc[m
+Author: cou <courange.c@gmail.com>
+Date:   Fri Jul 28 10:08:10 2023 +0900
+
+    Add Task class and taskIoTypeInstance definition
+
+[33mcommit 3f747fca8f4d09e74d1be89edc2f1c92b6c53352[m
+Author: cou <courange.c@gmail.com>
+Date:   Fri Jul 28 03:44:08 2023 +0900
+
+    Refactor code and update dependencies in project files
+
+[33mcommit ee8a5e9ae99164d11419b0aec0b602b73a491dce[m
+Author: cou <courange.c@gmail.com>
+Date:   Fri Jul 28 03:43:52 2023 +0900
+
+    Refactor passport import and strategy inheritance in JwtStrategy and LocalStrategy
+
+[33mcommit 5c6ddc27c7133bd293a792258c71e12f79e37392[m
+Author: cou <courange.c@gmail.com>
+Date:   Fri Jul 28 03:43:32 2023 +0900
+
+    Rename "parent_id" to "newParent" in the backend README.md file
+
+[33mcommit 9a155b8cf41f71f2ee0e4e75202615faf44df03d[m
+Author: cou <courange.c@gmail.com>
+Date:   Thu Jul 27 10:43:45 2023 +0900
+
+    Refactor task.ts for better readability and maintainability
+
+[33mcommit c9493e7a61fb64007f2f74ff59e9cf604d1d5f60[m
+Author: cou <courange.c@gmail.com>
+Date:   Thu Jul 27 10:35:23 2023 +0900
+
+    Update task endpoints and functions
+
+[33mcommit 6105fef2f850b719a9d90228c5314646c2c596cd[m
+Author: cou <courange.c@gmail.com>
+Date:   Wed Jul 26 20:08:09 2023 +0900
+
+    before add cookie strategy
+
+[33mcommit 8af7f2da922a71c8aa8d8a6f657668a97a09fe96[m
+Author: cou <courange.c@gmail.com>
+Date:   Wed Jul 26 18:42:45 2023 +0900
+
+    Refactor task entity and service, move task common logic to separate file
+
+[33mcommit d741a349cd0fc825e7d289aece6cdd64e58e3774[m
+Author: cou <courange.c@gmail.com>
+Date:   Wed Jul 26 18:38:58 2023 +0900
+
+    Refactor Task class and related code to use TaskEntity instead of Task
+
+[33mcommit d3b22433d6a72282981e217cc09c63fcbe3d5b78[m
+Author: cou <courange.c@gmail.com>
+Date:   Wed Jul 26 11:46:20 2023 +0900
+
+    Add new pages for login and register functionality
+
+[33mcommit 4f1ac685169817a74a8e5fc664b75f1e80b1c9db[m
+Author: cou <courange.c@gmail.com>
+Date:   Wed Jul 26 11:46:04 2023 +0900
+
+    Add Common
+
+[33mcommit 72e5882863ff9b672fa76b5cdd8f516c792dbcbf[m
+Author: cou <courange.c@gmail.com>
+Date:   Tue Jul 25 21:44:09 2023 +0900
+
+    Add Jest and Solid Testing Library dependencies
+
+[33mcommit b1450782f051b28303cd04cbe1d1ff7436734398[m
+Author: cou <courange.c@gmail.com>
+Date:   Tue Jul 25 18:23:16 2023 +0900
+
+    Update README with pnpm installation and build instructions
+
+[33mcommit 715a59982462fc6a6f09e9aeb0586eeab56157de[m
+Author: cou <courange.c@gmail.com>
+Date:   Tue Jul 25 17:49:47 2023 +0900
+
+    Add Eslint
+
+[33mcommit 307403891431810f5e23bb558b5915038e5668d6[m
+Author: cou <courange.c@gmail.com>
+Date:   Tue Jul 25 17:37:55 2023 +0900
+
+    Add Solid router
+
+[33mcommit fb18066f3bffccc4378187df9df8f416057df71f[m
+Author: cou <courange.c@gmail.com>
+Date:   Tue Jul 25 16:51:56 2023 +0900
+
+    Add Tailwind CSS and PostCSS for styling
+
+[33mcommit 5ba68959bbd5c434bfa1668988f3e05fd424894a[m
+Author: cou <courange.c@gmail.com>
+Date:   Tue Jul 25 16:20:29 2023 +0900
+
+    Add frontend project files
+
+[33mcommit ad6353e769ee4a14884bd789b27a0d7edda402f6[m
+Author: cou <courange.c@gmail.com>
+Date:   Sun Jul 23 16:50:26 2023 +0900
+
+    Remove unnecessary console.log statement in TaskService
+
+[33mcommit c52047bdc7ad0a6046b25bc7eada765055b559ef[m
+Author: cou <courange.c@gmail.com>
+Date:   Sun Jul 23 16:49:47 2023 +0900
+
+    Refactor task.service.ts to improve code readability and remove unnecessary console.log statements
+
+[33mcommit 981f8d7810f7e1ec1e6dfc096a594c9d47783e49[m
+Author: cou <courange.c@gmail.com>
+Date:   Sun Jul 23 16:49:36 2023 +0900
+
+    Refactored tests for task endpoints
+
+[33mcommit 319b94d7091fc1438fa0cbf22decc63d189341ae[m
+Author: cou <courange.c@gmail.com>
+Date:   Sun Jul 23 00:03:49 2023 +0900
+
+    wip: Added e2e test
+
+[33mcommit a5952d9dd82d1026ebc26892e986179101e2bea8[m
+Author: cou <courange.c@gmail.com>
+Date:   Sat Jul 22 17:34:30 2023 +0900
+
+    Remove unnecessary console.log statements and comments
+
+[33mcommit c5e4c35e2b4056620833e6928e8b3ccd67a838cf[m
+Author: cou <courange.c@gmail.com>
+Date:   Sat Jul 22 17:34:14 2023 +0900
+
+    Add Test case(/login;POST,/register;POST,/user;DELETE)
+
+[33mcommit 93e9bdb83089a7f2ce9f1f73a6e8707e7ab9af37[m
+Author: cou <courange.c@gmail.com>
+Date:   Sat Jul 22 11:37:29 2023 +0900
+
+    add mini e2e tests
+
+[33mcommit cb7f26e6a610f883636d51c06905e0c602a0128e[m
+Author: cou <courange.c@gmail.com>
+Date:   Sat Jul 22 00:48:48 2023 +0900
+
+    wip: e2eテスト追加中
+
+[33mcommit 7a2c1091473132fc20092af9b15666203fadd87a[m
+Author: cou <courange.c@gmail.com>
+Date:   Fri Jul 21 21:37:18 2023 +0900
+
+    Change return type of `findOne` method in `UserService` to `User | null`.
+
+[33mcommit b58bb8397217f53cd679f0a42f8046a7816d73be[m
+Author: cou <courange.c@gmail.com>
+Date:   Fri Jul 21 21:31:31 2023 +0900
+
+    Add sqlite database and bcrypt type definitions
+
+[33mcommit 178845a56017c581d4a88577cc2f5bbf9c14e861[m
+Author: cou <courange.c@gmail.com>
+Date:   Fri Jul 21 21:24:09 2023 +0900
+
+    Refactor app.controller to use UserService instead of AppService
+
+[33mcommit 1d544980fa9c7d18495e9dc9ad0ac5b078bf9ba6[m
+Author: cou <courange.c@gmail.com>
+Date:   Fri Jul 21 21:19:10 2023 +0900
+
+    Fix validateUser not checking for null user and password match error handling
+
+[33mcommit 73d8c07333b7cc007b0e3abfcc5f87d2b055e988[m
+Author: cou <courange.c@gmail.com>
+Date:   Fri Jul 21 19:11:27 2023 +0900
+
+    Add tests for user service methods
+
+[33mcommit 2a4cd60e0326480b80b5ba041d7ca98b8ee9a6db[m
+Author: cou <courange.c@gmail.com>
+Date:   Fri Jul 21 01:32:42 2023 +0900
+
+    feat: /task;DELETE
+
+[33mcommit d7cabac35476d78a488a4ce07b893f06fc5010af[m
+Author: cou <courange.c@gmail.com>
+Date:   Fri Jul 21 01:24:52 2023 +0900
+
+    feat: /task/:id /task/list
+
+[33mcommit 847c53c438518f5fb4a47247f8c1b82085aad71c[m
+Author: cou <courange.c@gmail.com>
+Date:   Thu Jul 20 01:16:27 2023 +0900
+
+    feat: jwt完成
+
+[33mcommit 377af60f94098751689d2c8e0dd45aefca010aa7[m
+Author: cou <courange.c@gmail.com>
+Date:   Wed Jul 19 23:16:25 2023 +0900
+
+    feat: /login API完成
+
+[33mcommit 33f5bc02815e3e364214a6d304c9286390f5f2c9[m
+Author: cou <courange.c@gmail.com>
+Date:   Wed Jul 19 19:58:44 2023 +0900
+
+    wip: before edit app controller
+
+[33mcommit 4b4127453e3cedf33ed5824cf8218dcdeffe2cab[m[33m ([m[1;31morigin/main[m[33m)[m
+Author: cou <courange.c@gmail.com>
+Date:   Wed Jul 19 11:41:58 2023 +0900
+
+    wip: add /login endpoint using passport.js
+
+[33mcommit 0ef3dd4afbba171f528636dae709a81a9199c37e[m
+Author: cou <courange.c@gmail.com>
+Date:   Tue Jul 18 21:41:56 2023 +0900
+
+    feat: add passport.js for authentication
+
+[33mcommit 8aeb9748d74d8601aae8c9c5c68492e5a0988436[m
+Author: cou <courange.c@gmail.com>
+Date:   Tue Jul 18 16:55:04 2023 +0900
+
+    first commit
