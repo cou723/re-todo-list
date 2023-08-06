@@ -1,4 +1,3 @@
-import { Button } from 'solid-bootstrap';
 import TaskList from '../components/TaskList/TaskList';
 import api from '@/lib/api';
 import { Task } from '@/../../backend/common/Task';
@@ -7,6 +6,7 @@ import { Show, createResource } from 'solid-js';
 import { ITaskView, TaskView } from '@/types/TaskView';
 import { Result } from 'ts-results';
 import AddIcon from '@/components/AddIcon';
+import Button from '@/components/utils/Button';
 
 // データのリストをとってくる
 // データのリストの取得に失敗したらログインを促す

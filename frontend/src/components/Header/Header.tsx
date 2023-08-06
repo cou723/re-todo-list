@@ -1,10 +1,10 @@
 import { Show, createResource } from 'solid-js';
-import { Button } from 'solid-bootstrap';
 import LogoIcon from './LogoIcon';
 import api from '@/lib/api';
 import { LoginButton } from './LoginButton';
 import { LogoutButton } from './LogoutButton';
 import { UserDeleteButton } from './UserDeleteButton';
+import Button from '../utils/Button';
 
 const Header = (props: { class?: string }) => {
   const [loginName] = createResource(true, async () => {
@@ -22,7 +22,7 @@ const Header = (props: { class?: string }) => {
           props.class
         }
       >
-        <a href="/" class="d-flex align-items-center ">
+        <a href="/" class="ml-4" style={{ display: 'inline-block' }}>
           <LogoIcon size={2} />
         </a>
 

@@ -1,7 +1,8 @@
-import { Alert, Button, Form } from 'solid-bootstrap';
 import api from '@/lib/api';
 import { createSignal, Show } from 'solid-js';
 import TextInput from '@/components/TextInput';
+import Alert from '@/components/utils/Alert';
+import Button from '@/components/utils/Button';
 
 const LoginPage = () => {
   const [username, setUsername] = createSignal('');
@@ -32,16 +33,11 @@ const LoginPage = () => {
           placeholder="**********"
         />
         <Show when={error()}>
-          <Alert variant="danger" dismissible onClose={() => setError(false)}>
-            <Alert.Heading>ログイン失敗</Alert.Heading>
-            <p>
-              ログインに失敗しました。今一度ユーザー名とパスワードを確認してください。
-            </p>
+          <Alert variant="error" onClose={() => setError(false)}>
+            ログインに失敗しました。今一度ユーザー名とパスワードを確認してください。
           </Alert>
         </Show>
-        <Button variant="primary" onClick={login}>
-          Login
-        </Button>
+        <Button onClick={login}>Login</Button>
       </Form>
     </div>
   );

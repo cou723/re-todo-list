@@ -1,7 +1,8 @@
-import { Alert, Button, Form } from 'solid-bootstrap';
 import { type Component, Show, createSignal, createResource } from 'solid-js';
 import TextInput from '@/components/TextInput';
 import api from '@/lib/api';
+import Button from '@/components/utils/Button';
+import Alert from '@/components/utils/Alert';
 
 const RegisterPage: Component = () => {
   const [username, setUsername] = createSignal<string>('');
@@ -40,16 +41,11 @@ const RegisterPage: Component = () => {
           placeholder="**********"
         />
         <Show when={error()}>
-          <Alert variant="danger" dismissible onClose={() => setError('')}>
-            <Alert.Heading>登録失敗</Alert.Heading>
+          <Alert variant="error" onClose={() => setError('')}>
             <p>{error()}</p>
           </Alert>
         </Show>
-        <Button
-          variant="primary"
-          onClick={register}
-          disabled={!!isDuplicateUsername()}
-        >
+        <Button onClick={register} disabled={!!isDuplicateUsername()}>
           アカウント新規作成
         </Button>
       </Form>

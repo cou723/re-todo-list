@@ -40,7 +40,6 @@
     "@solidjs/router": "^0.8.2",
     "io-ts": "^2.2.20",
     "json-server": "^0.17.3",
-    "solid-bootstrap": "^1.0.14",
     "solid-js": "^1.7.6",
     "ts-results": "^3.3.0"
   }

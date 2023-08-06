@@ -6,12 +6,15 @@ import RegisterPage from './pages/RegisterPage';
 import CreatePage from './pages/CreatePage';
 import HomePage from './pages/HomePage';
 import Header from './components/Header/Header';
+import ComponentPlayground from './pages/ComponentPlayground';
 
 const App: Component = () => (
   <>
     <Header />
     <div class="container mt-4">
       <Routes>
+        <Route path="/404" element={<div>404</div>} />
+        <Route path="/test" element={<ComponentPlayground />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/" element={<HomePage />} />

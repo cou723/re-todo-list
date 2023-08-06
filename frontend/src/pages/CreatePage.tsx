@@ -2,7 +2,7 @@ import { createSignal, type Component, Show } from 'solid-js';
 import TaskEditor from '@/components/TaskEditor/TaskEditor';
 import api from '@/lib/api';
 import { ICreateTaskDto } from '@/../../backend/src/task/createTaskDto';
-import { Alert } from 'solid-bootstrap';
+import Alert from '@/components/utils/Alert';
 
 const CreatePage: Component = () => {
   const [error, setError] = createSignal<string>('');
@@ -23,8 +23,7 @@ const CreatePage: Component = () => {
     <>
       <Show when={error() != ''}>
         <Alert
-          variant="danger"
-          dismissible
+          variant="error"
           onClose={() => {
             setError('');
           }}
