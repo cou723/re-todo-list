@@ -1,10 +1,9 @@
-import { ITask } from '@/../../backend/common/Task';
-import TextInput from '@/components/TextInput';
+import TextInput from '@/components/utils/TextInput';
 import { createStore } from 'solid-js/store';
-import { Button, Form } from 'solid-bootstrap';
 import { ICreateTaskDto } from '@/../../backend/src/task/createTaskDto';
 import { mergeProps } from 'solid-js';
 import ParentTaskSelect from './ParentTaskSelect';
+import Button from '../utils/Button';
 
 const TaskEditor = (props: {
   onSend: (task: ICreateTaskDto) => void;
@@ -24,33 +23,31 @@ const TaskEditor = (props: {
 
   const [currentTask, setTask] = createStore<ICreateTaskDto>(merged.default);
 
-  function generateSetTaskProps<T extends keyof ITask>(key: T) {
-    return (value: string) => setTask({ ...currentTask, [key]: value });
+  function generateSetTaskProps<T extends keyof ICreateTaskDto>(key: T) {
+    return (value: string) => setTask(key, value);
   }
 
   return (
-    <>
+    <div class="flex flex-col gap-4">
       <TextInput
         label="タイトル"
-        value={() => currentTask.title}
-        setValue={generateSetTaskProps('title')}
+        accessor={() => currentTask.title}
+        setter={generateSetTaskProps('title')}
       />
       <TextInput
         label="説明"
-        value={() => currentTask.description}
-        setValue={generateSetTaskProps('description')}
+        accessor={() => currentTask.description}
+        setter={generateSetTaskProps('description')}
       />
-      <Form>
-        <ParentTaskSelect
-          currentTask={currentTask}
-          setTask={setTask}
-          id={props.id}
-        />
-      </Form>
+      <ParentTaskSelect
+        currentTask={currentTask}
+        setTask={setTask}
+        id={props.id}
+      />
       <Button onClick={() => props.onSend(currentTask)}>
         {props.sendLabel}
       </Button>
-    </>
+    </div>
   );
 };
 

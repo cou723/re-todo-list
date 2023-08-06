@@ -1,5 +1,7 @@
-const AddIcon = () => (
+const AddIcon = (props: { class: string }) => (
   <svg
+    class={props.class ?? ''}
+    style={{ display: 'inline' }}
     width="24"
     height="24"
     viewBox="0 0 24 24"

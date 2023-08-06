@@ -1,6 +1,6 @@
 import api from '@/lib/api';
 import { createSignal, Show } from 'solid-js';
-import TextInput from '@/components/TextInput';
+import TextInput from '@/components/utils/TextInput';
 import Alert from '@/components/utils/Alert';
 import Button from '@/components/utils/Button';
 
@@ -10,25 +10,27 @@ const LoginPage = () => {
   const [error, setError] = createSignal(false);
 
   const login = async () => {
+    console.log(username(), password());
+
     const data = await api.login(username(), password());
     if (data.ok) window.location.href = '/';
     else setError(true);
   };
 
   return (
-    <div style={{ width: '20rem' }}>
+    <div class="">
       <h4>Login</h4>
-      <Form>
+      <div class="flex flex-row">
         <TextInput
           label="Username"
-          value={username}
-          setValue={setUsername}
+          accessor={username}
+          setter={setUsername}
           placeholder="UserName10203"
         />
         <TextInput
           label="Password"
-          value={password}
-          setValue={setPassword}
+          accessor={password}
+          setter={setPassword}
           type="password"
           placeholder="**********"
         />
@@ -38,7 +40,7 @@ const LoginPage = () => {
           </Alert>
         </Show>
         <Button onClick={login}>Login</Button>
-      </Form>
+      </div>
     </div>
   );
 };

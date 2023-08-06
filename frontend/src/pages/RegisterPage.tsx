@@ -1,5 +1,5 @@
 import { type Component, Show, createSignal, createResource } from 'solid-js';
-import TextInput from '@/components/TextInput';
+import TextInput from '@/components/utils/TextInput';
 import api from '@/lib/api';
 import Button from '@/components/utils/Button';
 import Alert from '@/components/utils/Alert';
@@ -25,18 +25,20 @@ const RegisterPage: Component = () => {
   return (
     <div style={{ width: '20rem' }}>
       <h4>Register</h4>
-      <Form>
+      <form>
         <TextInput
           label="Username"
-          value={username}
-          setValue={setUsername}
+          accessor={username}
+          setter={setUsername}
           placeholder="UserName10203"
-          help={isDuplicateUsername() ? 'ユーザー名が既に使われています。' : ''}
+          error={
+            isDuplicateUsername() ? 'ユーザー名が既に使われています。' : ''
+          }
         />
         <TextInput
           label="Password"
-          value={password}
-          setValue={setPassword}
+          accessor={password}
+          setter={setPassword}
           type="password"
           placeholder="**********"
         />
@@ -48,7 +50,7 @@ const RegisterPage: Component = () => {
         <Button onClick={register} disabled={!!isDuplicateUsername()}>
           アカウント新規作成
         </Button>
-      </Form>
+      </form>
     </div>
   );
 };

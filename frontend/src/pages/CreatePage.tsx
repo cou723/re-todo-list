@@ -20,7 +20,7 @@ const CreatePage: Component = () => {
   };
 
   return (
-    <>
+    <div>
       <Show when={error() != ''}>
         <Alert
           variant="error"
@@ -32,7 +32,7 @@ const CreatePage: Component = () => {
         </Alert>
       </Show>
       <TaskEditor onSend={createTask} sendLabel="作成" />
-    </>
+    </div>
   );
 };
 

@@ -11,7 +11,7 @@ import ComponentPlayground from './pages/ComponentPlayground';
 const App: Component = () => (
   <>
     <Header />
-    <div class="container mt-4">
+    <div class="container mx-auto px-10">
       <Routes>
         <Route path="/404" element={<div>404</div>} />
         <Route path="/test" element={<ComponentPlayground />} />

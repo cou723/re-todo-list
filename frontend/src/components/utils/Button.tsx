@@ -1,42 +1,26 @@
-import { JSX, Show } from 'solid-js';
-import { Link } from '@solidjs/router';
+import { JSX, Switch, Match } from 'solid-js';
+import LinkButton from './LinkButton';
+import NormalButton from './NormalButton';
 
-const Button = (props: {
+export type ButtonProps = {
   class?: string;
   onClick?: () => void;
-  children?: string | JSX.Element;
+  children: string | JSX.Element;
   disabled?: boolean;
-  href?: string;
-}) => {
+  href: string;
+  outline?: boolean;
+};
+
+const Button = (props: ButtonProps) => {
   return (
-    <Show
-      when={props.href}
-      fallback={
-        <button
-          class={`bg-pri hover:bg-pri-dark text-white font-bold py-2 px-4 rounded ${
-            props.class
-          } ${props.disabled ? 'opacity-50 cursor-not-allowed' : ''}}`}
-          onClick={
-            props.onClick ??
-            (() => {
-              console.log('click');
-            })
-          }
-        >
-          {props.children ?? 'ボタン'}
-        </button>
-      }
-    >
-      <Link
-        class={`bg-pri hover:bg-pri-dark text-white font-bold py-2 px-4 rounded ${
-          props.class
-        } ${props.disabled ? 'opacity-50 cursor-not-allowed' : ''}}`}
-        href={props.href!}
-        style={{ display: 'inline-block' }}
-      >
-        {props.children ?? 'Link'}
-      </Link>
-    </Show>
+    <Switch>
+      <Match when={props.href === undefined}>
+        <NormalButton {...props}>{props.children}</NormalButton>
+      </Match>
+      <Match when={props.href}>
+        <LinkButton {...props}>{props.children}</LinkButton>
+      </Match>
+    </Switch>
   );
 };
 

@@ -3,6 +3,7 @@ import { SetStoreFunction } from 'solid-js/store';
 import { ICreateTaskDto } from '@/../../backend/src/task/createTaskDto';
 import { ITaskView, TaskView } from '@/types/TaskView';
 import api from '@/lib/api';
+import Select from '../utils/Select';
 
 const ParentTaskSelect = (props: {
   currentTask: ICreateTaskDto;
@@ -21,16 +22,12 @@ const ParentTaskSelect = (props: {
   });
 
   return (
-    <select
-      class="form-select"
-      aria-label="Default select example"
-      onChange={(e) =>
+    <Select
+      label="親タスク"
+      setter={(value: string) =>
         props.setTask({
           ...props.currentTask,
-          parentId:
-            e.currentTarget.value == 'undefined'
-              ? undefined
-              : parseInt(e.currentTarget.value),
+          parentId: value == 'undefined' ? undefined : parseInt(value),
         })
       }
     >
@@ -54,7 +51,7 @@ const ParentTaskSelect = (props: {
           なし
         </option>
       </Show>
-    </select>
+    </Select>
   );
 };
 
