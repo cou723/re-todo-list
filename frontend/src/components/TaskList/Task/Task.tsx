@@ -7,6 +7,7 @@ import Checkbox from '@/components/util/Checkbox';
 
 export const Task = (props: { class?: string; task: ITaskView }) => {
   const [showErrorModal, setShowErrorModal] = createSignal(false);
+  console.log(props.task);
   const [isDone, setIsDone] = createSignal(props.task.isDone);
 
   const deleteFailed = () => {
@@ -14,6 +15,7 @@ export const Task = (props: { class?: string; task: ITaskView }) => {
   };
 
   const handleClick = () => {
+    console.log('check:', isDone());
     setIsDone(!isDone());
     if (isDone()) api.done(props.task.id);
     else api.undone(props.task.id);

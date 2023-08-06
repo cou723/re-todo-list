@@ -7,8 +7,8 @@ const Checkbox = (props: {
   return (
     <input
       type="checkbox"
-      value={props.isChecked() ? 1 : 0}
-      onClick={() => props.onClick()}
+      checked={props.isChecked()}
+      onClick={props.onClick}
     />
   );
 };
