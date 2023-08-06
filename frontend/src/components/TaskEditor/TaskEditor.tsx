@@ -1,8 +1,8 @@
-import { ITask } from '../../../../backend/common/Task';
-import TextInput from '../TextInput';
+import { ITask } from '@/../../backend/common/Task';
+import TextInput from '@/components/TextInput';
 import { createStore } from 'solid-js/store';
 import { Button, Form } from 'solid-bootstrap';
-import { ICreateTaskDto } from '../../../../backend/src/task/createTaskDto';
+import { ICreateTaskDto } from '@/../../backend/src/task/createTaskDto';
 import { mergeProps } from 'solid-js';
 import ParentTaskSelect from './ParentTaskSelect';
 

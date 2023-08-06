@@ -1,7 +1,7 @@
 import { createSignal, type Component, Show } from 'solid-js';
-import TaskEditor from '../components/TaskEditor/TaskEditor';
-import api from '../lib/api';
-import { ICreateTaskDto } from '../../../backend/src/task/createTaskDto';
+import TaskEditor from '@/components/TaskEditor/TaskEditor';
+import api from '@/lib/api';
+import { ICreateTaskDto } from '@/../../backend/src/task/createTaskDto';
 import { Alert } from 'solid-bootstrap';
 
 const CreatePage: Component = () => {

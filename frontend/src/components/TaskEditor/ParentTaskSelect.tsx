@@ -1,8 +1,8 @@
 import { Show, For, createResource } from 'solid-js';
 import { SetStoreFunction } from 'solid-js/store';
-import { ICreateTaskDto } from '../../../../backend/src/task/createTaskDto';
-import { ITaskView, TaskView } from '../../types/TaskView';
-import api from '../../lib/api';
+import { ICreateTaskDto } from '@/../../backend/src/task/createTaskDto';
+import { ITaskView, TaskView } from '@/types/TaskView';
+import api from '@/lib/api';
 
 const ParentTaskSelect = (props: {
   currentTask: ICreateTaskDto;

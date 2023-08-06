@@ -1,9 +1,9 @@
 import { useParams } from '@solidjs/router';
 import { type Component, createResource, Show } from 'solid-js';
-import TaskEditor from '../components/TaskEditor/TaskEditor';
-import api from '../lib/api';
+import TaskEditor from '@/components/TaskEditor/TaskEditor';
+import api from '@/lib/api';
 import { Err, Ok, Result } from 'ts-results';
-import { ICreateTaskDto } from '../../../backend/src/task/createTaskDto';
+import { ICreateTaskDto } from '@/../../backend/src/task/createTaskDto';
 
 const EditPage: Component = () => {
   const params = useParams();

@@ -1,7 +1,7 @@
 import { Alert, Button, Form } from 'solid-bootstrap';
-import api from '../lib/api';
+import api from '@/lib/api';
 import { createSignal, Show } from 'solid-js';
-import TextInput from '../components/TextInput';
+import TextInput from '@/components/TextInput';
 
 const LoginPage = () => {
   const [username, setUsername] = createSignal('');

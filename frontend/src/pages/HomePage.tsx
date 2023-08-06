@@ -1,12 +1,12 @@
 import { Button } from 'solid-bootstrap';
 import TaskList from '../components/TaskList/TaskList';
-import api from '../lib/api';
-import { Task } from '../../../backend/common/Task';
-import { getTaskViewTree } from '../lib/getTaskView';
+import api from '@/lib/api';
+import { Task } from '@/../../backend/common/Task';
+import { getTaskViewTree } from '@/lib/getTaskView';
 import { Show, createResource } from 'solid-js';
-import { ITaskView, TaskView } from '../types/TaskView';
+import { ITaskView, TaskView } from '@/types/TaskView';
 import { Result } from 'ts-results';
-import AddIcon from '../components/AddIcon';
+import AddIcon from '@/components/AddIcon';
 
 // データのリストをとってくる
 // データのリストの取得に失敗したらログインを促す

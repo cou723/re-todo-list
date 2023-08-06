@@ -1,7 +1,7 @@
 import { Alert, Button, Form } from 'solid-bootstrap';
 import { type Component, Show, createSignal, createResource } from 'solid-js';
-import TextInput from '../components/TextInput';
-import api from '../lib/api';
+import TextInput from '@/components/TextInput';
+import api from '@/lib/api';
 
 const RegisterPage: Component = () => {
   const [username, setUsername] = createSignal<string>('');

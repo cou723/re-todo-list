@@ -1,9 +1,9 @@
 import { Card, Form } from 'solid-bootstrap';
-import { type ITaskView } from '../../../types/TaskView';
+import { type ITaskView } from '@/types/TaskView';
 import { For, createSignal } from 'solid-js';
 import TaskDeleteFailedModal from './TaskDeleteFailedModal';
 import TaskEditButtonGroup from './TaskEditButtonGroup/TaskEditButtonGroup';
-import api from '../../../lib/api';
+import api from '@/lib/api';
 
 export const Task = (props: { class?: string; task: ITaskView }) => {
   const [showErrorModal, setShowErrorModal] = createSignal(false);

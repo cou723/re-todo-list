@@ -1,7 +1,7 @@
 import { Show, createResource } from 'solid-js';
 import { Button } from 'solid-bootstrap';
 import LogoIcon from './LogoIcon';
-import api from '../../lib/api';
+import api from '@/lib/api';
 import { LoginButton } from './LoginButton';
 import { LogoutButton } from './LogoutButton';
 import { UserDeleteButton } from './UserDeleteButton';

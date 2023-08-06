@@ -1,4 +1,4 @@
-import { Task, type ITask } from '../../../backend/common/Task';
+import { Task, type ITask } from '@/../../backend/common/Task';
 export type ITaskView = ITask & { children: ITaskView[] };
 
 export class TaskView implements ITaskView {

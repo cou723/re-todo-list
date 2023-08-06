@@ -1,5 +1,5 @@
 import { getTaskViewTree } from './getTaskView';
-import { Task } from '../../../backend/common/Task';
+import { Task } from '@/../../backend/common/Task';
 import { Ok } from 'ts-results';
 import { TaskView } from '../types/TaskView';
 describe('endpoints', () => {
