@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { UserService } from '../user/user.service';
-import { User } from '../entity/user.entity';
+import { UserService } from '@/user/user.service';
+import { User } from '@/entity/user.entity';
 import { JwtService } from '@nestjs/jwt';
 import bcrypt = require('bcrypt');
 type PasswordOmitUser = Omit<User, 'password'>;

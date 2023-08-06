@@ -14,8 +14,8 @@ import {
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { TaskService } from './task.service';
-import { User } from '../entity/user.entity';
-import { TaskEntity } from '../entity/task.entity';
+import { User } from '@/entity/user.entity';
+import { TaskEntity } from '@/entity/task.entity';
 
 import { CreateTaskDto } from './createTaskDto';
 import { UpdateTaskDto } from './updateTaskDto';

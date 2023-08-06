@@ -12,10 +12,10 @@ import {
   Get,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { PasswordOmitUser } from './entity/user.entity';
-import { UserService } from './user/user.service';
-import { AuthService } from './auth/auth.service';
-import { RegisterDto } from './register.dto';
+import { PasswordOmitUser } from '@/entity/user.entity';
+import { UserService } from '@/user/user.service';
+import { AuthService } from '@/auth/auth.service';
+import { RegisterDto } from '@/register.dto';
 import { Response } from 'express';
 
 @Controller()

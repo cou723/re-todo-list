@@ -1,5 +1,5 @@
 import { IsNumber, IsOptional, IsString } from 'class-validator';
-import { TaskEntity } from '../entity/task.entity';
+import { TaskEntity } from '@/entity/task.entity';
 
 export interface ICreateTaskDto {
   title: TaskEntity['title'];

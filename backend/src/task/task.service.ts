@@ -1,8 +1,8 @@
 import { HttpException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { TaskEntity } from '../entity/task.entity';
-import { ITask, Task } from '../../common/Task';
+import { TaskEntity } from '@/entity/task.entity';
+import { ITask, Task } from '@common/Task';
 
 export class TaskService {
   constructor(
