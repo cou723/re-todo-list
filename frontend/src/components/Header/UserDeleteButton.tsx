@@ -1,5 +1,5 @@
-import { Button } from 'solid-bootstrap';
 import api from '@/lib/api';
+import Button from '../util/Button';
 
 export const UserDeleteButton = (props: { class: string }) => {
   const deleteAccount = async () => {

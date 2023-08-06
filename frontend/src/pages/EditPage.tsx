@@ -4,6 +4,7 @@ import TaskEditor from '@/components/TaskEditor/TaskEditor';
 import api from '@/lib/api';
 import { Err, Ok, Result } from 'ts-results';
 import { ICreateTaskDto } from '@/../../backend/src/task/createTaskDto';
+import Title from '@/components/Header/Title';
 
 const EditPage: Component = () => {
   const params = useParams();
@@ -55,7 +56,7 @@ const EditPage: Component = () => {
 
   return (
     <>
-      <h4>タスクを編集</h4>
+      <Title class="mb-4">タスクを編集</Title>
       <Show when={!!task()} fallback={<>now loading</>}>
         <TaskEditor
           default={{

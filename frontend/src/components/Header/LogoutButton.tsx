@@ -1,5 +1,5 @@
-import { Button } from 'solid-bootstrap';
 import api from '@/lib/api';
+import Button from '../util/Button';
 
 export const LogoutButton = () => {
   const logout = async () => await api.logout();

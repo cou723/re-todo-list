@@ -1,7 +1,6 @@
-import { Button, ButtonGroup } from 'solid-bootstrap';
-import TrashIcon from './TrashIcon';
-import PenIcon from './PenIcon';
+import Button from '@/components/util/Button';
 import api from '@/lib/api';
+import { Icon } from '@iconify-icon/solid';
 
 const TaskEditButtonGroup = (props: {
   id: number;
@@ -14,16 +13,16 @@ const TaskEditButtonGroup = (props: {
   };
 
   return (
-    <ButtonGroup class="ms-auto">
-      <Button size="sm" href={`/edit/${props.id}`}>
+    <div>
+      <Button href={`/edit/${props.id}`}>
         <span class="mr-2">編集</span>
-        <PenIcon />
+        <Icon icon="mdi:pencil" />
       </Button>
-      <Button size="sm" variant="danger" onClick={() => deleteTask()}>
+      <Button variant="danger" onClick={() => deleteTask()}>
         <span class="mr-2">削除</span>
-        <TrashIcon />
+        <Icon icon="mdi:delete" />
       </Button>
-    </ButtonGroup>
+    </div>
   );
 };
 

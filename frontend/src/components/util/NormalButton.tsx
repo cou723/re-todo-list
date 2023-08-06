@@ -1,10 +1,8 @@
-import { ButtonProps } from './Button';
+import { ButtonProps, getClass } from './Button';
 
 const NormalButton = (props: ButtonProps) => (
   <button
-    class={`bg-pri hover:bg-pri-dark text-white font-bold py-2 px-4 rounded ${
-      props.class ?? ''
-    } ${props.disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
+    class={`${getClass(props.variant, props.class, props.disabled)}`}
     onClick={
       props.onClick ??
       (() => {

@@ -1,8 +1,11 @@
 import api from '@/lib/api';
 import { createSignal, Show } from 'solid-js';
-import TextInput from '@/components/utils/TextInput';
-import Alert from '@/components/utils/Alert';
-import Button from '@/components/utils/Button';
+import Alert from '@/components/util/Alert';
+import Button from '@/components/util/Button';
+import Title from '@/components/Header/Title';
+import CenterContainer from '@/components/util/CenterContainer';
+import UsernameInput from '@/components/UsernameInput';
+import PasswordInput from '@/components/PasswordInput';
 
 const LoginPage = () => {
   const [username, setUsername] = createSignal('');
@@ -18,22 +21,11 @@ const LoginPage = () => {
   };
 
   return (
-    <div class="">
-      <h4>Login</h4>
-      <div class="flex flex-row">
-        <TextInput
-          label="Username"
-          accessor={username}
-          setter={setUsername}
-          placeholder="UserName10203"
-        />
-        <TextInput
-          label="Password"
-          accessor={password}
-          setter={setPassword}
-          type="password"
-          placeholder="**********"
-        />
+    <CenterContainer>
+      <Title class="mb-4">Login</Title>
+      <div class="flex flex-col gap-4">
+        <UsernameInput value={username} setValue={setUsername} />
+        <PasswordInput accessor={password} setter={setPassword} />
         <Show when={error()}>
           <Alert variant="error" onClose={() => setError(false)}>
             ログインに失敗しました。今一度ユーザー名とパスワードを確認してください。
@@ -41,7 +33,7 @@ const LoginPage = () => {
         </Show>
         <Button onClick={login}>Login</Button>
       </div>
-    </div>
+    </CenterContainer>
   );
 };
 

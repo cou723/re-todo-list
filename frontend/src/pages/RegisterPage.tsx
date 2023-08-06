@@ -1,8 +1,11 @@
 import { type Component, Show, createSignal, createResource } from 'solid-js';
-import TextInput from '@/components/utils/TextInput';
 import api from '@/lib/api';
-import Button from '@/components/utils/Button';
-import Alert from '@/components/utils/Alert';
+import Button from '@/components/util/Button';
+import Alert from '@/components/util/Alert';
+import Title from '@/components/Header/Title';
+import CenterContainer from '@/components/util/CenterContainer';
+import UsernameInput from '@/components/UsernameInput';
+import PasswordInput from '@/components/PasswordInput';
 
 const RegisterPage: Component = () => {
   const [username, setUsername] = createSignal<string>('');
@@ -23,35 +26,25 @@ const RegisterPage: Component = () => {
   });
 
   return (
-    <div style={{ width: '20rem' }}>
-      <h4>Register</h4>
-      <form>
-        <TextInput
-          label="Username"
-          accessor={username}
-          setter={setUsername}
-          placeholder="UserName10203"
-          error={
-            isDuplicateUsername() ? 'ユーザー名が既に使われています。' : ''
-          }
+    <CenterContainer>
+      <Title class="mb-4">Register</Title>
+      <div class="flex flex-col gap-4">
+        <UsernameInput
+          value={username}
+          setValue={setUsername}
+          isDuplicateUsername={isDuplicateUsername}
         />
-        <TextInput
-          label="Password"
-          accessor={password}
-          setter={setPassword}
-          type="password"
-          placeholder="**********"
-        />
+        <PasswordInput accessor={password} setter={setPassword} />
         <Show when={error()}>
           <Alert variant="error" onClose={() => setError('')}>
             <p>{error()}</p>
           </Alert>
         </Show>
-        <Button onClick={register} disabled={!!isDuplicateUsername()}>
+        <Button onClick={register} disabled={isDuplicateUsername()}>
           アカウント新規作成
         </Button>
-      </form>
-    </div>
+      </div>
+    </CenterContainer>
   );
 };
 

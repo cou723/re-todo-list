@@ -10,6 +10,7 @@ const TextInput = (props: {
   type?: 'text' | 'password' | 'email' | 'number';
   help?: string;
   error?: string;
+  full?: boolean;
 }) => {
   return (
     <div class={props.class ?? ''}>
@@ -21,7 +22,9 @@ const TextInput = (props: {
       </label>
       <input
         type={props.type ?? 'text'}
-        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-pri focus:border-pri block p-2.5 "
+        class={`bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-pri focus:border-pri block p-2.5 ${
+          props.full ? 'w-full' : ''
+        }`}
         placeholder={props.placeholder ?? ''}
         required={props.isRequired ?? false}
         value={props.accessor()}

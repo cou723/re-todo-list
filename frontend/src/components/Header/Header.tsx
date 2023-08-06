@@ -4,7 +4,7 @@ import api from '@/lib/api';
 import { LoginButton } from './LoginButton';
 import { LogoutButton } from './LogoutButton';
 import { UserDeleteButton } from './UserDeleteButton';
-import Button from '../utils/Button';
+import Button from '../util/Button';
 
 const Header = (props: { class?: string }) => {
   const [loginName] = createResource(true, async () => {
@@ -15,36 +15,38 @@ const Header = (props: { class?: string }) => {
   });
 
   return (
-    <div class="container">
-      <header
-        class={
-          'd-flex flex-wrap align-items-center justify-content-between py-3 border-bottom ' +
-          props.class
-        }
-      >
-        <a href="/" class="ml-4" style={{ display: 'inline-block' }}>
-          <LogoIcon size={2} />
-        </a>
+    <header
+      class={
+        'd-flex flex-wrap align-items-center justify-content-between py-3 border-bottom ' +
+        props.class
+      }
+    >
+      <nav class="bg-white border-gray-200 px-4 py-2.5">
+        <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
+          <a href="/" class="ml-4" style={{ display: 'inline-block' }}>
+            <LogoIcon size={2} />
+          </a>
 
-        <div class="text-end">
-          <Show
-            when={loginName()}
-            fallback={
+          <div>
+            <Show
+              when={loginName()}
+              fallback={
+                <>
+                  <LoginButton />
+                  <Button href="/register">Sign-up</Button>
+                </>
+              }
+            >
               <>
-                <LoginButton />
-                <Button href="/register">Sign-up</Button>
+                <LogoutButton />
+                <span class="ml-3">username: {loginName()}</span>
+                <UserDeleteButton class="ml-3" />
               </>
-            }
-          >
-            <>
-              <LogoutButton />
-              <span class="ml-3">username: {loginName()}</span>
-              <UserDeleteButton class="ml-3" />
-            </>
-          </Show>
+            </Show>
+          </div>
         </div>
-      </header>
-    </div>
+      </nav>
+    </header>
   );
 };
 

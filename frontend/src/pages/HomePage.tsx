@@ -5,14 +5,9 @@ import { getTaskViewTree } from '@/lib/getTaskView';
 import { Show, createResource } from 'solid-js';
 import { ITaskView, TaskView } from '@/types/TaskView';
 import { Result } from 'ts-results';
-import AddIcon from '@/components/AddIcon';
-import Button from '@/components/utils/Button';
+import { Icon } from '@iconify-icon/solid';
+import Button from '@/components/util/Button';
 
-// データのリストをとってくる
-// データのリストの取得に失敗したらログインを促す
-// データのリストをツリー構造に変換する
-// 失敗したらエラーメッセージを表示する
-// 成功したら表示して返す
 const HomePage = () => {
   const [tasks] = createResource(true, async () => {
     const data = await api.list();
@@ -30,7 +25,7 @@ const HomePage = () => {
   return (
     <div>
       <Button onClick={() => (window.location.href = '/task/create')}>
-        <AddIcon class="mr-2 align-bottom" />
+        <Icon icon="ic:baseline-plus" />
         タスクを追加
       </Button>
       <Show

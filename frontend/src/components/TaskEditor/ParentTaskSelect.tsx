@@ -3,7 +3,7 @@ import { SetStoreFunction } from 'solid-js/store';
 import { ICreateTaskDto } from '@/../../backend/src/task/createTaskDto';
 import { ITaskView, TaskView } from '@/types/TaskView';
 import api from '@/lib/api';
-import Select from '../utils/Select';
+import Select from '../util/Select';
 
 const ParentTaskSelect = (props: {
   currentTask: ICreateTaskDto;

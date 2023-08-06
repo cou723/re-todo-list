@@ -2,7 +2,8 @@ import { createSignal, type Component, Show } from 'solid-js';
 import TaskEditor from '@/components/TaskEditor/TaskEditor';
 import api from '@/lib/api';
 import { ICreateTaskDto } from '@/../../backend/src/task/createTaskDto';
-import Alert from '@/components/utils/Alert';
+import Alert from '@/components/util/Alert';
+import Title from '@/components/Header/Title';
 
 const CreatePage: Component = () => {
   const [error, setError] = createSignal<string>('');
@@ -21,6 +22,7 @@ const CreatePage: Component = () => {
 
   return (
     <div>
+      <Title class="mb-4">タスク作成</Title>
       <Show when={error() != ''}>
         <Alert
           variant="error"

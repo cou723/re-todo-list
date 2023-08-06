@@ -1,9 +1,9 @@
-import TextInput from '@/components/utils/TextInput';
+import TextInput from '@/components/util/TextInput';
 import { createStore } from 'solid-js/store';
 import { ICreateTaskDto } from '@/../../backend/src/task/createTaskDto';
 import { mergeProps } from 'solid-js';
 import ParentTaskSelect from './ParentTaskSelect';
-import Button from '../utils/Button';
+import Button from '../util/Button';
 
 const TaskEditor = (props: {
   onSend: (task: ICreateTaskDto) => void;

@@ -20,7 +20,9 @@ const Alert = (props: {
   return (
     <Show when={!props.disabled}>
       <div
-        class={`border ${boxClass()} px-4 py-3 rounded relative ${props.class}`}
+        class={`border ${boxClass()} pl-4 pr-12 py-3 rounded relative ${
+          props.class
+        }`}
         role="alert"
       >
         <span class="block sm:inline">{props.children}</span>

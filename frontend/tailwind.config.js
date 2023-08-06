@@ -7,7 +7,7 @@ module.exports = {
       colors: {
         pri: '#5d4dbf',
         'pri-dark': '#463a8f',
-        'pri-light': '#867acf',
+        'pri-light': '#a49bdb',
         secondary: '#4B5563',
       },
     },
