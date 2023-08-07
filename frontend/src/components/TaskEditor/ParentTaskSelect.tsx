@@ -9,6 +9,7 @@ const ParentTaskSelect = (props: {
   currentTask: ICreateTaskDto;
   setTask: SetStoreFunction<ICreateTaskDto>;
   id?: number;
+  full?: boolean;
 }) => {
   const [parentTaskList] = createResource(true, async () => {
     const data = await api.list();
@@ -30,6 +31,7 @@ const ParentTaskSelect = (props: {
           parentId: value == 'undefined' ? undefined : parseInt(value),
         })
       }
+      class={`${props.full ? 'w-full' : ''}`}
     >
       <Show when={parentTaskList()}>
         <For each={parentTaskList()}>

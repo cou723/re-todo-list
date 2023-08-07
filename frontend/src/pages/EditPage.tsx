@@ -5,6 +5,7 @@ import api from '@/lib/api';
 import { Err, Ok, Result } from 'ts-results';
 import { ICreateTaskDto } from '@/../../backend/src/task/createTaskDto';
 import Title from '@/components/Header/Title';
+import CenterContainer from '@/components/util/CenterContainer';
 
 const EditPage: Component = () => {
   const params = useParams();
@@ -55,7 +56,7 @@ const EditPage: Component = () => {
   };
 
   return (
-    <>
+    <CenterContainer>
       <Title class="mb-4">タスクを編集</Title>
       <Show when={!!task()} fallback={<>now loading</>}>
         <TaskEditor
@@ -68,10 +69,8 @@ const EditPage: Component = () => {
           onSend={sendEditedTask}
           id={id}
         />
-        {task()?.parentId}
       </Show>
-      Task Id: {id}
-    </>
+    </CenterContainer>
   );
 };
 

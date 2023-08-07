@@ -5,8 +5,9 @@ import { LoginButton } from './LoginButton';
 import { LogoutButton } from './LogoutButton';
 import { UserDeleteButton } from './UserDeleteButton';
 import { IconButton } from '../util/IconButton';
+import { Icon } from '@iconify-icon/solid';
 
-const Header = (props: { class?: string }) => {
+const Header = () => {
   const [loginName] = createResource(true, async () => {
     const res = await api.authStatus();
     if (res.ok) return res.val;
@@ -14,13 +15,8 @@ const Header = (props: { class?: string }) => {
   });
 
   return (
-    <header
-      class={
-        'd-flex flex-wrap align-items-center justify-content-between py-3 border-bottom ' +
-        props.class
-      }
-    >
-      <nav class="bg-white border-gray-400 px-4 py-2.5">
+    <header class="d-flex flex-wrap align-items-center justify-content-between py-3 border-bottom bg-pri-light">
+      <nav class=" border-gray-400 px-4 py-2.5">
         <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
           <a href="/" class="ml-4" style={{ display: 'inline-block' }}>
             <LogoIcon size={2} />
@@ -38,10 +34,13 @@ const Header = (props: { class?: string }) => {
                 </>
               }
             >
-              <div class="flex flex-row items-center">
-                <span class="mr-3">username: {loginName()}</span>
+              <div class="flex flex-row items-center gap-3">
+                <div class="flex flex-row item-center border  border-pri px-3 py-1">
+                  <Icon class="text-3xl text-pri" icon="mdi:account-circle" />
+                  <span class="mx-3 text-lg">{loginName()}</span>
+                </div>
                 <LogoutButton />
-                <UserDeleteButton class="ml-3" />
+                <UserDeleteButton />
               </div>
             </Show>
           </div>

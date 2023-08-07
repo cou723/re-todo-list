@@ -1,7 +1,7 @@
 import api from '@/lib/api';
 import Button from '../util/Button';
 
-export const UserDeleteButton = (props: { class: string }) => {
+export const UserDeleteButton = (props: { class?: string }) => {
   const deleteAccount = async () => {
     // 今のところ削除が成功したかどうかは確認しない
     /* const res = */ await api.deleteAccount();
@@ -10,7 +10,7 @@ export const UserDeleteButton = (props: { class: string }) => {
   };
 
   return (
-    <Button variant="danger" class={props.class} onClick={deleteAccount}>
+    <Button variant="danger" class={props.class ?? ''} onClick={deleteAccount}>
       アカウント削除
     </Button>
   );

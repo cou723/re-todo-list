@@ -4,6 +4,7 @@ import api from '@/lib/api';
 import { ICreateTaskDto } from '@/../../backend/src/task/createTaskDto';
 import Alert from '@/components/util/Alert';
 import Title from '@/components/Header/Title';
+import CenterContainer from '@/components/util/CenterContainer';
 
 const CreatePage: Component = () => {
   const [error, setError] = createSignal<string>('');
@@ -21,7 +22,7 @@ const CreatePage: Component = () => {
   };
 
   return (
-    <div>
+    <CenterContainer>
       <Title class="mb-4">タスク作成</Title>
       <Show when={error() != ''}>
         <Alert
@@ -34,7 +35,7 @@ const CreatePage: Component = () => {
         </Alert>
       </Show>
       <TaskEditor onSend={createTask} sendLabel="作成" />
-    </div>
+    </CenterContainer>
   );
 };
 

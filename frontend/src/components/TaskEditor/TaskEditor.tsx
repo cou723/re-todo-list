@@ -33,16 +33,19 @@ const TaskEditor = (props: {
         label="タイトル"
         accessor={() => currentTask.title}
         setter={generateSetTaskProps('title')}
+        full
       />
       <TextInput
         label="説明"
         accessor={() => currentTask.description}
         setter={generateSetTaskProps('description')}
+        full
       />
       <ParentTaskSelect
         currentTask={currentTask}
         setTask={setTask}
         id={props.id}
+        full
       />
       <Button onClick={() => props.onSend(currentTask)}>
         {props.sendLabel}
