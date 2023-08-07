@@ -13,8 +13,6 @@ const LoginPage = () => {
   const [error, setError] = createSignal(false);
 
   const login = async () => {
-    console.log(username(), password());
-
     const data = await api.login(username(), password());
     if (data.ok) window.location.href = '/';
     else setError(true);

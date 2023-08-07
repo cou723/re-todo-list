@@ -9,7 +9,6 @@ import { IconButton } from '../util/IconButton';
 const Header = (props: { class?: string }) => {
   const [loginName] = createResource(true, async () => {
     const res = await api.authStatus();
-    console.log(res.ok, res.val);
     if (res.ok) return res.val;
     else return undefined;
   });
@@ -21,7 +20,7 @@ const Header = (props: { class?: string }) => {
         props.class
       }
     >
-      <nav class="bg-white border-gray-200 px-4 py-2.5">
+      <nav class="bg-white border-gray-400 px-4 py-2.5">
         <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
           <a href="/" class="ml-4" style={{ display: 'inline-block' }}>
             <LogoIcon size={2} />

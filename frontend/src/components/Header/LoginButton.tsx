@@ -4,7 +4,7 @@ export const LoginButton = () => (
   <IconButton
     href="/login"
     variant="outline-primary"
-    class="me-2 mr-1"
+    class="mr-1"
     icon="material-symbols:login"
   >
     Login

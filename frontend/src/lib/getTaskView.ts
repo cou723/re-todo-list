@@ -3,9 +3,6 @@ import { type ITaskView } from '../types/TaskView';
 
 export function getTaskViewTree(tasks: ITaskView[]): Result<ITaskView[], void> {
   const trees: ITaskView[] = [];
-  console.log("raw tasks:",tasks);
-
-
   const taskGroupList = tasks.reduce((acc: Map<string, ITaskView[]>, task) => {
     const key = task.path.split('/')[0];
     if (acc.has(key)) {
@@ -28,11 +25,7 @@ function buildTree(tasks: ITaskView[]): ITaskView {
   const root = taskToView(
     tasks.find((task: ITaskView) => !task.path.includes('/')),
   );
-  if (root.err) {
-    console.log(tasks);
-
-    throw new Error('Root node not found');
-  }
+  if (root.err) throw new Error('Root node not found');
 
   addChildren(root.val, tasks);
   return root.val;

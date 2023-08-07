@@ -1,10 +1,10 @@
-import { Accessor, Resource, Setter } from 'solid-js';
+import { Accessor, Setter } from 'solid-js';
 import TextInput from './util/TextInput';
 
 const UsernameInput = (props: {
   value: Accessor<string>;
   setValue: Setter<string>;
-  isDuplicateUsername?: Resource<boolean>;
+  isDuplicateUsername?: boolean;
 }) => {
   return (
     <TextInput
@@ -13,11 +13,10 @@ const UsernameInput = (props: {
       accessor={props.value}
       setter={props.setValue}
       placeholder="UserName10203"
+      isRequired
       error={
         props.isDuplicateUsername
-          ? props.isDuplicateUsername()
-            ? 'ユーザー名が既に使われています。'
-            : ''
+          ? 'ユーザー名が既に使われています。'
           : undefined
       }
     />

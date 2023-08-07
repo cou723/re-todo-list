@@ -15,14 +15,17 @@ const RegisterPage: Component = () => {
   const register = async () => {
     const res = await api.register(username(), password());
     if (res.err) {
-      setError('ユーザー名が既に使われています。');
+      if (res.val.statusCode === 409)
+        setError('ユーザー名が既に使われています。');
+      if (res.val.statusCode === 400)
+        setError('ユーザー名またはpasswordが空です');
     } else window.location.href = '/login';
   };
 
   const [isDuplicateUsername] = createResource(username, async () => {
     const res = await api.isUserExist(username());
     if (res.ok) return res.val;
-    else return false;
+    return false;
   });
 
   return (
@@ -32,7 +35,7 @@ const RegisterPage: Component = () => {
         <UsernameInput
           value={username}
           setValue={setUsername}
-          isDuplicateUsername={isDuplicateUsername}
+          isDuplicateUsername={isDuplicateUsername()}
         />
         <PasswordInput accessor={password} setter={setPassword} />
         <Show when={error()}>

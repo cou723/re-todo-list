@@ -17,6 +17,10 @@ export class UserService {
   }
 
   async register(username, password) {
+    console.log(username, password);
+
+    if (username == '' || password == '')
+      throw new HttpException('Username or password is empty', 400);
     if (await this.findOne(username))
       throw new HttpException('User already exists', 409);
     return await this.userRepos.save({

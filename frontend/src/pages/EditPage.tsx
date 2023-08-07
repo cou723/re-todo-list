@@ -21,7 +21,7 @@ const EditPage: Component = () => {
         window.location.href = '/';
         throw new Error();
       }
-      console.log('res:', res.val);
+
       if (res.val.path === '')
         return {
           title: res.val.title,

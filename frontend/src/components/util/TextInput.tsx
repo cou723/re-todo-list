@@ -28,7 +28,7 @@ const TextInput = (props: {
         placeholder={props.placeholder ?? ''}
         required={props.isRequired ?? false}
         value={props.accessor()}
-        onChange={(e) => props.setter(e.currentTarget.value)}
+        onInput={(e) => props.setter(e.currentTarget.value)}
       />
       <Show when={props.help}>
         <p id="helper-text-explanation" class="mt-2 text-sm text-gray-500">
@@ -37,7 +37,7 @@ const TextInput = (props: {
       </Show>
       <Show when={props.error}>
         <p id="helper-text-explanation" class="mt-2 text-sm text-red-700">
-          {props.help}
+          {props.error}
         </p>
       </Show>
     </div>

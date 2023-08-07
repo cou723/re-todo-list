@@ -3,13 +3,16 @@ import { ButtonProps, getClass } from './Button';
 
 const LinkButton = (props: ButtonProps) => {
   return (
-    <Link
+    <a
       class={`${getClass(props.variant, props.class, props.disabled)}`}
       href={props.href!}
-      style={{ display: 'inline-block' }}
+      style={{
+        display: 'inline-block',
+        'pointer-events': props.disabled ? 'none' : 'auto',
+      }}
     >
       {props.children}
-    </Link>
+    </a>
   );
 };
 

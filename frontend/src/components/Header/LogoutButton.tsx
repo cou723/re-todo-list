@@ -3,8 +3,6 @@ import { IconButton } from '../util/IconButton';
 
 export const LogoutButton = () => {
   const logout = async () => {
-    console.log('logout');
-
     await api.logout();
     window.location.href = '/login';
   };

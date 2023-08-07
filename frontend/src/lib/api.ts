@@ -64,8 +64,6 @@ async function get(id: number): ApiReturnVal<ITask> {
 }
 
 async function create(task: ICreateTaskDto): ApiReturnVal {
-  console.log('create', task);
-
   return requestErrorHandling(endpoints.task.base, task, 'POST');
 }
 
@@ -147,8 +145,6 @@ async function isUserExist(username: string): ApiReturnVal<boolean> {
       'POST',
     );
     const body = await res.json();
-    console.log(body);
-
     return Ok(body.isExits);
   } catch (e) {
     return Err({ statusCode: 500, message: 'internal server error' });
