@@ -14,13 +14,16 @@ const TaskEditButtonGroup = (props: {
 
   return (
     <div>
-      <Button href={`/edit/${props.id}`}>
-        <span class="mr-2">編集</span>
-        <Icon icon="mdi:pencil" />
+      <Button href={`/edit/${props.id}`} class="rounded-none rounded-l-xl">
+        <Icon class="text-2xl h-5" icon="mdi:pencil" />
       </Button>
-      <Button variant="danger" onClick={() => deleteTask()}>
-        <span class="mr-2">削除</span>
-        <Icon icon="mdi:delete" />
+      <Button
+        variant="danger"
+        onClick={() => deleteTask()}
+        class="rounded-none rounded-r-xl"
+      >
+        {/* <span class="mr-2">削除</span> */}
+        <Icon class="text-2xl h-5" icon="mdi:delete" />
       </Button>
     </div>
   );

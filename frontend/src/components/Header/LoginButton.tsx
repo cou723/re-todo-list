@@ -1,7 +1,12 @@
-import Button from '../util/Button';
+import { IconButton } from '@/components/util/IconButton';
 
 export const LoginButton = () => (
-  <Button href="/login" variant="outline-primary" class="me-2 mr-1">
+  <IconButton
+    href="/login"
+    variant="outline-primary"
+    class="me-2 mr-1"
+    icon="material-symbols:login"
+  >
     Login
-  </Button>
+  </IconButton>
 );

@@ -5,8 +5,7 @@ import { getTaskViewTree } from '@/lib/getTaskView';
 import { Show, createResource } from 'solid-js';
 import { ITaskView, TaskView } from '@/types/TaskView';
 import { Result } from 'ts-results';
-import { Icon } from '@iconify-icon/solid';
-import Button from '@/components/util/Button';
+import { IconButton } from '@/components/util/IconButton';
 
 const HomePage = () => {
   const [tasks] = createResource(true, async () => {
@@ -24,10 +23,12 @@ const HomePage = () => {
 
   return (
     <div>
-      <Button onClick={() => (window.location.href = '/task/create')}>
-        <Icon icon="ic:baseline-plus" />
+      <IconButton
+        onClick={() => (window.location.href = '/task/create')}
+        icon="mdi:plus-outline"
+      >
         タスクを追加
-      </Button>
+      </IconButton>
       <Show
         when={tasks()?.length !== 0}
         fallback={

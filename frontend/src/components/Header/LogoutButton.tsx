@@ -1,17 +1,22 @@
 import api from '@/lib/api';
-import Button from '../util/Button';
+import { IconButton } from '../util/IconButton';
 
 export const LogoutButton = () => {
-  const logout = async () => await api.logout();
+  const logout = async () => {
+    console.log('logout');
+
+    await api.logout();
+    window.location.href = '/login';
+  };
 
   return (
-    <Button
-      href="/login"
+    <IconButton
       variant="outline-primary"
       class="me-2 mr-1"
       onClick={logout}
+      icon="material-symbols:logout"
     >
       Logout
-    </Button>
+    </IconButton>
   );
 };

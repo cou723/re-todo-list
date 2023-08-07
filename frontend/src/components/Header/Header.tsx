@@ -4,7 +4,7 @@ import api from '@/lib/api';
 import { LoginButton } from './LoginButton';
 import { LogoutButton } from './LogoutButton';
 import { UserDeleteButton } from './UserDeleteButton';
-import Button from '../util/Button';
+import { IconButton } from '../util/IconButton';
 
 const Header = (props: { class?: string }) => {
   const [loginName] = createResource(true, async () => {
@@ -33,15 +33,17 @@ const Header = (props: { class?: string }) => {
               fallback={
                 <>
                   <LoginButton />
-                  <Button href="/register">Sign-up</Button>
+                  <IconButton href="/register" icon="mdi:account-plus">
+                    Sign-up
+                  </IconButton>
                 </>
               }
             >
-              <>
+              <div class="flex flex-row items-center">
+                <span class="mr-3">username: {loginName()}</span>
                 <LogoutButton />
-                <span class="ml-3">username: {loginName()}</span>
                 <UserDeleteButton class="ml-3" />
-              </>
+              </div>
             </Show>
           </div>
         </div>
