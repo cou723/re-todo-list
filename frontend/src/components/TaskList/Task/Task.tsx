@@ -24,7 +24,7 @@ export const Task = (props: { class?: string; task: ITaskView }) => {
       <div
         class={`flex flex-row justify-between p-3 bg-pri-light rounded-t-xl`}
       >
-        <div class="ml-4">
+        <div class="flex flex-row items-center  ml-4">
           <Checkbox isChecked={isDone} onClick={handleClick} />
           <span class="ml-2 text-2xl font-bold">{props.task.title}</span>
         </div>
