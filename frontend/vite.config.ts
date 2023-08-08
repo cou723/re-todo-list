@@ -11,6 +11,7 @@ export default defineConfig({
     env({ prefix: 'VITE', mountedPath: 'process.env' }),
   ],
   server: {
+    host: true,
     port: 3000,
   },
   build: {
