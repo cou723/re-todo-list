@@ -14,12 +14,12 @@ describe('User and User API (e2e)', () => {
   let taskRepository: Repository<TaskEntity>;
 
   // for debug
-  async function showUserRepository() {
-    console.log(await userRepository.find({}));
-  }
-  async function showTaskRepository() {
-    console.log(await taskRepository.find({}));
-  }
+  // async function showUserRepository() {
+  //   console.log(await userRepository.find({}));
+  // }
+  // async function showTaskRepository() {
+  //   console.log(await taskRepository.find({}));
+  // }
 
   function generateTask({
     id = 1,
