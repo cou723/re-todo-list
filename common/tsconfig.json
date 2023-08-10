@@ -8,6 +8,8 @@
     "allowSyntheticDefaultImports": true,
     "target": "es2017",
     "sourceMap": true,
+    "declarationMap": true,
+    "declarationDir": "./types",
     "outDir": "./dist",
     "baseUrl": "./",
     "incremental": true,
@@ -17,8 +19,8 @@
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
-    "paths": {
-      "@/*": ["src/*"],
-    }
-  }
+  },
+  "include": [
+    "./lib"
+  ]
 }

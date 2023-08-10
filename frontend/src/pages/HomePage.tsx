@@ -1,6 +1,6 @@
 import TaskList from '../components/TaskList/TaskList';
 import api from '@/lib/api';
-import { Task } from '@/../../backend/common/Task';
+import { Task } from 'common';
 import { getTaskViewTree } from '@/lib/getTaskView';
 import { Show, createResource } from 'solid-js';
 import { ITaskView, TaskView } from '@/types/TaskView';

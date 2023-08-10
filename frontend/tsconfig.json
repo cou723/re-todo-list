@@ -14,7 +14,7 @@
     "isolatedModules": true,
     // viteなので関係ないがvscodeの補完を効かせるために必要
     "paths":{
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
     }
   }
 }

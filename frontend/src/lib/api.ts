@@ -1,14 +1,14 @@
 import endpoints from './endpoints';
 import { type Result, Ok, Err } from 'ts-results';
-import { taskIoType, type ITask } from '@/../../backend/common/Task';
+import { taskIoType, type ITask } from 'common';
 import * as t from 'io-ts';
 import {
   type HttpError,
   httpErrorIo,
   unknownFormatError,
 } from '../types/httpError';
-import { ICreateTaskDto } from '@/../../backend/src/task/createTaskDto';
-import { IUpdateTaskDto } from '@/../../backend/src/task/updateTaskDto';
+import { ICreateTaskDto } from 'common';
+import { IUpdateTaskDto } from 'common';
 
 const taskListIoType = t.array(taskIoType);
 

@@ -1,7 +1,7 @@
 import { createSignal, type Component, Show } from 'solid-js';
 import TaskEditor from '@/components/TaskEditor/TaskEditor';
 import api from '@/lib/api';
-import { ICreateTaskDto } from '@/../../backend/src/task/createTaskDto';
+import { ICreateTaskDto } from 'common';
 import Alert from '@/components/util/Alert';
 import Title from '@/components/Header/Title';
 import CenterContainer from '@/components/util/CenterContainer';

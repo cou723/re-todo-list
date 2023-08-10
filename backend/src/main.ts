@@ -7,6 +7,8 @@ async function bootstrap() {
     credentials: true,
     origin: process.env.FRONTEND_URL,
   });
+
   await app.listen(8000);
 }
-bootstrap();
+
+void bootstrap();

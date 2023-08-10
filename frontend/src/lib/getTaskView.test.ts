@@ -1,5 +1,5 @@
 import { getTaskViewTree } from './getTaskView';
-import { Task } from '@/../../backend/common/Task';
+import { Task } from 'common';
 import { Ok } from 'ts-results';
 import { TaskView } from '../types/TaskView';
 describe('endpoints', () => {
@@ -50,9 +50,6 @@ describe('endpoints', () => {
     ];
 
     const tree = getTaskViewTree(tasks.map((task) => new TaskView(task)));
-    if (tree.ok) {
-      console.log(tree.val[0].children);
-    }
 
     expect(tree.ok).toBeTruthy();
     expect(tree.val).toEqual([

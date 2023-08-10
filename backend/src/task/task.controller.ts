@@ -17,8 +17,8 @@ import { TaskService } from './task.service';
 import { User } from '@/entity/user.entity';
 import { TaskEntity } from '@/entity/task.entity';
 
-import { CreateTaskDto } from './createTaskDto';
-import { UpdateTaskDto } from './updateTaskDto';
+import { CreateTaskDto } from 'common';
+import { UpdateTaskDto } from 'common';
 import { ParentDto } from './parentDto';
 
 @UseGuards(AuthGuard('jwt'))

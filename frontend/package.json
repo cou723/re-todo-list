@@ -40,6 +40,7 @@
   "dependencies": {
     "@mojs/core": "^1.6.0",
     "@solidjs/router": "^0.8.2",
+    "common": "link:../common",
     "io-ts": "^2.2.20",
     "json-server": "^0.17.3",
     "solid-js": "^1.7.6",

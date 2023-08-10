@@ -1,8 +1,8 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
-import { ITask } from '@common/Task';
+import * as Common from 'common';
 
 @Entity()
-export class TaskEntity implements ITask {
+export class TaskEntity implements Common.ITask {
   @PrimaryGeneratedColumn()
   id: number;
 
