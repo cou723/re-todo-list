@@ -12,26 +12,21 @@ import {
   Get,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { PasswordOmitUser } from '@/entity/user.entity';
-import { UserService } from '@/user/user.service';
-import { AuthService } from '@/auth/auth.service';
-import { RegisterDto } from '@/register.dto';
 import { Response } from 'express';
+
+import { AuthService } from '@/auth/auth.service';
+import { PasswordOmitUser } from '@/entity/user.entity';
+import { RegisterDto } from '@/register.dto';
+import { UserService } from '@/user/user.service';
 
 @Controller()
 export class AppController {
-  constructor(
-    private userService: UserService,
-    private readonly authService: AuthService,
-  ) {}
+  constructor(private userService: UserService, private readonly authService: AuthService) {}
 
   @UseGuards(AuthGuard('local')) // passport-local戦略を付与する
   @Post('login')
   @HttpCode(200)
-  async login(
-    @Res({ passthrough: true }) res: Response,
-    @Req() req: { user: PasswordOmitUser },
-  ) {
+  async login(@Res({ passthrough: true }) res: Response, @Req() req: { user: PasswordOmitUser }) {
     const token = await this.authService.login(req.user);
     res.cookie('accessToken', token, {
       httpOnly: true,

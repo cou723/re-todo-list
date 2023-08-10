@@ -15,7 +15,7 @@ export default defineConfig({
     port: 3000,
   },
   build: {
-    target: 'esnext',
+    target: 'es2020',
   },
   resolve: {
     alias: {

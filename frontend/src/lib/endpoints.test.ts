@@ -14,11 +14,7 @@ describe('endpoints', () => {
     expect(endpoints.task.list).toEqual('http://localhost:8000/task/list');
     expect(endpoints.task.one(1)).toEqual('http://localhost:8000/task/1');
     expect(endpoints.task.done(1)).toEqual('http://localhost:8000/task/1/done');
-    expect(endpoints.task.undone(1)).toEqual(
-      'http://localhost:8000/task/1/undone',
-    );
-    expect(endpoints.task.parent(1)).toEqual(
-      'http://localhost:8000/task/1/parent',
-    );
+    expect(endpoints.task.undone(1)).toEqual('http://localhost:8000/task/1/undone');
+    expect(endpoints.task.parent(1)).toEqual('http://localhost:8000/task/1/parent');
   });
 });

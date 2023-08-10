@@ -20,9 +20,7 @@ export class TaskView implements ITaskView {
     this.createdBy = task.createdBy;
 
     if (this.path.split('/').slice(-1)[0] !== this.id.toString()) {
-      throw new Error(
-        'path root is not this id(' + this.id + '): ' + this.path,
-      );
+      throw new Error('path root is not this id(' + this.id + '): ' + this.path);
     }
     if (this.path[0] === '/') {
       throw new Error('path cannot start with /: ' + this.path);

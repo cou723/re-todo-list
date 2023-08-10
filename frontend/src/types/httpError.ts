@@ -1,13 +1,13 @@
 import * as t from 'io-ts';
 
 export const httpErrorTypeObject = {
-  statusCode: t.number,
   message: t.string,
+  statusCode: t.number,
 };
 
 export const unknownFormatError = {
-  statusCode: 500,
   message: 'Unknown error',
+  statusCode: 500,
 };
 
 export const httpErrorIo = t.type(httpErrorTypeObject);

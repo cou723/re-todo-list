@@ -13,13 +13,13 @@ import {
   HttpCode,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { TaskService } from './task.service';
-import { User } from '@/entity/user.entity';
-import { TaskEntity } from '@/entity/task.entity';
+import { CreateTaskDto, UpdateTaskDto } from 'common';
 
-import { CreateTaskDto } from 'common';
-import { UpdateTaskDto } from 'common';
 import { ParentDto } from './parentDto';
+import { TaskService } from './task.service';
+
+import { TaskEntity } from '@/entity/task.entity';
+import { User } from '@/entity/user.entity';
 
 @UseGuards(AuthGuard('jwt'))
 @Controller('task')
@@ -28,28 +28,22 @@ export class TaskController {
 
   @Post()
   @UsePipes(ValidationPipe)
-  async createTask(
-    @Body() task: CreateTaskDto,
-    @Req() req: { user: User },
-  ): Promise<void> {
+  async createTask(@Body() task: CreateTaskDto, @Req() req: { user: User }): Promise<void> {
     let path = '';
 
     if (task.parentId) {
-      const parent = await this.taskService.findTask(
-        task.parentId,
-        req.user.id,
-      );
+      const parent = await this.taskService.findTask(task.parentId, req.user.id);
       if (parent.path === '') path = `${parent.id}`;
       else path = `${parent.path}/${parent.id}`;
     }
 
     try {
       await this.taskService.create({
-        title: task.title,
+        createdBy: req.user.id,
         description: task.description,
         isDone: false,
         path,
-        createdBy: req.user.id,
+        title: task.title,
       });
     } catch (e) {
       throw new HttpException('Create Task failed.', 500);
@@ -64,10 +58,7 @@ export class TaskController {
   }
 
   @Get(':id')
-  async getTask(
-    @Param('id') paramId: string,
-    @Req() req: { user: User },
-  ): Promise<TaskEntity> {
+  async getTask(@Param('id') paramId: string, @Req() req: { user: User }): Promise<TaskEntity> {
     const id = parseId(paramId);
     return await this.taskService.findTask(id, req.user.id);
   }
@@ -77,53 +68,42 @@ export class TaskController {
   async updateTask(
     @Body() updateContents: UpdateTaskDto,
     @Req() req: { user: User },
-    @Param('id') paramId: string,
+    @Param('id') paramId: string
   ): Promise<void> {
     const id = parseId(paramId);
     const targetTask = await this.taskService.findTask(id, req.user.id);
     let path = targetTask.path;
 
     if (updateContents.parent)
-      path = (
-        await this.taskService.findTask(updateContents.parent, req.user.id)
-      ).getCurrentPath();
+      path = (await this.taskService.findTask(updateContents.parent, req.user.id)).getCurrentPath();
 
     await this.taskService.edit(
       {
+        description: updateContents.description,
         id: targetTask.id,
         path: path,
         title: updateContents.title,
-        description: updateContents.description,
       },
-      req.user.id,
+      req.user.id
     );
   }
 
   // 削除が成功したかどうかは返さない
   @HttpCode(204)
   @Delete(':id')
-  async deleteTask(
-    @Param('id') paramId: string,
-    @Req() req: { user: User },
-  ): Promise<void> {
+  async deleteTask(@Param('id') paramId: string, @Req() req: { user: User }): Promise<void> {
     const id = parseId(paramId);
     await this.taskService.delete(id, req.user.id);
   }
 
   @Post(':id/done')
-  async markTaskAsDone(
-    @Param('id') paramId: string,
-    @Req() req: { user: User },
-  ) {
+  async markTaskAsDone(@Param('id') paramId: string, @Req() req: { user: User }) {
     const id = parseId(paramId);
     await this.taskService.setIsDone(id, req.user.id, true);
   }
 
   @Post(':id/undone')
-  async markTaskAsUndone(
-    @Param('id') paramId: string,
-    @Req() req: { user: User },
-  ) {
+  async markTaskAsUndone(@Param('id') paramId: string, @Req() req: { user: User }) {
     const id = parseId(paramId);
     await this.taskService.setIsDone(id, req.user.id, false);
   }
@@ -133,18 +113,16 @@ export class TaskController {
   async setParentTask(
     @Param('id') paramId: string,
     @Body() body: ParentDto,
-    @Req() req: { user: User },
+    @Req() req: { user: User }
   ): Promise<void> {
     const id = parseId(paramId);
     try {
       await this.taskService.edit(
         {
           id,
-          path: (
-            await this.taskService.findTask(body.newParent, req.user.id)
-          ).getCurrentPath(),
+          path: (await this.taskService.findTask(body.newParent, req.user.id)).getCurrentPath(),
         },
-        req.user.id,
+        req.user.id
       );
     } catch (error) {
       if (error instanceof HttpException) {
@@ -157,10 +135,7 @@ export class TaskController {
 
   @HttpCode(204)
   @Delete(':id/parent')
-  async deleteParentTask(
-    @Param('id') paramId: string,
-    @Req() req: { user: User },
-  ): Promise<void> {
+  async deleteParentTask(@Param('id') paramId: string, @Req() req: { user: User }): Promise<void> {
     const id = parseId(paramId);
     try {
       await this.taskService.edit({ id, path: '' }, req.user.id);

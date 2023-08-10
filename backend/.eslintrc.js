@@ -5,7 +5,13 @@ module.exports = {
     tsconfigRootDir: __dirname,
     sourceType: "module",
   },
-  plugins: ["@typescript-eslint/eslint-plugin"],
+  plugins: [
+    "@typescript-eslint/eslint-plugin",
+    "import",
+    "sort-keys-fix",
+    "typescript-sort-keys",
+    "unused-imports",
+  ],
   extends: [
     "plugin:@typescript-eslint/recommended",
     "plugin:prettier/recommended",
@@ -36,6 +42,29 @@ module.exports = {
         "format": ["PascalCase"],
       },
     ],
+    "import/order": [
+      "error",
+      {
+        "groups": [
+          "builtin",
+          "external",
+          "internal",
+          "parent",
+          "sibling",
+          "index",
+          "object",
+          "type",
+        ],
+        "newlines-between": "always",
+        "alphabetize": {
+          "order": "asc",
+        },
+      },
+    ],
+    "import/no-duplicates": "error",
+    "sort-keys-fix/sort-keys-fix": "error",
+    "typescript-sort-keys/interface": "error",
+    "unused-imports/no-unused-imports": "error",
   },
   "overrides": [
     {

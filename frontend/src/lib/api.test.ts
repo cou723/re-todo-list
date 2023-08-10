@@ -1,5 +1,7 @@
-import jsonServer from 'json-server';
 import { type Server } from 'http';
+
+import jsonServer from 'json-server';
+
 import TaskApi from './api';
 
 describe('Task Api', () => {
@@ -28,12 +30,12 @@ describe('Task Api', () => {
     const data = await TaskApi.get(1);
     expect(data.ok).toBeTruthy();
     expect(data.val).toEqual({
-      id: 1,
-      title: 'Task 1',
-      description: 'This is task 1',
       createdBy: 1,
-      path: '',
+      description: 'This is task 1',
+      id: 1,
       isDone: false,
+      path: '',
+      title: 'Task 1',
     });
   });
 
@@ -42,20 +44,20 @@ describe('Task Api', () => {
     expect(data.ok).toBeTruthy();
     expect(data.val).toEqual([
       {
-        id: 1,
-        title: 'Task 1',
-        description: 'This is task 1',
         createdBy: 1,
-        path: '',
+        description: 'This is task 1',
+        id: 1,
         isDone: false,
+        path: '',
+        title: 'Task 1',
       },
       {
-        id: 2,
-        title: 'Task 2',
-        description: 'This is task 2',
         createdBy: 1,
-        path: '',
+        description: 'This is task 2',
+        id: 2,
         isDone: false,
+        path: '',
+        title: 'Task 2',
       },
     ]);
   });

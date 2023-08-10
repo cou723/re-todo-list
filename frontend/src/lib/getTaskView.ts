@@ -1,4 +1,5 @@
 import { Err, Ok, type Result } from 'ts-results';
+
 import { type ITaskView } from '../types/TaskView';
 
 export function getTaskViewTree(tasks: ITaskView[]): Result<ITaskView[], void> {
@@ -22,9 +23,7 @@ export function getTaskViewTree(tasks: ITaskView[]): Result<ITaskView[], void> {
 }
 
 function buildTree(tasks: ITaskView[]): ITaskView {
-  const root = taskToView(
-    tasks.find((task: ITaskView) => !task.path.includes('/')),
-  );
+  const root = taskToView(tasks.find((task: ITaskView) => !task.path.includes('/')));
   if (root.err) throw new Error('Root node not found');
 
   addChildren(root.val, tasks);

@@ -1,18 +1,14 @@
-import { Repository } from 'typeorm';
-import { getRepositoryToken } from '@nestjs/typeorm';
-
-import * as bcrypt from 'bcrypt';
-import { User } from '@/entity/user.entity';
-
-import { Test, TestingModule } from '@nestjs/testing';
 import { JwtService } from '@nestjs/jwt';
+import { Test, TestingModule } from '@nestjs/testing';
+import { getRepositoryToken } from '@nestjs/typeorm';
+import * as bcrypt from 'bcrypt';
+import { Repository } from 'typeorm';
 
-import {
-  AuthService,
-  PasswordNotMatchError,
-  UserNotFoundError,
-} from './auth.service';
 import { UserService } from '../user/user.service';
+
+import { AuthService, PasswordNotMatchError, UserNotFoundError } from './auth.service';
+
+import { User } from '@/entity/user.entity';
 
 describe('AuthService', () => {
   let service: AuthService;
@@ -42,8 +38,8 @@ describe('AuthService', () => {
     const users: User[] = [
       {
         id: 1,
-        username: 'hoge',
         password: hashedPassword,
+        username: 'hoge',
       },
     ];
     jest.spyOn(repo, 'findOne').mockResolvedValueOnce(users[0]);
@@ -58,22 +54,20 @@ describe('AuthService', () => {
     const users: User[] = [
       {
         id: 1,
-        username: 'hoge',
         password: bcrypt.hashSync('hoge', 10),
+        username: 'hoge',
       },
     ];
     jest.spyOn(repo, 'findOne').mockResolvedValueOnce(users[0]);
 
-    expect(service.validateUser('hoge', 'wrong_password')).rejects.toThrow(
-      PasswordNotMatchError,
+    void expect(service.validateUser('hoge', 'wrong_password')).rejects.toThrow(
+      PasswordNotMatchError
     );
   });
 
   it('validate user wrong username', async () => {
     jest.spyOn(repo, 'findOne').mockResolvedValueOnce(null);
 
-    expect(service.validateUser('wrong username', 'hoge')).rejects.toThrow(
-      UserNotFoundError,
-    );
+    void expect(service.validateUser('wrong username', 'hoge')).rejects.toThrow(UserNotFoundError);
   });
 });

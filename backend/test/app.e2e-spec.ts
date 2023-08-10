@@ -1,12 +1,13 @@
+import { INestApplication } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import { TypeOrmModule, getRepositoryToken } from '@nestjs/typeorm';
-import { User } from '../src/entity/user.entity';
-import { TaskEntity } from '../src/entity/task.entity';
-import { Repository } from 'typeorm';
-import { AppModule } from '../src/app.module';
-import { INestApplication } from '@nestjs/common';
-import * as request from 'supertest';
 import * as bcrypt from 'bcrypt';
+import * as request from 'supertest';
+import { Repository } from 'typeorm';
+
+import { AppModule } from '../src/app.module';
+import { TaskEntity } from '../src/entity/task.entity';
+import { User } from '../src/entity/user.entity';
 
 describe('User and User API (e2e)', () => {
   let app: INestApplication;
@@ -27,18 +28,18 @@ describe('User and User API (e2e)', () => {
     title = `created by ${createdBy}`,
     path = '',
   }: {
-    id?: number;
-    title?: string;
     createdBy?: number;
+    id?: number;
     path?: string;
+    title?: string;
   }): TaskEntity {
     return {
-      id,
-      title,
-      description: 'desc',
-      isDone: false,
       createdBy,
+      description: 'desc',
+      id,
+      isDone: false,
       path: path ?? '',
+      title,
     };
   }
 
@@ -47,32 +48,30 @@ describe('User and User API (e2e)', () => {
       imports: [
         AppModule,
         TypeOrmModule.forRoot({
-          type: 'sqlite',
           database: 'test.sqlite',
           entities: [User, TaskEntity],
           synchronize: true,
+          type: 'sqlite',
         }),
       ],
     }).compile();
 
     userRepository = moduleRef.get<Repository<User>>(getRepositoryToken(User));
-    taskRepository = moduleRef.get<Repository<TaskEntity>>(
-      getRepositoryToken(TaskEntity),
-    );
+    taskRepository = moduleRef.get<Repository<TaskEntity>>(getRepositoryToken(TaskEntity));
 
     app = moduleRef.createNestApplication();
     await app.init();
   });
 
-  const TEST_USER = { username: 'test', password: 'test' };
+  const TEST_USER = { password: 'test', username: 'test' };
 
   beforeEach(async () => {
     await userRepository.clear();
     await taskRepository.clear();
     await userRepository.insert({
       id: 1,
-      username: TEST_USER.username,
       password: bcrypt.hashSync(TEST_USER.password, 1),
+      username: TEST_USER.username,
     });
   });
 
@@ -86,9 +85,7 @@ describe('User and User API (e2e)', () => {
       .set('Accept', 'application/json')
       .send(TEST_USER);
     expect(res.status).toEqual(200);
-    expect(res.header['set-cookie'][0]).toMatch(
-      /accessToken=[^;]+; Path=\/; HttpOnly/,
-    );
+    expect(res.header['set-cookie'][0]).toMatch(/accessToken=[^;]+; Path=\/; HttpOnly/);
     accessToken = res.header['set-cookie'][0].split(';')[0].split('=')[1];
   });
 
@@ -102,19 +99,20 @@ describe('User and User API (e2e)', () => {
     const res = await request(app.getHttpServer())
       .post('/register')
       .set('Accept', 'application/json')
-      .send({ username: addedUserName, password: addedUserPassword });
+      .send({ password: addedUserPassword, username: addedUserName });
 
     expect(res.status).toEqual(201);
 
     expect(await userRepository.count()).toEqual(2);
 
-    expect(
-      await userRepository.findOne({ where: { username: addedUserName } }),
-    ).toHaveProperty('username', addedUserName);
+    expect(await userRepository.findOne({ where: { username: addedUserName } })).toHaveProperty(
+      'username',
+      addedUserName
+    );
 
-    expect(
-      await userRepository.findOne({ where: { username: addedUserName } }),
-    ).toHaveProperty('password');
+    expect(await userRepository.findOne({ where: { username: addedUserName } })).toHaveProperty(
+      'password'
+    );
   });
 
   it('/user DELETE ', async () => {
@@ -134,7 +132,7 @@ describe('User and User API (e2e)', () => {
     path: string,
     method: 'get' | 'post' | 'delete',
     body = {},
-    token?: string,
+    token?: string
   ) {
     return await request(app.getHttpServer())
       [method](path)
@@ -148,8 +146,8 @@ describe('User and User API (e2e)', () => {
   {
     it('/task POST success single task ', async () => {
       const res = await requestWrapper('/task', 'post', {
-        title: 'test',
         description: 'test',
+        title: 'test',
       });
 
       expect(res.status).toEqual(201);
@@ -169,13 +167,13 @@ describe('User and User API (e2e)', () => {
 
     it('/task POST success multiple task', async () => {
       await requestWrapper('/task', 'post', {
-        title: 'test',
         description: 'test',
+        title: 'test',
       });
 
       const res = await requestWrapper('/task', 'post', {
-        title: 'test',
         description: 'test',
+        title: 'test',
       });
 
       expect(res.status).toEqual(201);
@@ -198,18 +196,16 @@ describe('User and User API (e2e)', () => {
 
     it('/task POST success with parent', async () => {
       await requestWrapper('/task', 'post', {
-        title: 'test',
         description: 'test',
+        title: 'test',
       });
 
-      const parentId = (
-        await taskRepository.findOne({ where: { title: 'test' } })
-      ).id;
+      const parentId = (await taskRepository.findOne({ where: { title: 'test' } })).id;
 
       const res = await requestWrapper('/task', 'post', {
-        title: 'child',
         description: 'child',
         parentId,
+        title: 'child',
       });
 
       expect(res.status).toEqual(201);
@@ -235,10 +231,10 @@ describe('User and User API (e2e)', () => {
         '/task',
         'post',
         {
-          title: 'test',
           description: 'test',
+          title: 'test',
         },
-        'invalid token',
+        'invalid token'
       );
 
       expect(res.status).toEqual(401);
@@ -252,15 +248,15 @@ describe('User and User API (e2e)', () => {
   {
     it('/task/list GET', async () => {
       const tasks = [
-        generateTask({ id: 1, createdBy: 1 }),
-        generateTask({ id: 2, createdBy: 1 }),
-        generateTask({ id: 3, createdBy: 2 }),
+        generateTask({ createdBy: 1, id: 1 }),
+        generateTask({ createdBy: 1, id: 2 }),
+        generateTask({ createdBy: 2, id: 3 }),
       ];
       await taskRepository.insert(tasks);
 
       const res = await requestWrapper('/task/list', 'get', {
-        title: 'test',
         description: 'test',
+        title: 'test',
       });
       expect(res.status).toEqual(200);
       expect(res.body).toEqual(tasks.filter((task) => task.createdBy === 1));
@@ -271,10 +267,10 @@ describe('User and User API (e2e)', () => {
         '/task/list',
         'get',
         {
-          title: 'test',
           description: 'test',
+          title: 'test',
         },
-        'invalid token',
+        'invalid token'
       );
       expect(res.status).toEqual(401);
       expect(res.body.message).toEqual('Unauthorized');
@@ -285,9 +281,9 @@ describe('User and User API (e2e)', () => {
   // task/:id GET
   {
     const tasks = [
-      generateTask({ id: 1, createdBy: 1 }),
-      generateTask({ id: 2, createdBy: 1 }),
-      generateTask({ id: 3, createdBy: 2 }),
+      generateTask({ createdBy: 1, id: 1 }),
+      generateTask({ createdBy: 1, id: 2 }),
+      generateTask({ createdBy: 2, id: 3 }),
     ];
 
     it('/task/:id GET', async () => {
@@ -314,7 +310,7 @@ describe('User and User API (e2e)', () => {
     });
 
     it('/task/:id GET fail: un auth', async () => {
-      await taskRepository.insert(generateTask({ id: 1, createdBy: 1 }));
+      await taskRepository.insert(generateTask({ createdBy: 1, id: 1 }));
 
       const res = await requestWrapper('/task/1', 'post', {}, 'invalid token');
       expect(res.status).toEqual(401);
@@ -325,12 +321,10 @@ describe('User and User API (e2e)', () => {
   // task/:id POST
   {
     it('/task/:id POST', async () => {
-      await taskRepository.insert(
-        generateTask({ id: 1, title: 'test', createdBy: 1 }),
-      );
+      await taskRepository.insert(generateTask({ createdBy: 1, id: 1, title: 'test' }));
       const res = await requestWrapper('/task/1', 'post', {
-        title: 'test',
         description: 'hoge',
+        title: 'test',
       });
       expect(res.status).toEqual(201);
       expect(await taskRepository.count()).toEqual(1);
@@ -345,8 +339,8 @@ describe('User and User API (e2e)', () => {
       const res = await requestWrapper(
         '/task/1',
         'post',
-        { title: 'test', description: 'test' },
-        'invalid token',
+        { description: 'test', title: 'test' },
+        'invalid token'
       );
       expect(res.status).toEqual(401);
       expect(res.body.message).toEqual('Unauthorized');
@@ -357,9 +351,7 @@ describe('User and User API (e2e)', () => {
   // task/:id/done POST
   {
     it('/task/:id/done POST', async () => {
-      await taskRepository.insert(
-        generateTask({ id: 1, title: 'test', createdBy: 1 }),
-      );
+      await taskRepository.insert(generateTask({ createdBy: 1, id: 1, title: 'test' }));
       const res = await requestWrapper('/task/1/done', 'post');
 
       expect(res.status).toEqual(201);
@@ -369,12 +361,7 @@ describe('User and User API (e2e)', () => {
     });
 
     it('/task/:id/done POST fail: un auth', async () => {
-      const res = await requestWrapper(
-        '/task/1/done',
-        'post',
-        {},
-        'invalid token',
-      );
+      const res = await requestWrapper('/task/1/done', 'post', {}, 'invalid token');
       expect(res.status).toEqual(401);
       expect(res.body.message).toEqual('Unauthorized');
       expect(await taskRepository.count()).toEqual(0);
@@ -385,7 +372,7 @@ describe('User and User API (e2e)', () => {
   {
     it('/task/:id/undone POST', async () => {
       await taskRepository.insert({
-        ...generateTask({ id: 1, title: 'test', createdBy: 1 }),
+        ...generateTask({ createdBy: 1, id: 1, title: 'test' }),
         isDone: true,
       });
 
@@ -402,7 +389,7 @@ describe('User and User API (e2e)', () => {
         .post('/task/:id/undone')
         .set('Accept', 'application/json')
         .set('Authorization', `Bearer hoge}`)
-        .send({ title: 'test', description: 'test' });
+        .send({ description: 'test', title: 'test' });
       expect(res.status).toEqual(401);
       expect(res.body.message).toEqual('Unauthorized');
       expect(await taskRepository.count()).toEqual(0);
@@ -411,13 +398,10 @@ describe('User and User API (e2e)', () => {
 
   // task/:id/parent POST
   {
-    const PARENT_TASK = generateTask({ id: 1, title: 'parent', createdBy: 1 });
+    const PARENT_TASK = generateTask({ createdBy: 1, id: 1, title: 'parent' });
 
     it('/task/:id/parent POST', async () => {
-      const tasks = [
-        PARENT_TASK,
-        generateTask({ id: 2, title: 'child', createdBy: 1 }),
-      ];
+      const tasks = [PARENT_TASK, generateTask({ createdBy: 1, id: 2, title: 'child' })];
       await taskRepository.insert(tasks);
       const res = await request(app.getHttpServer())
         .post('/task/2/parent')
@@ -426,16 +410,11 @@ describe('User and User API (e2e)', () => {
         .send({ newParent: 1 });
       expect(res.status).toEqual(201);
       expect(await taskRepository.count()).toEqual(2);
-      expect((await taskRepository.findOne({ where: { id: 2 } })).path).toEqual(
-        '1',
-      );
+      expect((await taskRepository.findOne({ where: { id: 2 } })).path).toEqual('1');
     });
 
     it('/task/:id/parent POST :fail new parent not exist', async () => {
-      const tasks = [
-        PARENT_TASK,
-        generateTask({ id: 2, title: 'child', createdBy: 1 }),
-      ];
+      const tasks = [PARENT_TASK, generateTask({ createdBy: 1, id: 2, title: 'child' })];
       await taskRepository.insert(tasks);
       const res = await request(app.getHttpServer())
         .post('/task/2/parent')
@@ -444,9 +423,7 @@ describe('User and User API (e2e)', () => {
         .send({ newParent: 10 });
       expect(res.status).toEqual(404);
       expect(await taskRepository.count()).toEqual(2);
-      expect((await taskRepository.findOne({ where: { id: 2 } })).path).toEqual(
-        '',
-      );
+      expect((await taskRepository.findOne({ where: { id: 2 } })).path).toEqual('');
     });
 
     it('/task/:id/parent POST :fail new parent is other user task', async () => {
@@ -455,7 +432,7 @@ describe('User and User API (e2e)', () => {
           ...PARENT_TASK,
           createdBy: 2,
         },
-        generateTask({ id: 2, title: 'child', createdBy: 1000 }),
+        generateTask({ createdBy: 1000, id: 2, title: 'child' }),
       ];
       await taskRepository.insert(tasks);
       const res = await request(app.getHttpServer())
@@ -465,9 +442,7 @@ describe('User and User API (e2e)', () => {
         .send({ newParent: 1 });
       expect(res.status).toEqual(403);
       expect(await taskRepository.count()).toEqual(2);
-      expect((await taskRepository.findOne({ where: { id: 2 } })).path).toEqual(
-        '',
-      );
+      expect((await taskRepository.findOne({ where: { id: 2 } })).path).toEqual('');
     });
 
     it('/task/:id/parent POST fail: un auth', async () => {
@@ -475,7 +450,7 @@ describe('User and User API (e2e)', () => {
         .post('/task/1/parent')
         .set('Accept', 'application/json')
         .set('Authorization', `Bearer hoge}`)
-        .send({ title: 'test', description: 'test' });
+        .send({ description: 'test', title: 'test' });
       expect(res.status).toEqual(401);
       expect(res.body.message).toEqual('Unauthorized');
       expect(await taskRepository.count()).toEqual(0);
@@ -484,13 +459,10 @@ describe('User and User API (e2e)', () => {
 
   // task/:id/parent DELETE
   {
-    const PARENT_TASK = generateTask({ id: 1, title: 'parent', createdBy: 1 });
+    const PARENT_TASK = generateTask({ createdBy: 1, id: 1, title: 'parent' });
 
     it('/task/:id/parent DELETE', async () => {
-      const tasks = [
-        PARENT_TASK,
-        generateTask({ id: 2, title: 'child', createdBy: 1, path: '1' }),
-      ];
+      const tasks = [PARENT_TASK, generateTask({ createdBy: 1, id: 2, path: '1', title: 'child' })];
       await taskRepository.insert(tasks);
       const res = await request(app.getHttpServer())
         .delete('/task/2/parent')
@@ -498,15 +470,13 @@ describe('User and User API (e2e)', () => {
         .set('Cookie', [`accessToken=${accessToken}`]);
       expect(res.status).toEqual(204);
       expect(await taskRepository.count()).toEqual(2);
-      expect((await taskRepository.findOne({ where: { id: 2 } })).path).toEqual(
-        '',
-      );
+      expect((await taskRepository.findOne({ where: { id: 2 } })).path).toEqual('');
     });
 
     it('/task/:id/parent DELETE :fail task(id) is other users task', async () => {
       const tasks = [
         PARENT_TASK,
-        generateTask({ id: 2, title: 'child', createdBy: 1000, path: '1' }),
+        generateTask({ createdBy: 1000, id: 2, path: '1', title: 'child' }),
       ];
       await taskRepository.insert(tasks);
       const res = await request(app.getHttpServer())
@@ -515,9 +485,7 @@ describe('User and User API (e2e)', () => {
         .set('Cookie', [`accessToken=${accessToken}`]);
       expect(res.status).toEqual(403);
       expect(await taskRepository.count()).toEqual(2);
-      expect((await taskRepository.findOne({ where: { id: 2 } })).path).toEqual(
-        '1',
-      );
+      expect((await taskRepository.findOne({ where: { id: 2 } })).path).toEqual('1');
     });
 
     it('/task/:id/parent POST fail: un auth', async () => {
@@ -525,7 +493,7 @@ describe('User and User API (e2e)', () => {
         .delete('/task/1/parent')
         .set('Accept', 'application/json')
         .set('Authorization', `Bearer hoge}`)
-        .send({ title: 'test', description: 'test' });
+        .send({ description: 'test', title: 'test' });
       expect(res.status).toEqual(401);
       expect(res.body.message).toEqual('Unauthorized');
       expect(await taskRepository.count()).toEqual(0);
@@ -537,18 +505,16 @@ describe('User and User API (e2e)', () => {
     // if delete grand parent task, child task and parent task is deleted.
     it('/task/:id DELETE', async () => {
       const tasks = [
-        generateTask({ id: 1, title: 'grand parent', createdBy: 1 }),
-        generateTask({ id: 2, title: 'parent', createdBy: 1, path: '1' }),
-        generateTask({ id: 3, title: 'child', createdBy: 1, path: '1/2' }),
-        generateTask({ id: 4, title: 'other task', createdBy: 1 }),
+        generateTask({ createdBy: 1, id: 1, title: 'grand parent' }),
+        generateTask({ createdBy: 1, id: 2, path: '1', title: 'parent' }),
+        generateTask({ createdBy: 1, id: 3, path: '1/2', title: 'child' }),
+        generateTask({ createdBy: 1, id: 4, title: 'other task' }),
       ];
       await taskRepository.insert(tasks);
       const res = await requestWrapper('/task/1', 'delete');
       expect(res.status).toEqual(204);
       expect(await taskRepository.count()).toEqual(1);
-      expect(await taskRepository.findOne({ where: { id: 4 } })).toEqual(
-        tasks[3],
-      );
+      expect(await taskRepository.findOne({ where: { id: 4 } })).toEqual(tasks[3]);
     });
 
     it('/task/:id DELETE fail: un auth', async () => {
@@ -556,7 +522,7 @@ describe('User and User API (e2e)', () => {
         .delete('/task/1')
         .set('Accept', 'application/json')
         .set('Authorization', `Bearer hoge}`)
-        .send({ title: 'test', description: 'test' });
+        .send({ description: 'test', title: 'test' });
       expect(res.status).toEqual(401);
       expect(res.body.message).toEqual('Unauthorized');
       expect(await taskRepository.count()).toEqual(0);

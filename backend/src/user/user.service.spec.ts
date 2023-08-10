@@ -1,9 +1,11 @@
-import { Repository } from 'typeorm';
-import { User } from '@/entity/user.entity';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { UserService } from './user.service';
 import * as bcrypt from 'bcrypt';
+import { Repository } from 'typeorm';
+
+import { UserService } from './user.service';
+
+import { User } from '@/entity/user.entity';
 
 describe(' UserService', () => {
   let service: UserService;
@@ -16,9 +18,9 @@ describe(' UserService', () => {
         {
           provide: getRepositoryToken(User),
           useValue: {
+            delete: jest.fn(),
             findOne: jest.fn(),
             save: jest.fn(),
-            delete: jest.fn(),
           },
         },
       ],
@@ -32,13 +34,13 @@ describe(' UserService', () => {
     const users: User[] = [
       {
         id: 1,
-        username: 'test',
         password: bcrypt.hashSync('test', 10),
+        username: 'test',
       },
       {
         id: 2,
-        username: 'test2',
         password: bcrypt.hashSync('test2', 10),
+        username: 'test2',
       },
     ];
     jest.spyOn(mockRepos, 'findOne').mockResolvedValueOnce(users[0]);
@@ -55,15 +57,15 @@ describe(' UserService', () => {
     jest.spyOn(bcrypt, 'hashSync').mockReturnValue(hashedPassword);
     jest
       .spyOn(mockRepos, 'save')
-      .mockResolvedValueOnce({ id: 0, username, password: hashedPassword });
+      .mockResolvedValueOnce({ id: 0, password: hashedPassword, username });
 
     const result = await service.register(username, password);
 
-    expect(result).toEqual({ id: 0, username, password: hashedPassword });
+    expect(result).toEqual({ id: 0, password: hashedPassword, username });
     expect(bcrypt.hashSync).toHaveBeenCalledWith(password, 10);
     expect(mockRepos.save).toHaveBeenCalledWith({
-      username,
       password: hashedPassword,
+      username,
     });
   });
 });

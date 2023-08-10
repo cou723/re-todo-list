@@ -1,19 +1,17 @@
 import { HttpException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { TaskEntity } from '@/entity/task.entity';
 import { ITask, Task } from 'common';
+import { Repository } from 'typeorm';
+
+import { TaskEntity } from '@/entity/task.entity';
 
 export class TaskService {
   constructor(
     @InjectRepository(TaskEntity)
-    private readonly taskRepos: Repository<TaskEntity>,
+    private readonly taskRepos: Repository<TaskEntity>
   ) {}
 
-  private async checkTargetValidity(
-    taskId: number,
-    userId: number,
-  ): Promise<Task> {
+  private async checkTargetValidity(taskId: number, userId: number): Promise<Task> {
     const task = await this.taskRepos.findOne({ where: { id: taskId } });
     if (!task) throw new HttpException(`task:${taskId} is not found`, 404);
     if (task.createdBy !== userId)
@@ -21,13 +19,8 @@ export class TaskService {
     return Task.fromObject(task);
   }
 
-  async findTask(
-    taskId: TaskEntity['id'],
-    currentUserId: number,
-  ): Promise<Task> {
-    return Task.fromObject(
-      await this.checkTargetValidity(taskId, currentUserId),
-    );
+  async findTask(taskId: TaskEntity['id'], currentUserId: number): Promise<Task> {
+    return Task.fromObject(await this.checkTargetValidity(taskId, currentUserId));
   }
 
   async findAll(currentUserId: number): Promise<Task[]> {
@@ -44,12 +37,12 @@ export class TaskService {
 
   async edit(
     task: {
-      id: number;
-      title?: string;
       description?: string;
+      id: number;
       path?: string;
+      title?: string;
     },
-    currentUserId: number,
+    currentUserId: number
   ): Promise<void> {
     const currentTask = await this.checkTargetValidity(task.id, currentUserId);
     const updateTask = { ...currentTask, ...task };
@@ -68,11 +61,7 @@ export class TaskService {
     await this.taskRepos.delete({ id });
   }
 
-  async setIsDone(
-    id: TaskEntity['id'],
-    currentUserId: number,
-    isDone: boolean,
-  ): Promise<void> {
+  async setIsDone(id: TaskEntity['id'], currentUserId: number, isDone: boolean): Promise<void> {
     const currentTask = await this.checkTargetValidity(id, currentUserId);
     try {
       await this.taskRepos.save({

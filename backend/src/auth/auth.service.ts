@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { UserService } from '@/user/user.service';
-import { User } from '@/entity/user.entity';
 import { JwtService } from '@nestjs/jwt';
 import bcrypt = require('bcrypt');
+
+import { User } from '@/entity/user.entity';
+import { UserService } from '@/user/user.service';
 type PasswordOmitUser = Omit<User, 'password'>;
 
 export class AuthError extends Error {
@@ -37,20 +38,13 @@ interface JWTPayload {
  */
 @Injectable()
 export class AuthService {
-  constructor(
-    private jwtService: JwtService,
-    private usersService: UserService,
-  ) {}
+  constructor(private jwtService: JwtService, private usersService: UserService) {}
 
-  async validateUser(
-    name: User['username'],
-    pass: User['password'],
-  ): Promise<PasswordOmitUser> {
+  async validateUser(name: User['username'], pass: User['password']): Promise<PasswordOmitUser> {
     const user = await this.usersService.findOne(name);
 
     if (!user) throw new UserNotFoundError();
-    if (!bcrypt.compareSync(pass, user.password))
-      throw new PasswordNotMatchError();
+    if (!bcrypt.compareSync(pass, user.password)) throw new PasswordNotMatchError();
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { password, ...userOmitPassword } = user;
     return userOmitPassword;

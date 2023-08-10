@@ -1,14 +1,11 @@
-import endpoints from './endpoints';
-import { type Result, Ok, Err } from 'ts-results';
 import { taskIoType, type ITask } from 'common';
+import { ICreateTaskDto, IUpdateTaskDto } from 'common';
 import * as t from 'io-ts';
-import {
-  type HttpError,
-  httpErrorIo,
-  unknownFormatError,
-} from '../types/httpError';
-import { ICreateTaskDto } from 'common';
-import { IUpdateTaskDto } from 'common';
+import { type Result, Ok, Err } from 'ts-results';
+
+import { type HttpError, httpErrorIo, unknownFormatError } from '../types/httpError';
+
+import endpoints from './endpoints';
 
 const taskListIoType = t.array(taskIoType);
 
@@ -18,15 +15,16 @@ export async function fetchWithHeader(
   method: 'GET' | 'POST' | 'DELETE' = 'GET',
 ): Promise<Response> {
   let payload: {
-    method: 'GET' | 'POST' | 'DELETE';
-    headers: any;
-    credentials: 'include';
     body?: any;
+    credentials: 'include';
+    headers: any;
+    method: 'GET' | 'POST' | 'DELETE';
   } = {
-    method,
+    credentials: 'include',
+
     // eslint-disable-next-line @typescript-eslint/naming-convention
     headers: { 'Content-Type': 'application/json' },
-    credentials: 'include',
+    method,
   };
   if (method !== 'GET') payload = { ...payload, body: JSON.stringify(body) };
   return await fetch(url, payload);
@@ -103,7 +101,7 @@ async function deleteParent(id: number): ApiReturnVal {
 }
 
 async function login(username: string, password: string) {
-  return requestErrorHandling(endpoints.login, { username, password }, 'POST');
+  return requestErrorHandling(endpoints.login, { password, username }, 'POST');
 }
 
 async function logout() {
@@ -111,11 +109,7 @@ async function logout() {
 }
 
 async function register(username: string, password: string) {
-  return requestErrorHandling(
-    endpoints.register,
-    { username, password },
-    'POST',
-  );
+  return requestErrorHandling(endpoints.register, { password, username }, 'POST');
 }
 
 async function deleteAccount() {
@@ -126,8 +120,8 @@ async function getAuthStatus(): Promise<Result<string, void>> {
   let res;
   try {
     res = await fetch(endpoints.authStatus, {
-      method: 'GET',
       credentials: 'include',
+      method: 'GET',
     });
     const data: any = await res.json();
     if (res.ok) return Ok(data.username);
@@ -139,34 +133,30 @@ async function getAuthStatus(): Promise<Result<string, void>> {
 
 async function isUserExist(username: string): ApiReturnVal<boolean> {
   try {
-    const res = await fetchWithHeader(
-      endpoints.userExist,
-      { username },
-      'POST',
-    );
+    const res = await fetchWithHeader(endpoints.userExist, { username }, 'POST');
     const body = await res.json();
     return Ok(body.isExits);
   } catch (e) {
-    return Err({ statusCode: 500, message: 'internal server error' });
+    return Err({ message: 'internal server error', statusCode: 500 });
   }
 }
 
 const api = {
-  get,
-  create,
-  deleteIt,
-  update,
-  list,
-  done,
-  undone,
   addParent,
+  authStatus: getAuthStatus,
+  create,
+  deleteAccount,
+  deleteIt,
   deleteParent,
+  done,
+  get,
+  isUserExist,
+  list,
   login,
   logout,
   register,
-  deleteAccount,
-  authStatus: getAuthStatus,
-  isUserExist,
+  undone,
+  update,
 };
 
 export default api;
