@@ -10,7 +10,6 @@
 
 ```bash
 $ pnpm install
-$ touch db.sqlite
 ```
 
 ### Running the app
@@ -34,15 +33,9 @@ $ pnpm run test
 
 # e2e tests
 $ pnpm run test:e2e
-
-# test coverage
-$ pnpm run test:cov
 ```
 
 ### Git Commit Message 
-
-iを使用しています
-
 ## サービス内容
 
 ### 言語定義

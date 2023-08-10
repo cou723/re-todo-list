@@ -1,4 +1,4 @@
-# Frontend(solid.js)
+# Frontend(SolidJS)
 
 ## route
 | path         | できること                                             | 遷移可能先              |
