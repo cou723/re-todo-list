@@ -1,3 +1,4 @@
+import { useNavigate } from '@solidjs/router';
 import { Task } from 'common';
 import { Show, createResource } from 'solid-js';
 import { Result } from 'ts-results';
@@ -10,6 +11,8 @@ import { getTaskViewTree } from '@/lib/getTaskView';
 import { ITaskView, TaskView } from '@/types/TaskView';
 
 const HomePage = () => {
+  const navigate = useNavigate();
+
   const [tasks] = createResource(true, async () => {
     const data = await api.list();
     let tasks: ITaskView[] = [];
@@ -18,14 +21,14 @@ const HomePage = () => {
         data.val.map((task) => new TaskView(Task.fromObject(task))),
       );
       if (taskTree.ok) tasks = taskTree.val;
-    } else window.location.href = '/login';
+    } else navigate('/login');
 
     return tasks;
   });
 
   return (
     <div>
-      <IconButton onClick={() => (window.location.href = '/task/create')} icon="mdi:plus-outline">
+      <IconButton onClick={() => navigate('/task/create')} icon="mdi:plus-outline">
         タスクを追加
       </IconButton>
       <Show

@@ -1,3 +1,4 @@
+import { useNavigate } from '@solidjs/router';
 import { type Component, Show, createSignal, createResource } from 'solid-js';
 
 import Title from '@/components/Header/Title';
@@ -13,12 +14,14 @@ const RegisterPage: Component = () => {
   const [password, setPassword] = createSignal<string>('');
   const [error, setError] = createSignal<string>('');
 
+  const navigate = useNavigate();
+
   const register = async () => {
     const res = await api.register(username(), password());
     if (res.err) {
       if (res.val.statusCode === 409) setError('ユーザー名が既に使われています。');
       if (res.val.statusCode === 400) setError('ユーザー名またはpasswordが空です');
-    } else window.location.href = '/login';
+    } else navigate('/login');
   };
 
   const [isDuplicateUsername] = createResource(username, async () => {

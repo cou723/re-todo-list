@@ -1,4 +1,5 @@
 import { Icon } from '@iconify-icon/solid';
+import { useNavigate } from '@solidjs/router';
 
 import Button from '@/components/util/Button';
 import api from '@/lib/api';
@@ -8,9 +9,11 @@ const TaskEditButtonGroup = (props: {
   failedDelete: () => void;
   id: number;
 }) => {
+  const navigate = useNavigate();
+
   const deleteTask = async () => {
     const res = await api.deleteIt(props.id);
-    if (res.ok) window.location.href = '/';
+    if (res.ok) navigate('/');
     else props.failedDelete();
   };
 

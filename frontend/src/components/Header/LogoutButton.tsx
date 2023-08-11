@@ -1,11 +1,14 @@
+import { useNavigate } from '@solidjs/router';
+
 import { IconButton } from '../util/IconButton';
 
 import api from '@/lib/api';
 
 export const LogoutButton = () => {
+  const navigate = useNavigate();
   const logout = async () => {
     await api.logout();
-    window.location.href = '/login';
+    navigate('/login');
   };
 
   return (

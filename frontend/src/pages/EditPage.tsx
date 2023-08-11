@@ -1,4 +1,4 @@
-import { useParams } from '@solidjs/router';
+import { useNavigate, useParams } from '@solidjs/router';
 import { ICreateTaskDto } from 'common';
 import { type Component, createResource, Show } from 'solid-js';
 import { Err, Ok, Result } from 'ts-results';
@@ -9,20 +9,22 @@ import CenterContainer from '@/components/util/CenterContainer';
 import api from '@/lib/api';
 
 const EditPage: Component = () => {
+  const navigate = useNavigate();
+
   const params = useParams();
 
   const [task] = createResource<ICreateTaskDto>(async (): Promise<ICreateTaskDto> => {
     const idResult = parseIntResult(params.id);
 
     if (idResult.err) {
-      window.location.href = '/404';
+      navigate('/404');
       throw new Error('404');
     }
 
     const targetId = idResult.val;
     const res = await api.get(targetId);
     if (res.err) {
-      window.location.href = '/';
+      navigate('/');
       throw new Error();
     }
 
@@ -42,7 +44,7 @@ const EditPage: Component = () => {
   const sendEditedTask = async (sendTask: ICreateTaskDto) => {
     const taskId = parseIntResult(params.id);
     if (taskId.err) {
-      window.location.href = '/404';
+      navigate('/404');
       return [];
     }
     console.log('val;', sendTask);
@@ -54,7 +56,7 @@ const EditPage: Component = () => {
       if (sendTask.parentId == undefined) await api.deleteParent(taskId.val);
       else await api.addParent(taskId.val, sendTask.parentId);
     }
-    window.location.href = '/';
+    navigate('/');
   };
 
   return (

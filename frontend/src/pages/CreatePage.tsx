@@ -1,3 +1,4 @@
+import { useNavigate } from '@solidjs/router';
 import { ICreateTaskDto } from 'common';
 import { createSignal, type Component, Show } from 'solid-js';
 
@@ -10,16 +11,18 @@ import api from '@/lib/api';
 const CreatePage: Component = () => {
   const [error, setError] = createSignal<string>('');
 
+  const navigate = useNavigate();
+
   const createTask = async (task: ICreateTaskDto) => {
     console.log(task);
 
     const res = await api.create(task);
     if (res.err) {
-      if (res.val.statusCode === 401) window.location.href = '/login';
+      if (res.val.statusCode === 401) navigate('/login');
       else setError('タスクの作成に失敗しました');
       return;
     }
-    window.location.href = '/';
+    navigate('/');
   };
 
   return (

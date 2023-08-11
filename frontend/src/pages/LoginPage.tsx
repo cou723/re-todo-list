@@ -1,3 +1,4 @@
+import { useNavigate } from '@solidjs/router';
 import { createSignal, Show } from 'solid-js';
 
 import Title from '@/components/Header/Title';
@@ -13,9 +14,11 @@ const LoginPage = () => {
   const [password, setPassword] = createSignal('');
   const [error, setError] = createSignal(false);
 
+  const navigate = useNavigate();
+
   const login = async () => {
     const data = await api.login(username(), password());
-    if (data.ok) window.location.href = '/';
+    if (data.ok) navigate('/');
     else setError(true);
   };
 

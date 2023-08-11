@@ -17,4 +17,6 @@ RUN pnpm install --frozen-lockfile --prod
 
 EXPOSE 8000
 
-CMD ["pnpm", "start"]
+RUN pnpm run build
+
+CMD ["pnpm", "run", "preview"]
