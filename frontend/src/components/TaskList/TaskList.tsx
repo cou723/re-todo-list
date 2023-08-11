@@ -6,7 +6,6 @@ import { type ITaskView } from '@/types/TaskView';
 
 const TaskList = (props: { tasks: ITaskView[] | undefined }) => {
   return (
-    // gapがなぜか機能しない
     <div class="flex flex-col gap-4">
       <For each={props.tasks}>{(task) => <Task class="mt-4" task={task} />}</For>
     </div>

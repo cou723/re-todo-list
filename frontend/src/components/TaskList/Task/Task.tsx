@@ -5,6 +5,7 @@ import TaskEditButtonGroup from './TaskEditButtonGroup/TaskEditButtonGroup';
 
 import Checkbox from '@/components/util/Checkbox';
 import api from '@/lib/api';
+import { getAllChildren } from '@/lib/getTaskView';
 import { type ITaskView } from '@/types/TaskView';
 
 export const Task = (props: { class?: string; task: ITaskView }) => {
@@ -28,7 +29,11 @@ export const Task = (props: { class?: string; task: ITaskView }) => {
           <Checkbox isChecked={isDone} onClick={handleClick} />
           <span class="ml-2 text-2xl font-bold">{props.task.title}</span>
         </div>
-        <TaskEditButtonGroup id={props.task.id} failedDelete={deleteFailed} />
+        <TaskEditButtonGroup
+          childTaskIdList={getAllChildren(props.task).map((task) => task.id)}
+          id={props.task.id}
+          failedDelete={deleteFailed}
+        />
       </div>
       <div class="bg-slate-100 p-5 border rounded-b-xl">
         <div class="mb-3">{props.task.description}</div>

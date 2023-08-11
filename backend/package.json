@@ -6,7 +6,7 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "start": "node dist/main",
+    "start": "tsc --project tsconfig.json && tsc-alias -p tsconfig.json && node dist/src/main",
     "dev": "ts-node-dev -r tsconfig-paths/register --poll --interval 1000 --respawn ./src/main.ts",
     "build": "tsc --project tsconfig.json && tsc-alias -p tsconfig.json",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",

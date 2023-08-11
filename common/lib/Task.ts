@@ -47,9 +47,4 @@ export class Task implements ITask {
       task.path,
     );
   }
-
-  getCurrentPath(): string {
-    if (this.path === '') return this.id.toString();
-    return this.path + '/' + this.id;
-  }
 }

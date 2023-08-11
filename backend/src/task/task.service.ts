@@ -71,6 +71,9 @@ export class TaskService {
     newParent: TaskEntity['id'],
     currentUserId: number
   ): Promise<void> {
+    if ((await this.getAllChildTasks(id)).map((task) => task.id).includes(newParent)) {
+      throw new HttpException('Cannot set parent to child', 400);
+    }
     const currentTask = await this.checkTargetValidity(id, currentUserId);
     const newParentTask = await this.checkTargetValidity(newParent, currentUserId);
 
@@ -89,6 +92,12 @@ export class TaskService {
     });
 
     return findBy.filter((task) => regex.test(task.path));
+  }
+
+  async getAllChildTasks(parentId: TaskEntity['id']): Promise<ITask[]> {
+    return await this.taskRepos.findBy({
+      path: Like(`%${parentId}/%`),
+    });
   }
 
   async updateChildTasks(parentId: TaskEntity['id'], currentUserId: number): Promise<void> {

@@ -53,3 +53,8 @@ function taskToView(task: ITaskView | undefined): Result<ITaskView, void> {
     children: [],
   });
 }
+
+export function getAllChildren(task: ITaskView): ITaskView[] {
+  const children = task.children.map((child) => getAllChildren(child)).flat();
+  return [task, ...children];
+}

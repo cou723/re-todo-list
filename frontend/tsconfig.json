@@ -6,6 +6,7 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "jsxImportSource": "solid-js",
+    "module": "es2020",
     "moduleResolution": "node",
     "noEmit": true,
     "outDir": "./dist",

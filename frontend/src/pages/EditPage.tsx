@@ -10,14 +10,17 @@ import api from '@/lib/api';
 
 const EditPage: Component = () => {
   const params = useParams();
-  const idResult = parseIntResult(params.id);
-  if (idResult.err) {
-    window.location.href = '/404';
-    throw new Error('404');
-  }
-  const id = idResult.val;
+
   const [task] = createResource<ICreateTaskDto>(async (): Promise<ICreateTaskDto> => {
-    const res = await api.get(id);
+    const idResult = parseIntResult(params.id);
+
+    if (idResult.err) {
+      window.location.href = '/404';
+      throw new Error('404');
+    }
+
+    const targetId = idResult.val;
+    const res = await api.get(targetId);
     if (res.err) {
       window.location.href = '/';
       throw new Error();
@@ -57,7 +60,7 @@ const EditPage: Component = () => {
   return (
     <CenterContainer>
       <Title class="mb-4">タスクを編集</Title>
-      <Show when={!!task()} fallback={<>now loading</>}>
+      <Show when={!!task()} fallback={<>タスクの取得に失敗しました。リロードしてください。</>}>
         <TaskEditor
           default={{
             description: task()?.description ?? '',
@@ -66,7 +69,6 @@ const EditPage: Component = () => {
           }}
           sendLabel="更新"
           onSend={sendEditedTask}
-          id={id}
         />
       </Show>
     </CenterContainer>

@@ -438,6 +438,21 @@ describe('User and User API (e2e)', () => {
       expect((await taskRepository.findOne({ where: { id: 5 } })).path).toEqual('6/3/2/4/5');
     });
 
+    it('/task/:id/parent POST :fail register parent as child', async () => {
+      const tasks = [
+        PARENT_TASK,
+        generateTask({ createdBy: 1, id: 2, path: '6/1/2', title: 'child' }),
+        generateTask({ createdBy: 1, id: 3, path: '6/2/3', title: 'new_parent' }),
+      ];
+      await taskRepository.insert(tasks);
+      const res = await request(app.getHttpServer())
+        .post('/task/2/parent')
+        .set('Accept', 'application/json')
+        .set('Cookie', [`accessToken=${accessToken}`])
+        .send({ newParent: 3 });
+      expect(res.status).toEqual(400);
+    });
+
     it('/task/:id/parent POST :fail new parent not exist', async () => {
       const tasks = [PARENT_TASK, generateTask({ createdBy: 1, id: 2, title: 'child' })];
       await taskRepository.insert(tasks);
