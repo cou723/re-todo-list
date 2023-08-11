@@ -15,6 +15,7 @@ RUN curl -fsSL https://get.pnpm.io/install.sh | env PNPM_VERSION=8.6.12 sh -
 ENV PATH="/root/.local/share/pnpm:$PATH"
 
 WORKDIR /common
+RUN pnpm install
 RUN pnpm run build
 WORKDIR /app
 
