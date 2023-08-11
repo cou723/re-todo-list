@@ -7,6 +7,7 @@ const LinkButton = (props: ButtonProps) => {
       href={props.href!}
       style={{
         display: 'inline-block',
+        // eslint-disable-next-line @typescript-eslint/naming-convention
         'pointer-events': props.disabled ? 'none' : 'auto',
       }}
     >

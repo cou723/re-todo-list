@@ -7,34 +7,23 @@ export type ButtonProps = {
   children: string | JSX.Element;
   class?: string;
   disabled?: boolean;
-  onClick: () => void;
+  href?: string;
+  onClick?: () => void;
   outline?: boolean;
   variant?: 'primary' | 'danger' | 'outline-primary' | 'outline-danger';
 };
 
-function isButtonProps(props: ButtonProps | LinkButtonProps): props is ButtonProps {
+function isButtonProps(props: ButtonProps): props is ButtonProps {
   return 'onClick' in props;
 }
 
-export type LinkButtonProps = {
-  children: string | JSX.Element;
-  class?: string;
-  disabled?: boolean;
-  href: string;
-  outline?: boolean;
-  variant?: 'primary' | 'danger' | 'outline-primary' | 'outline-danger';
-};
-
-function isLinkButtonProps(props: ButtonProps | LinkButtonProps): props is LinkButtonProps {
-  return 'href' in props;
-}
-
-const Button = (props: ButtonProps | LinkButtonProps) => (
+// ButtonPropsはLinkButtonPropsとNormalButtonPropsで別の型にしてユニオン型にしたかったが、solidjsのMatchでwhen式にis typeの型を充てても認識しなかったため、このような実装になっている。
+const Button = (props: ButtonProps) => (
   <Switch>
     <Match when={isButtonProps(props)}>
       <NormalButton {...props}>{props.children}</NormalButton>
     </Match>
-    <Match when={isLinkButtonProps(props)}>
+    <Match when={true}>
       <LinkButton {...props}>{props.children}</LinkButton>
     </Match>
   </Switch>
