@@ -17,7 +17,7 @@ COPY ./backend ./
 ENV SHELL /bin/bash
 RUN curl -fsSL https://get.pnpm.io/install.sh | env PNPM_VERSION=8.6.12 sh -
 ENV PATH="/root/.local/share/pnpm:$PATH"
-RUN pnpm install --frozen-lockfile --prod
+RUN pnpm install --frozen-lockfile
 
 EXPOSE 8000
 
