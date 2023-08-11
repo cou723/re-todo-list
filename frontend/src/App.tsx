@@ -1,12 +1,13 @@
-import { type Component } from 'solid-js';
 import { Routes, Route } from '@solidjs/router';
-import EditPage from './pages/EditPage';
-import LoginPage from './pages/LoginPage';
-import RegisterPage from './pages/RegisterPage';
-import CreatePage from './pages/CreatePage';
-import HomePage from './pages/HomePage';
+import { type Component } from 'solid-js';
+
 import Header from './components/Header/Header';
 import ComponentPlayground from './pages/ComponentPlayground';
+import CreatePage from './pages/CreatePage';
+import EditPage from './pages/EditPage';
+import HomePage from './pages/HomePage';
+import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
 
 const App: Component = () => (
   <>

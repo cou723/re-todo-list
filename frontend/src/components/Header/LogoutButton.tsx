@@ -1,5 +1,6 @@
-import api from '@/lib/api';
 import { IconButton } from '../util/IconButton';
+
+import api from '@/lib/api';
 
 export const LogoutButton = () => {
   const logout = async () => {

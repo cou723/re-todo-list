@@ -1,11 +1,11 @@
 import { createSignal, JSX, Show } from 'solid-js';
 
 const Alert = (props: {
-  variant?: 'normal' | 'error';
   children: JSX.Element | string;
   class?: string;
-  onClose: any;
   disabled?: boolean;
+  onClose: any;
+  variant?: 'normal' | 'error';
 }) => {
   const [boxClass, setBoxClass] = createSignal('bg-red-100 border-red-400 text-red-700');
   const [textColorClass, setTextColorClass] = createSignal('text-red-500');

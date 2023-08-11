@@ -1,10 +1,11 @@
 import { Accessor, Setter } from 'solid-js';
+
 import TextInput from './util/TextInput';
 
 const UsernameInput = (props: {
-  value: Accessor<string>;
-  setValue: Setter<string>;
   isDuplicateUsername?: boolean;
+  setValue: Setter<string>;
+  value: Accessor<string>;
 }) => {
   return (
     <TextInput

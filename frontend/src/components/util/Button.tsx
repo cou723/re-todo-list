@@ -1,14 +1,15 @@
 import { JSX, Switch, Match } from 'solid-js';
+
 import LinkButton from './LinkButton';
 import NormalButton from './NormalButton';
 
 export type ButtonProps = {
-  variant?: 'primary' | 'danger' | 'outline-primary' | 'outline-danger';
-  class?: string;
-  onClick: () => void;
   children: string | JSX.Element;
+  class?: string;
   disabled?: boolean;
+  onClick: () => void;
   outline?: boolean;
+  variant?: 'primary' | 'danger' | 'outline-primary' | 'outline-danger';
 };
 
 function isButtonProps(props: ButtonProps | LinkButtonProps): props is ButtonProps {
@@ -16,12 +17,12 @@ function isButtonProps(props: ButtonProps | LinkButtonProps): props is ButtonPro
 }
 
 export type LinkButtonProps = {
-  variant?: 'primary' | 'danger' | 'outline-primary' | 'outline-danger';
-  class?: string;
   children: string | JSX.Element;
+  class?: string;
   disabled?: boolean;
   href: string;
   outline?: boolean;
+  variant?: 'primary' | 'danger' | 'outline-primary' | 'outline-danger';
 };
 
 function isLinkButtonProps(props: ButtonProps | LinkButtonProps): props is LinkButtonProps {

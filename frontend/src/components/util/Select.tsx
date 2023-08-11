@@ -1,11 +1,11 @@
 import { Accessor, JSX, Setter } from 'solid-js';
 
 const Select = (props: {
+  accessor?: Accessor<string>;
+  children: JSX.Element;
   class?: string;
   label: string;
-  accessor?: Accessor<string>;
   setter: Setter<string> | ((value: string) => void);
-  children: JSX.Element;
 }) => {
   return (
     <div>

@@ -1,9 +1,11 @@
-import { type ITaskView } from '@/types/TaskView';
 import { For, createSignal } from 'solid-js';
+
 import TaskDeleteFailedModal from './TaskDeleteFailedModal';
 import TaskEditButtonGroup from './TaskEditButtonGroup/TaskEditButtonGroup';
-import api from '@/lib/api';
+
 import Checkbox from '@/components/util/Checkbox';
+import api from '@/lib/api';
+import { type ITaskView } from '@/types/TaskView';
 
 export const Task = (props: { class?: string; task: ITaskView }) => {
   const [showErrorModal, setShowErrorModal] = createSignal(false);

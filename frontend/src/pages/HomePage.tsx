@@ -1,11 +1,13 @@
-import TaskList from '../components/TaskList/TaskList';
-import api from '@/lib/api';
 import { Task } from 'common';
-import { getTaskViewTree } from '@/lib/getTaskView';
 import { Show, createResource } from 'solid-js';
-import { ITaskView, TaskView } from '@/types/TaskView';
 import { Result } from 'ts-results';
+
+import TaskList from '../components/TaskList/TaskList';
+
 import { IconButton } from '@/components/util/IconButton';
+import api from '@/lib/api';
+import { getTaskViewTree } from '@/lib/getTaskView';
+import { ITaskView, TaskView } from '@/types/TaskView';
 
 const HomePage = () => {
   const [tasks] = createResource(true, async () => {

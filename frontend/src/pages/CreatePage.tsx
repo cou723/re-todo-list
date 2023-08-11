@@ -1,10 +1,11 @@
-import { createSignal, type Component, Show } from 'solid-js';
-import TaskEditor from '@/components/TaskEditor/TaskEditor';
-import api from '@/lib/api';
 import { ICreateTaskDto } from 'common';
-import Alert from '@/components/util/Alert';
+import { createSignal, type Component, Show } from 'solid-js';
+
 import Title from '@/components/Header/Title';
+import TaskEditor from '@/components/TaskEditor/TaskEditor';
+import Alert from '@/components/util/Alert';
 import CenterContainer from '@/components/util/CenterContainer';
+import api from '@/lib/api';
 
 const CreatePage: Component = () => {
   const [error, setError] = createSignal<string>('');

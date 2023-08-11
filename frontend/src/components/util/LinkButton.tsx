@@ -1,4 +1,3 @@
-import { Link } from '@solidjs/router';
 import { ButtonProps, getClass } from './Button';
 
 const LinkButton = (props: ButtonProps) => {

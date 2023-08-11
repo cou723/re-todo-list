@@ -1,5 +1,6 @@
-import Button, { ButtonProps } from '../util/Button';
 import { Icon } from '@iconify-icon/solid';
+
+import Button, { ButtonProps } from '../util/Button';
 
 export const IconButton = (props: ButtonProps & { icon: string }) => {
   return (

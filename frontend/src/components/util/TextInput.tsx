@@ -1,16 +1,16 @@
 import { Accessor, Setter, Show } from 'solid-js';
 
 const TextInput = (props: {
-  label: string;
   accessor: Accessor<string | number | string[]>;
-  setter: Setter<string | number | string[]> | ((value: string) => void);
   class?: string;
-  placeholder?: string;
-  isRequired?: boolean;
-  type?: 'text' | 'password' | 'email' | 'number';
-  help?: string;
   error?: string;
   full?: boolean;
+  help?: string;
+  isRequired?: boolean;
+  label: string;
+  placeholder?: string;
+  setter: Setter<string | number | string[]> | ((value: string) => void);
+  type?: 'text' | 'password' | 'email' | 'number';
 }) => {
   return (
     <div class={props.class ?? ''}>

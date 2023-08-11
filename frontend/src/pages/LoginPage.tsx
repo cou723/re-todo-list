@@ -1,11 +1,12 @@
-import api from '@/lib/api';
 import { createSignal, Show } from 'solid-js';
+
+import Title from '@/components/Header/Title';
+import PasswordInput from '@/components/PasswordInput';
+import UsernameInput from '@/components/UsernameInput';
 import Alert from '@/components/util/Alert';
 import Button from '@/components/util/Button';
-import Title from '@/components/Header/Title';
 import CenterContainer from '@/components/util/CenterContainer';
-import UsernameInput from '@/components/UsernameInput';
-import PasswordInput from '@/components/PasswordInput';
+import api from '@/lib/api';
 
 const LoginPage = () => {
   const [username, setUsername] = createSignal('');

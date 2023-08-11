@@ -1,5 +1,6 @@
-import api from '@/lib/api';
 import Button from '../util/Button';
+
+import api from '@/lib/api';
 
 export const UserDeleteButton = (props: { class?: string }) => {
   const deleteAccount = async () => {

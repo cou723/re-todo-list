@@ -1,9 +1,10 @@
+import { Component, createSignal } from 'solid-js';
+
 import Alert from '@/components/util/Alert';
 import Button from '@/components/util/Button';
 import Select from '@/components/util/Select';
 import TextInput from '@/components/util/TextInput';
 // import ButtonGroup from '@/components/utils/ButtonGroup';
-import { Component, createSignal } from 'solid-js';
 
 const ComponentPlayground: Component = () => {
   const [test, setTest] = createSignal('test');

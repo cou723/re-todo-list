@@ -1,21 +1,24 @@
-import TextInput from '@/components/util/TextInput';
-import { createStore } from 'solid-js/store';
 import { ICreateTaskDto } from 'common';
 import { mergeProps } from 'solid-js';
-import ParentTaskSelect from './ParentTaskSelect';
+import { createStore } from 'solid-js/store';
+
 import Button from '../util/Button';
 
+import ParentTaskSelect from './ParentTaskSelect';
+
+import TextInput from '@/components/util/TextInput';
+
 const TaskEditor = (props: {
-  onSend: (task: ICreateTaskDto) => void;
   default?: ICreateTaskDto;
-  sendLabel: string;
   id?: number;
+  onSend: (task: ICreateTaskDto) => void;
+  sendLabel: string;
 }) => {
   const merged = mergeProps(
     {
       default: {
-        title: '',
         description: '',
+        title: '',
       },
     },
     props,

@@ -1,6 +1,8 @@
 import { For } from 'solid-js';
-import { type ITaskView } from '@/types/TaskView';
+
 import { Task } from './Task/Task';
+
+import { type ITaskView } from '@/types/TaskView';
 
 const TaskList = (props: { tasks: ITaskView[] | undefined }) => {
   return (

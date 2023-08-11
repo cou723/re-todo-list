@@ -1,11 +1,12 @@
 import { type Component, Show, createSignal, createResource } from 'solid-js';
-import api from '@/lib/api';
-import Button from '@/components/util/Button';
-import Alert from '@/components/util/Alert';
+
 import Title from '@/components/Header/Title';
-import CenterContainer from '@/components/util/CenterContainer';
-import UsernameInput from '@/components/UsernameInput';
 import PasswordInput from '@/components/PasswordInput';
+import UsernameInput from '@/components/UsernameInput';
+import Alert from '@/components/util/Alert';
+import Button from '@/components/util/Button';
+import CenterContainer from '@/components/util/CenterContainer';
+import api from '@/lib/api';
 
 const RegisterPage: Component = () => {
   const [username, setUsername] = createSignal<string>('');

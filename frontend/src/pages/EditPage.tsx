@@ -1,11 +1,12 @@
 import { useParams } from '@solidjs/router';
-import { type Component, createResource, Show } from 'solid-js';
-import TaskEditor from '@/components/TaskEditor/TaskEditor';
-import api from '@/lib/api';
-import { Err, Ok, Result } from 'ts-results';
 import { ICreateTaskDto } from 'common';
+import { type Component, createResource, Show } from 'solid-js';
+import { Err, Ok, Result } from 'ts-results';
+
 import Title from '@/components/Header/Title';
+import TaskEditor from '@/components/TaskEditor/TaskEditor';
 import CenterContainer from '@/components/util/CenterContainer';
+import api from '@/lib/api';
 
 const EditPage: Component = () => {
   const params = useParams();
@@ -24,14 +25,14 @@ const EditPage: Component = () => {
 
     if (res.val.path === '')
       return {
-        title: res.val.title,
         description: res.val.description,
+        title: res.val.title,
       };
 
     return {
-      title: res.val.title,
       description: res.val.description,
       parentId: parseInt(res.val.path.split('/').slice(0, -1)[0]),
+      title: res.val.title,
     };
   });
 
@@ -43,8 +44,8 @@ const EditPage: Component = () => {
     }
     console.log('val;', sendTask);
     await api.update(taskId.val, {
-      title: sendTask.title,
       description: sendTask.description,
+      title: sendTask.title,
     });
     if (task() !== undefined && sendTask.parentId != task()?.parentId) {
       if (sendTask.parentId == undefined) await api.deleteParent(taskId.val);
@@ -59,9 +60,9 @@ const EditPage: Component = () => {
       <Show when={!!task()} fallback={<>now loading</>}>
         <TaskEditor
           default={{
-            title: task()?.title ?? '',
             description: task()?.description ?? '',
             parentId: task()?.parentId ?? undefined,
+            title: task()?.title ?? '',
           }}
           sendLabel="更新"
           onSend={sendEditedTask}

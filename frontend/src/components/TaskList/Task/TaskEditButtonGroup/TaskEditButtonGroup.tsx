@@ -1,8 +1,9 @@
-import Button from '@/components/util/Button';
-import api from '@/lib/api';
 import { Icon } from '@iconify-icon/solid';
 
-const TaskEditButtonGroup = (props: { id: number; failedDelete: () => void }) => {
+import Button from '@/components/util/Button';
+import api from '@/lib/api';
+
+const TaskEditButtonGroup = (props: { failedDelete: () => void; id: number }) => {
   const deleteTask = async () => {
     const res = await api.deleteIt(props.id);
     if (res.ok) window.location.href = '/';

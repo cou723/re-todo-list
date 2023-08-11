@@ -16,7 +16,7 @@ export class TaskView implements ITaskView {
     this.description = task.description;
     this.isDone = task.isDone;
     this.children = children;
-    this.path = task.getCurrentPath();
+    this.path = task.path;
     this.createdBy = task.createdBy;
 
     if (this.path.split('/').slice(-1)[0] !== this.id.toString()) {
