@@ -62,7 +62,6 @@ export class AppController {
   @Post('is-exist')
   @UsePipes(ValidationPipe)
   async isExist(@Body() body: Omit<RegisterDto, 'password'>) {
-    console.log(body);
     if (body.username === '') return { isExits: false };
     const user = await this.userService.findOne(body.username);
 

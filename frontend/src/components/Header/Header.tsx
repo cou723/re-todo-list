@@ -11,7 +11,8 @@ import { UserDeleteButton } from './UserDeleteButton';
 import api from '@/lib/api';
 
 const Header = () => {
-  const [loginName] = createResource(true, async () => {
+  const [loginName, { refetch }] = createResource(true, async () => {
+    console.log('refetch');
     const res = await api.authStatus();
     if (res.ok) return res.val;
     else return undefined;
@@ -42,8 +43,8 @@ const Header = () => {
                   <Icon class="text-3xl text-pri" icon="mdi:account-circle" />
                   <span class="mx-3 text-lg">{loginName()}</span>
                 </div>
-                <LogoutButton />
-                <UserDeleteButton />
+                <LogoutButton refetch={refetch} />
+                <UserDeleteButton refetch={refetch} />
               </div>
             </Show>
           </div>

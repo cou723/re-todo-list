@@ -4,9 +4,10 @@ import { IconButton } from '../util/IconButton';
 
 import api from '@/lib/api';
 
-export const LogoutButton = () => {
+export const LogoutButton = (props: { refetch: () => void }) => {
   const navigate = useNavigate();
   const logout = async () => {
+    props.refetch();
     await api.logout();
     navigate('/login');
   };
