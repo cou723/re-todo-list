@@ -4,5 +4,6 @@
 ## for devloper
 ```bash
 $ cd re-todo-list
+$ cp .env.test .env
 $ docker compose up
 ```
