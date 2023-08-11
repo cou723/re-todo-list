@@ -29,26 +29,13 @@ export class TaskController {
   @Post()
   @UsePipes(ValidationPipe)
   async createTask(@Body() task: CreateTaskDto, @Req() req: { user: User }): Promise<void> {
-    let path = '';
-
-    if (task.parentId) {
-      const parent = await this.taskService.findTask(task.parentId, req.user.id);
-      if (parent.path === '') path = `${parent.id}`;
-      else path = `${parent.path}/${parent.id}`;
-    }
-
-    try {
-      await this.taskService.create({
-        createdBy: req.user.id,
-        description: task.description,
-        isDone: false,
-        path,
-        title: task.title,
-      });
-    } catch (e) {
-      throw new HttpException('Create Task failed.', 500);
-    }
-    return;
+    await this.taskService.create({
+      createdBy: req.user.id,
+      description: task.description,
+      isDone: false,
+      parentId: task.parentId ?? undefined,
+      title: task.title,
+    });
   }
 
   @Get('list')
@@ -71,21 +58,19 @@ export class TaskController {
     @Param('id') paramId: string
   ): Promise<void> {
     const id = parseId(paramId);
-    const targetTask = await this.taskService.findTask(id, req.user.id);
-    let path = targetTask.path;
-
-    if (updateContents.parent)
-      path = (await this.taskService.findTask(updateContents.parent, req.user.id)).getCurrentPath();
 
     await this.taskService.edit(
       {
         description: updateContents.description,
-        id: targetTask.id,
-        path: path,
+        id,
         title: updateContents.title,
       },
       req.user.id
     );
+
+    if (updateContents.parent !== undefined) {
+      await this.taskService.setParent(id, updateContents.parent, req.user.id);
+    }
   }
 
   // 削除が成功したかどうかは返さない
@@ -115,22 +100,7 @@ export class TaskController {
     @Body() body: ParentDto,
     @Req() req: { user: User }
   ): Promise<void> {
-    const id = parseId(paramId);
-    try {
-      await this.taskService.edit(
-        {
-          id,
-          path: (await this.taskService.findTask(body.newParent, req.user.id)).getCurrentPath(),
-        },
-        req.user.id
-      );
-    } catch (error) {
-      if (error instanceof HttpException) {
-        throw error;
-      }
-      console.error(error);
-      throw new HttpException('Internal Server Error', 500);
-    }
+    await this.taskService.setParent(parseId(paramId), body.newParent, req.user.id);
   }
 
   @HttpCode(204)
@@ -138,7 +108,7 @@ export class TaskController {
   async deleteParentTask(@Param('id') paramId: string, @Req() req: { user: User }): Promise<void> {
     const id = parseId(paramId);
     try {
-      await this.taskService.edit({ id, path: '' }, req.user.id);
+      await this.taskService.deleteParent(id, req.user.id);
     } catch (error) {
       if (error instanceof HttpException) {
         throw error;
