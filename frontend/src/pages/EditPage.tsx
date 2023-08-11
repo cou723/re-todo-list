@@ -15,27 +15,25 @@ const EditPage: Component = () => {
     throw new Error('404');
   }
   const id = idResult.val;
-  const [task] = createResource<ICreateTaskDto>(
-    async (): Promise<ICreateTaskDto> => {
-      const res = await api.get(id);
-      if (res.err) {
-        window.location.href = '/';
-        throw new Error();
-      }
+  const [task] = createResource<ICreateTaskDto>(async (): Promise<ICreateTaskDto> => {
+    const res = await api.get(id);
+    if (res.err) {
+      window.location.href = '/';
+      throw new Error();
+    }
 
-      if (res.val.path === '')
-        return {
-          title: res.val.title,
-          description: res.val.description,
-        };
-
+    if (res.val.path === '')
       return {
         title: res.val.title,
         description: res.val.description,
-        parentId: parseInt(res.val.path.split('/').slice(0, -1)[0]),
       };
-    },
-  );
+
+    return {
+      title: res.val.title,
+      description: res.val.description,
+      parentId: parseInt(res.val.path.split('/').slice(0, -1)[0]),
+    };
+  });
 
   const sendEditedTask = async (sendTask: ICreateTaskDto) => {
     const taskId = parseIntResult(params.id);

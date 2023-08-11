@@ -14,11 +14,7 @@ const UsernameInput = (props: {
       setter={props.setValue}
       placeholder="UserName10203"
       isRequired
-      error={
-        props.isDuplicateUsername
-          ? 'ユーザー名が既に使われています。'
-          : undefined
-      }
+      error={props.isDuplicateUsername ? 'ユーザー名が既に使われています。' : undefined}
     />
   );
 };

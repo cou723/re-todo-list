@@ -1,11 +1,14 @@
+import { Icon } from '@iconify-icon/solid';
 import { Show, createResource } from 'solid-js';
-import LogoIcon from './LogoIcon';
-import api from '@/lib/api';
+
+import { IconButton } from '../util/IconButton';
+
 import { LoginButton } from './LoginButton';
+import LogoIcon from './LogoIcon';
 import { LogoutButton } from './LogoutButton';
 import { UserDeleteButton } from './UserDeleteButton';
-import { IconButton } from '../util/IconButton';
-import { Icon } from '@iconify-icon/solid';
+
+import api from '@/lib/api';
 
 const Header = () => {
   const [loginName] = createResource(true, async () => {

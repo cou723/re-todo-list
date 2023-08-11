@@ -23,10 +23,7 @@ const HomePage = () => {
 
   return (
     <div>
-      <IconButton
-        onClick={() => (window.location.href = '/task/create')}
-        icon="mdi:plus-outline"
-      >
+      <IconButton onClick={() => (window.location.href = '/task/create')} icon="mdi:plus-outline">
         タスクを追加
       </IconButton>
       <Show

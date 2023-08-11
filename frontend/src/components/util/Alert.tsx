@@ -7,9 +7,7 @@ const Alert = (props: {
   onClose: any;
   disabled?: boolean;
 }) => {
-  const [boxClass, setBoxClass] = createSignal(
-    'bg-red-100 border-red-400 text-red-700',
-  );
+  const [boxClass, setBoxClass] = createSignal('bg-red-100 border-red-400 text-red-700');
   const [textColorClass, setTextColorClass] = createSignal('text-red-500');
   // eslint-disable-next-line solid/reactivity
   if (props.variant !== 'error') {
@@ -20,9 +18,7 @@ const Alert = (props: {
   return (
     <Show when={!props.disabled}>
       <div
-        class={`border ${boxClass()} pl-4 pr-12 py-3 rounded relative ${
-          props.class
-        }`}
+        class={`border ${boxClass()} pl-4 pr-12 py-3 rounded relative ${props.class}`}
         role="alert"
       >
         <span class="block sm:inline">{props.children}</span>

@@ -36,20 +36,14 @@ const ParentTaskSelect = (props: {
       <Show when={parentTaskList()}>
         <For each={parentTaskList()}>
           {(parentTask) => (
-            <option
-              selected={parentTask.id == props.currentTask.parentId}
-              value={parentTask.id}
-            >
+            <option selected={parentTask.id == props.currentTask.parentId} value={parentTask.id}>
               {parentTask.title}
               {/* :{_task.id == task.parent ? 'ok' : 'no'}:
             {_task.id}:{task.parent} */}
             </option>
           )}
         </For>
-        <option
-          selected={props.currentTask.parentId === undefined}
-          value={undefined}
-        >
+        <option selected={props.currentTask.parentId === undefined} value={undefined}>
           なし
         </option>
       </Show>

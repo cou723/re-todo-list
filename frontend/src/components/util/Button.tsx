@@ -11,9 +11,7 @@ export type ButtonProps = {
   outline?: boolean;
 };
 
-function isButtonProps(
-  props: ButtonProps | LinkButtonProps,
-): props is ButtonProps {
+function isButtonProps(props: ButtonProps | LinkButtonProps): props is ButtonProps {
   return 'onClick' in props;
 }
 
@@ -26,9 +24,7 @@ export type LinkButtonProps = {
   outline?: boolean;
 };
 
-function isLinkButtonProps(
-  props: ButtonProps | LinkButtonProps,
-): props is LinkButtonProps {
+function isLinkButtonProps(props: ButtonProps | LinkButtonProps): props is LinkButtonProps {
   return 'href' in props;
 }
 
@@ -48,9 +44,9 @@ export function getClass(
   classString?: string,
   disabled?: boolean,
 ): string {
-  return `${getButtonColor(variant)} font-bold py-2 px-4 rounded-lg ${
-    classString ?? ''
-  } ${disabled ? 'opacity-50 cursor-not-allowed' : ''} `;
+  return `${getButtonColor(variant)} font-bold py-2 px-4 rounded-lg ${classString ?? ''} ${
+    disabled ? 'opacity-50 cursor-not-allowed' : ''
+  } `;
 }
 
 export function getButtonColor(variant: ButtonProps['variant']): string {

@@ -41,15 +41,8 @@ const TaskEditor = (props: {
         setter={generateSetTaskProps('description')}
         full
       />
-      <ParentTaskSelect
-        currentTask={currentTask}
-        setTask={setTask}
-        id={props.id}
-        full
-      />
-      <Button onClick={() => props.onSend(currentTask)}>
-        {props.sendLabel}
-      </Button>
+      <ParentTaskSelect currentTask={currentTask} setTask={setTask} id={props.id} full />
+      <Button onClick={() => props.onSend(currentTask)}>{props.sendLabel}</Button>
     </div>
   );
 };

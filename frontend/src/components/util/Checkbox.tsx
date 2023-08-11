@@ -1,10 +1,7 @@
 import { Accessor } from 'solid-js';
 import './Checkbox.css';
 
-const Checkbox = (props: {
-  isChecked: Accessor<boolean>;
-  onClick: () => void;
-}) => {
+const Checkbox = (props: { isChecked: Accessor<boolean>; onClick: () => void }) => {
   return (
     <>
       <input

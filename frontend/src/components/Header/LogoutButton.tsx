@@ -8,12 +8,7 @@ export const LogoutButton = () => {
   };
 
   return (
-    <IconButton
-      variant="outline-primary"
-      class=""
-      onClick={logout}
-      icon="material-symbols:logout"
-    >
+    <IconButton variant="outline-primary" class="" onClick={logout} icon="material-symbols:logout">
       Logout
     </IconButton>
   );

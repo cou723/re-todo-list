@@ -15,10 +15,8 @@ const RegisterPage: Component = () => {
   const register = async () => {
     const res = await api.register(username(), password());
     if (res.err) {
-      if (res.val.statusCode === 409)
-        setError('ユーザー名が既に使われています。');
-      if (res.val.statusCode === 400)
-        setError('ユーザー名またはpasswordが空です');
+      if (res.val.statusCode === 409) setError('ユーザー名が既に使われています。');
+      if (res.val.statusCode === 400) setError('ユーザー名またはpasswordが空です');
     } else window.location.href = '/login';
   };
 
