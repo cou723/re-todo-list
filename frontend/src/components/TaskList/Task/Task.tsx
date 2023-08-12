@@ -8,7 +8,7 @@ import api from '@/lib/api';
 import { getAllChildren } from '@/lib/getTaskView';
 import { type ITaskView } from '@/types/TaskView';
 
-export const Task = (props: { class?: string; task: ITaskView }) => {
+export const Task = (props: { class?: string; task: ITaskView; reload:any }) => {
   const [showErrorModal, setShowErrorModal] = createSignal(false);
   const [isDone, setIsDone] = createSignal(props.task.isDone);
 
@@ -33,12 +33,13 @@ export const Task = (props: { class?: string; task: ITaskView }) => {
           childTaskIdList={getAllChildren(props.task).map((task) => task.id)}
           id={props.task.id}
           failedDelete={deleteFailed}
+          reload={props.reload}
         />
       </div>
       <div class="bg-slate-100 p-5 border rounded-b-xl">
         <div class="mb-3">{props.task.description}</div>
 
-        <For each={props.task.children}>{(child) => <Task class="pl-7" task={child} />}</For>
+        <For each={props.task.children}>{(child) => <Task class="pl-7" task={child} reload={props.reload}/>}</For>
         <TaskDeleteFailedModal
           show={showErrorModal()}
           handleClose={() => setShowErrorModal(false)}

@@ -13,7 +13,7 @@ import { ITaskView, TaskView } from '@/types/TaskView';
 const HomePage = () => {
   const navigate = useNavigate();
 
-  const [tasks] = createResource(true, async () => {
+  const [tasks, {refetch}] = createResource(true, async () => {
     const data = await api.list();
     let tasks: ITaskView[] = [];
     if (data.ok) {
@@ -40,7 +40,7 @@ const HomePage = () => {
           </div>
         }
       >
-        <TaskList tasks={tasks()} />
+        <TaskList tasks={tasks()} refetch={refetch} />
       </Show>
     </div>
   );

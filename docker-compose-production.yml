@@ -4,14 +4,14 @@ services:
     container_name: frontend
     build:
       context: ./
-      dockerfile: frontend/Dockerfile_release
+      dockerfile: frontend/Dockerfile_pro
     ports:
       - "3000:3000"
   backend:
     container_name: backend
     build:
       context: ./
-      dockerfile: backend/Dockerfile_release
+      dockerfile: backend/Dockerfile_pro
     ports:
       - "8000:8000"
     volumes:

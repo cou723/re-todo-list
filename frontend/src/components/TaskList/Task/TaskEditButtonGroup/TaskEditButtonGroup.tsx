@@ -8,12 +8,13 @@ const TaskEditButtonGroup = (props: {
   childTaskIdList: number[];
   failedDelete: () => void;
   id: number;
+  reload:any;
 }) => {
   const navigate = useNavigate();
 
   const deleteTask = async () => {
     const res = await api.deleteIt(props.id);
-    if (res.ok) navigate('/');
+    if (res.ok) props.reload();
     else props.failedDelete();
   };
 

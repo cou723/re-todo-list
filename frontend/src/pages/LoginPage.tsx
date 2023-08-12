@@ -1,5 +1,5 @@
 import { useNavigate } from '@solidjs/router';
-import { createSignal, Show } from 'solid-js';
+import { createSignal, Setter, Show } from 'solid-js';
 
 import Title from '@/components/Header/Title';
 import PasswordInput from '@/components/PasswordInput';
@@ -9,17 +9,17 @@ import Button from '@/components/util/Button';
 import CenterContainer from '@/components/util/CenterContainer';
 import api from '@/lib/api';
 
-const LoginPage = () => {
+const LoginPage = (props: { setUsername: Setter<string | undefined> }) => {
   const [username, setUsername] = createSignal('');
   const [password, setPassword] = createSignal('');
-  const [error, setError] = createSignal(false);
+  const [isError, setIsError] = createSignal(false);
 
   const navigate = useNavigate();
 
   const login = async () => {
     const data = await api.login(username(), password());
-    if (data.ok) navigate('/');
-    else setError(true);
+    if (data.ok) { props.setUsername(username()); navigate('/'); }
+    else { props.setUsername(undefined); setIsError(true); }
   };
 
   return (
@@ -28,8 +28,8 @@ const LoginPage = () => {
       <div class="flex flex-col gap-4">
         <UsernameInput value={username} setValue={setUsername} />
         <PasswordInput accessor={password} setter={setPassword} />
-        <Show when={error()}>
-          <Alert variant="error" onClose={() => setError(false)}>
+        <Show when={isError()}>
+          <Alert variant="error" onClose={() => setIsError(false)}>
             ログインに失敗しました。今一度ユーザー名とパスワードを確認してください。
           </Alert>
         </Show>
