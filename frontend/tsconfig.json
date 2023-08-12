@@ -11,7 +11,6 @@
     "noEmit": true,
     "outDir": "./dist",
     "paths": {
-      // viteなので関係ないがvscodeの補完を効かせるために必要
       "@/*": [
         "src/*"
       ]

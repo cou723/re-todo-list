@@ -26,15 +26,15 @@ describe('endpoints', () => {
   it('one layer tree', () => {
     const tree = getTaskViewTree([
       new TaskView(new Task(1, 1)),
-      new TaskView(new Task(2, 1, 'title2', '', false, '1')),
+      new TaskView(new Task(2, 1, 'title2', '', false, '1/2')),
       new TaskView(new Task(3, 1)),
-      new TaskView(new Task(4, 1, 'title4', '', false, '3')),
+      new TaskView(new Task(4, 1, 'title4', '', false, '3/4')),
     ]);
 
     expect(tree).toEqual(
       Ok([
-        new TaskView(new Task(1, 1), [new TaskView(new Task(2, 1, 'title2', '', false, '1'))]),
-        new TaskView(new Task(3, 1), [new TaskView(new Task(4, 1, 'title4', '', false, '3'))]),
+        new TaskView(new Task(1, 1), [new TaskView(new Task(2, 1, 'title2', '', false, '1/2'))]),
+        new TaskView(new Task(3, 1), [new TaskView(new Task(4, 1, 'title4', '', false, '3/4'))]),
       ]),
     );
   });
@@ -42,9 +42,9 @@ describe('endpoints', () => {
   it('multi layer tree', () => {
     const tasks = [
       new Task(1, 1),
-      new Task(2, 1, 'title2', '', false, '1'),
-      new Task(3, 1, 'title3', '', false, '1/2'),
-      new Task(4, 1, 'title3', '', false, '1/2/3'),
+      new Task(2, 1, 'title2', '', false, '1/2'),
+      new Task(3, 1, 'title3', '', false, '1/2/3'),
+      new Task(4, 1, 'title3', '', false, '1/2/3/4'),
     ];
 
     const tree = getTaskViewTree(tasks.map((task) => new TaskView(task)));

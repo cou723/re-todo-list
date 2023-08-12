@@ -27,7 +27,7 @@ export class Task implements ITask {
     title: string = 'title',
     description: string = '',
     isDone: boolean = false,
-    path: string = '',
+    path: string = id.toString(),
   ) {
     this.id = id;
     this.createdBy = createdBy;

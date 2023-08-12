@@ -7,7 +7,6 @@ import TaskApi from './api';
 describe('Task Api', () => {
   let server: Server;
   beforeAll(() => {
-    // Json-server の起動
     const app = jsonServer.create();
     const router = jsonServer.router('db.json');
     const routes = {
@@ -22,7 +21,6 @@ describe('Task Api', () => {
   });
 
   afterAll(() => {
-    // Json-server の停止
     server.close();
   });
 
@@ -34,7 +32,7 @@ describe('Task Api', () => {
       description: 'This is task 1',
       id: 1,
       isDone: false,
-      path: '',
+      path: '1',
       title: 'Task 1',
     });
   });
@@ -48,7 +46,7 @@ describe('Task Api', () => {
         description: 'This is task 1',
         id: 1,
         isDone: false,
-        path: '',
+        path: '1',
         title: 'Task 1',
       },
       {
@@ -56,7 +54,7 @@ describe('Task Api', () => {
         description: 'This is task 2',
         id: 2,
         isDone: false,
-        path: '',
+        path: '2',
         title: 'Task 2',
       },
     ]);

@@ -1,0 +1,22 @@
+version: '3.8'
+services:
+  frontend:
+    container_name: frontend
+    build:
+      context: ./
+      dockerfile: frontend/Dockerfile_test
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend/:/app
+      - ./common/:/common
+  backend:
+    container_name: backend
+    build:
+      context: ./
+      dockerfile: backend/Dockerfile_test
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend/:/app
+      - ./common/:/common
