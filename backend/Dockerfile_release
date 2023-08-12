@@ -1,9 +1,3 @@
-# backendディレクトリで`docker build -f Dockerfile ../`
-# このファイルでのカレントディレクトリ(./)はbackendではなく、プロジェクトのルートディレクトリであることに注意
-
-# In the `backend` directory `docker build -f Dockerfile . /`
-# Note that the current directory in this file (. /) is the root directory of the project, not the `backend`
-
 FROM node:20
 
 WORKDIR /app

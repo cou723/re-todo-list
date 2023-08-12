@@ -1,5 +1,3 @@
-# frontendディレクトリで`docker build -f Dockerfile ../`
-# カレントディレクトリはfrontendではなく、プロジェクトのルートディレクトリであることに注意
 FROM node:20
 
 WORKDIR /app
