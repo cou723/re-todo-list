@@ -21,4 +21,4 @@ RUN pnpm install --frozen-lockfile
 
 EXPOSE 8000
 
-CMD ["pnpm", "start"]
+ENTRYPOINT ["pnpm", "start"]
